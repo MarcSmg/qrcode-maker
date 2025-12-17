@@ -2,7 +2,7 @@ import React from "react";
 import * as Icons from "lucide-react";
 
 /**
- * Button component – entièrement personnalisable
+ * Button component – fully customizable
  *
  * Props:
  * - label: string | texte du bouton

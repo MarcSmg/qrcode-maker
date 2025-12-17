@@ -2,6 +2,8 @@ import React from 'react'
 import { useState } from 'react'
 import reactLogo from '../src/assets/react.svg'
 import viteLogo from '/vite.svg'
+import { CircleQuestionMark } from 'lucide-react'
+import Button from '../components/Button'
 
 function Landing() {
     const [count, setCount] = useState(0)
@@ -26,8 +28,9 @@ function Landing() {
                 </p>
             </div>
             <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
+                Click on the Vite and React logos to learn more <CircleQuestionMark/>
             </p>
+            <Button label='Hello mthrfckr' />
         </>
     )
 }

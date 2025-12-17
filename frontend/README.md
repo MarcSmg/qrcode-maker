@@ -1,21 +1,21 @@
-#Prérequis
+# Prérequis
 
 Node.js (version 18 ou plus)
 npm ou yarn
 
-#Vérification :
+# Vérification :
 
 ```bash
 node -v
 npm -v
 ```
 
-#Installer les dependances:
+# Installer les dependances:
 
 ```bash
 npm install
 ```
-#Lancer le serveur de développement
+# Lancer le serveur de développement
 
 ```bash
 npm run dev
@@ -27,7 +27,7 @@ Le projet sera accessible à l’adresse :
 
 #Configuration de React Router
 
-##Dans router.jsx
+## Dans router.jsx
 
 ```jsx
 import { createBrowserRouter } from "react-router-dom";
@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
 ]);
 ```
 
-##Dans main.jsx :
+## Dans main.jsx :
 ```jsx
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
