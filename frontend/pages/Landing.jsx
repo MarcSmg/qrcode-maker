@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import reactLogo from '../src/assets/react.svg'
 import viteLogo from '/vite.svg'
-import { CircleQuestionMark } from 'lucide-react'
+import { ChevronDown, CircleQuestionMark } from 'lucide-react'
 import Button from '../components/Button'
 
 function Landing() {
@@ -30,7 +30,7 @@ function Landing() {
             <p className="read-the-docs">
                 Click on the Vite and React logos to learn more <CircleQuestionMark/>
             </p>
-            <Button label='Hello mthrfckr' />
+            <Button label='' bgColor='#eff045' textColor='#000f45' radius='full' icon={"ChevronDown"}/>
         </>
     )
 }

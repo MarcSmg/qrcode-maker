@@ -8,7 +8,8 @@ import * as Icons from "lucide-react";
  * - label: string | texte du bouton
  * - onClick: function | action au clic
  * - variant: "solid" | "outline" | "ghost"
- * - color: string | couleur principale (ex: "#4f46e5" ou "indigo")
+ * - bgColor: string | couleur principale (ex: "#4f46e5" ou "indigo")
+ * - textColor = string | couleur de texte (ex: "#ffffff" ou "white")
  * - radius: "none" | "sm" | "md" | "lg" | "full"
  * - shadow: "none" | "sm" | "md" | "lg"
  * - icon: string | nom de l’icône Lucide (ex: "Download")
@@ -21,7 +22,8 @@ export default function Button({
   label = "Button",
   onClick,
   variant = "solid",
-  color = "#4f46e5",
+  bgColor = "#4f46e5",
+  textColor = "#ffffff",
   radius = "md",
   shadow = "sm",
   icon,
@@ -57,18 +59,18 @@ export default function Button({
 
   const variants = {
     solid: {
-      backgroundColor: color,
-      color: "#ffffff",
+      backgroundColor: bgColor,
+      color: textColor,
       border: "none",
     },
     outline: {
       backgroundColor: "transparent",
-      color: color,
-      border: `2px solid ${color}`,
+      color: bgColor,
+      border: `2px solid ${bgColor}`,
     },
     ghost: {
       backgroundColor: "transparent",
-      color: color,
+      color: bgColor,
       border: "none",
     },
   };
