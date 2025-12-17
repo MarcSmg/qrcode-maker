@@ -1,6 +1,6 @@
 # README4DEVS
 
-### Mettre ici toutes les clarifications au sujet du fonctionnement des composantes.
+### Mettre ici toutes les clarifications au sujet du fonctionnement des composantes ou de de packages React.
 
 ## Composantes:
 
@@ -63,6 +63,9 @@ Je pense que *textColor* et *bgColor* s'expliquent deja par leurs noms (bg =  ba
 
 
 
+## Packages:
+
+### >>> react-router-dom
 
 
 

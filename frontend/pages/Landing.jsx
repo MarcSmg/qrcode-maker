@@ -4,8 +4,15 @@ import reactLogo from '../src/assets/react.svg'
 import viteLogo from '/vite.svg'
 import { ChevronDown, CircleQuestionMark } from 'lucide-react'
 import Button from '../components/Button'
+import { useNavigate } from 'react-router-dom'
 
 function Landing() {
+
+    const navigate = useNavigate();
+    const handleNavigation = (link) => {
+        navigate(link);
+    }
+
     const [count, setCount] = useState(0)
 
     return (
@@ -28,9 +35,9 @@ function Landing() {
                 </p>
             </div>
             <p className="read-the-docs">
-                Click on the Vite and React logos to learn more <CircleQuestionMark/>
+                Click on the Vite and React logos to learn more <CircleQuestionMark />
             </p>
-            <Button label='' bgColor='#eff045' textColor='#000f45' radius='full' icon={"ChevronDown"}/>
+            <Button label='Go to dashboard' bgColor='#eff045' textColor='#000f45' radius='full' icon={"ChevronDown"} onClick={()=>handleNavigation("/dashboard")}/>
         </>
     )
 }
