@@ -1,0 +1,409 @@
+/* GLOBAL & RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+/* CONTAINER PRINCIPAL */
+.signup-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e3f2ff 0%, #99caff 50%, #1883ff 100%);
+  padding: 40px 20px;
+}
+
+/* CARTE CENTRALE  */
+.signup-card {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: white;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(4, 46, 123, 0.15);
+}
+
+/* COLONNE GAUCHE - BRANDING */
+.branding-section {
+  background: linear-gradient(165deg, #e3f2ff 0%, #d4e9ff 100%);
+  padding: 60px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Décoration cercle  */
+.branding-section::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 60px solid rgba(24, 131, 255, 0.05);
+}
+
+.branding-section::after {
+  content: "";
+  position: absolute;
+  bottom: -100px;
+  left: -80px;
+  width: 250px;
+  height: 250px;
+  background: rgba(153, 202, 255, 0.2);
+  border-radius: 40% 60% 50% 50%;
+}
+
+/* Logo */
+.logo-container {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 80px;
+}
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #042e7b;
+  letter-spacing: -0.5px;
+}
+
+.brand-logo-image {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.brand-name {
+  font-weight: 800;
+  color: #042e7b;
+}
+
+/* Contenu branding */
+.branding-content {
+  position: relative;
+  z-index: 2;
+}
+
+.branding-title {
+  font-family: "Playfair Display", serif;
+  font-size: 52px;
+  font-weight: 800;
+  color: #042e7b;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+}
+
+.branding-description {
+  font-size: 18px;
+  color: #004ee0;
+  line-height: 1.7;
+  max-width: 400px;
+  font-weight: 400;
+}
+
+/* Footer branding */
+.branding-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-top: 20px;
+}
+
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: white;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #042e7b;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(4, 46, 123, 0.08);
+}
+
+.language-selector:hover {
+  box-shadow: 0 4px 12px rgba(4, 46, 123, 0.15);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-link {
+  color: #004ee0;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #042e7b;
+}
+
+/* COLONNE DROITE - FORMULAIRE */
+.form-section {
+  padding: 60px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-header {
+  margin-bottom: 40px;
+}
+
+.form-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #042e7b;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.form-subtitle {
+  font-size: 16px;
+  color: #667085;
+}
+
+/* FORMULAIRE */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  color: #042e7b;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  color: #99caff;
+  pointer-events: none;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  font-size: 15px;
+  border: 2px solid #e3f2ff;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-family: "Inter", sans-serif;
+  background: white;
+  color: #042e7b;
+}
+
+.form-input::placeholder {
+  color: #99caff;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #1883ff;
+  box-shadow: 0 0 0 4px rgba(24, 131, 255, 0.1);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #99caff;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: #1883ff;
+}
+
+/* ========================================
+           BOUTON SIGNUP
+        ======================================== */
+.signup-button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #004ee0 0%, #1883ff 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 8px 20px rgba(24, 131, 255, 0.3);
+}
+
+.signup-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(24, 131, 255, 0.4);
+}
+
+.signup-button:active {
+  transform: translateY(0);
+}
+
+/* ========================================
+           DIVIDER
+        ======================================== */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: #e3f2ff;
+}
+
+.divider-text {
+  font-size: 14px;
+  color: #99caff;
+  font-weight: 500;
+}
+
+/* ========================================
+           BOUTONS OAUTH
+        ======================================== */
+.oauth-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.oauth-button {
+  padding: 14px;
+  background: white;
+  border: 2px solid #e3f2ff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 15px;
+  font-weight: 600;
+  color: #042e7b;
+}
+
+.oauth-button:hover {
+  border-color: #1883ff;
+  background: #e3f2ff;
+}
+
+/* ========================================
+           LIEN CONNEXION
+        ======================================== */
+.signin-link {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 15px;
+  color: #667085;
+}
+
+.signin-link a {
+  color: #1883ff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.signin-link a:hover {
+  color: #004ee0;
+}
+
+/* ========================================
+           RESPONSIVE
+        ======================================== */
+@media (max-width: 1024px) {
+  .signup-card {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .branding-section {
+    padding: 40px 30px;
+  }
+
+  .branding-title {
+    font-size: 38px;
+  }
+
+  .form-section {
+    padding: 40px 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .signup-container {
+    padding: 20px;
+  }
+
+  .branding-section,
+  .form-section {
+    padding: 30px 24px;
+  }
+
+  .form-title {
+    font-size: 32px;
+  }
+
+  .oauth-buttons {
+    grid-template-columns: 1fr;
+  }
+}
