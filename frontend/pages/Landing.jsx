@@ -10,7 +10,10 @@ import {
     CheckCircle2,
     ArrowRight,
     Menu,
-    X
+    X,
+    Twitter,
+    Facebook,
+    Instagram
 } from 'lucide-react';
 import '../styles/Landing.css';
 import { useNavigate } from 'react-router-dom';
@@ -99,7 +102,7 @@ function Landing() {
                                 className={`tab-btn ${activeTab === 'wifi' ? 'active' : ''}`}
                                 onClick={() => setActiveTab('wifi')}
                             >
-                                <Wifi size={16} /> Wi-Fi
+                                <Twitter size={16} /> Social
                             </button>
                         </div>
                     </div>
