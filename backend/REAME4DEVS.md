@@ -12,7 +12,7 @@ Avant de cloner et d'installer, assurez-vous que votre environnement (notamment 
 
 * **PHP 8.2+**
 * **Composer** (Gestionnaire de paquets PHP)
-* **Pilotes de base de données** (SQLite activé par défaut)
+* **Pilotes de base de données** (MySQL)
 * **Extension GD** (Indispensable pour la génération d'images)
 
 ---
@@ -27,7 +27,7 @@ Suivez ces étapes pour mettre en place le projet localement.
 
 ```bash
 # Clonez le dépôt (remplacez l'URL)
-git clone <url-du-depot>
+git clone "https://github.com/MarcSmg/qrcode-maker.git"
 
 # Entrez dans le dossier du backend
 cd backend
