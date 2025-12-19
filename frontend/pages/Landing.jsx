@@ -27,7 +27,7 @@ function Landing() {
                 <div className="nav-container">
                     <div className="logo">
                         <div className="logo-icon">
-                            <img style={{width:"35px",}} src="logo.svg" alt="" />                        </div>
+                            <img style={{ width: "35px", }} src="logo.svg" alt="" />                        </div>
                         <span className="logo-text">QR It</span>
                     </div>
 
@@ -60,7 +60,7 @@ function Landing() {
                         entre<span className="highlight-blue"> le réel et le virtuel</span>
                     </h1>
                     <p className="hero-subtitle">
-                        Créez des codes QR élégants et traçables pour votre entreprise, vos événements ou un usage personnel. Découvrez la simplicité en toute fluidité. 
+                        Créez des codes QR élégants et traçables pour votre entreprise, vos événements ou un usage personnel. Découvrez la simplicité en toute fluidité.
                     </p>
 
                     <div className="qr-generator-card">
@@ -168,7 +168,7 @@ function Landing() {
                             </li>
                         </ul>
 
-                        <button className="btn-primary large" onClick={()=>navigate("/signup")}>Créez votre premier Code QR</button>
+                        <button className="btn-primary large" onClick={() => navigate("/signup")}>Créez votre premier Code QR</button>
                     </div>
 
                     <div className="showcase-visual">
@@ -176,7 +176,7 @@ function Landing() {
                             {/* Abstract representation of the custom QR mockup */}
                             <div className="mockup-frame">
                                 <div className="qr-art">
-                                    <QrCode size={120} color="#fff" strokeWidth={1} />
+                                    <img style={{ width: "260px", }} src="images/qrcode.png" alt="" />
                                 </div>
                                 <div className="mockup-controls">
                                     <div className="mockup-line"></div>
@@ -198,9 +198,9 @@ function Landing() {
                     <div className="footer-brand">
                         <div className="logo">
                             <div className="logo-icon small">
-                            <img style={{width:"30px",}} src="logo.svg" alt="" />
+                                <img style={{ width: "30px", }} src="logo.svg" alt="" />
                             </div>
-                            <span style={{color:"#ffffffa0",}} className="logo-text">QR It</span>
+                            <span style={{ color: "#ffffffa0", }} className="logo-text">QR It</span>
                         </div>
                         <p>Simplifying the connection between print and digital with elegant QR solutions.</p>
                     </div>
