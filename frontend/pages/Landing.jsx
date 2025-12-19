@@ -1,10 +1,9 @@
 import React from 'react'
-import { useState } from 'react'
-import reactLogo from '../src/assets/react.svg'
-import viteLogo from '/vite.svg'
 import { ChevronDown, CircleQuestionMark } from 'lucide-react'
 import Button from '../components/Button'
 import { useNavigate } from 'react-router-dom'
+import Header from '../components/Header';
+import '../styles/Landing.css'
 
 function Landing() {
 
@@ -13,31 +12,28 @@ function Landing() {
         navigate(link);
     }
 
-    const [count, setCount] = useState(0)
 
     return (
         <>
-            <div>
-                <a href="https://vite.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                </a>
+            <div className='landing'>
+
+                <Header />
+                <section className='hero-sect'>
+                    <h1>Créer une Passerelle Fluide entre le <span style={{color:"#0B67EE",}}>Réel</span> & le <span style={{color:"#0B67EE",}}>Virtuel</span></h1>
+                    <p></p>
+                    <div></div>
+                    <div></div>
+                </section>
+                <section className='feat-sect'>
+
+                </section>
+                <section className='about-sect'>
+
+                </section>
+                <div>
+                    <Button label='Go to dashboard' bgColor='#eff045' textColor='#000f45' radius='full' icon={"ChevronDown"} onClick={() => handleNavigation("/dashboard")} />
+                </div>
             </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.jsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more <CircleQuestionMark />
-            </p>
-            <Button label='Go to dashboard' bgColor='#eff045' textColor='#000f45' radius='full' icon={"ChevronDown"} onClick={()=>handleNavigation("/dashboard")}/>
         </>
     )
 }
