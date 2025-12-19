@@ -17,9 +17,9 @@ function App() {
       <Routes>
 
         {/* non-protected routes */}
-        <Route path="/landing" element={<Landing />} /> {/* Je l'ai mis temporairement pour pouvoir tester la page Signup. À enlever une fois les tests terminés.*/}
+        <Route path="/" element={<Landing />} /> {/* Je l'ai mis temporairement pour pouvoir tester la page Signup. À enlever une fois les tests terminés.*/}
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/" element={<SignUp />} /> {/* Page par défaut, mis temporairement */}
+        <Route path="/signup" element={<SignUp />} /> {/* Next time bascule juste sur la route http://localhost:5173/signup pour voir ton rendu*/}
         <Route path="/forgot-password" element={<Landing />} />
         <Route path="/faq" element={<FAQs />} />
 

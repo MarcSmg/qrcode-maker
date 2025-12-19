@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/SignUp.css'; 
+import '../styles/Signup.css'; 
 import LogoAATW from "../src/assets/LogoAATW.jpg";
 
 export default function Signup() {
