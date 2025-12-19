@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Signup.css'; 
-import LogoAATW from "../src/assets/LogoAATW.jpg";
+import LogoAATW from "../public/logo.svg";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
