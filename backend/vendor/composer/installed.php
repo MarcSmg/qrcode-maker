@@ -1,15 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'laravel/laravel',
-<<<<<<< HEAD
         'pretty_version' => 'dev-develop',
         'version' => 'dev-develop',
         'reference' => '9d62469a09bc9e8ddf7677605e8fe245ce8ee0e2',
-=======
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '1b7abaf776453c89dca379bc46329e340f725183',
->>>>>>> main
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
