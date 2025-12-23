@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,3 +14,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     });
 });
+
+Route::get('/qr/{uuid}', [QrCodeScanController::class, 'handle']);
