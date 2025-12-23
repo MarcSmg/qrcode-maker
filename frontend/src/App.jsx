@@ -7,6 +7,7 @@ import Stats from "../pages/Stats";
 import Dashboard from "../pages/Dashboard";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
+import ForgotPassword from "../pages/ForgotPassword";
 import FAQs from "../pages/FAQs";
 import ProtectedRoute from "../routes/ProtectedRoutes";
 
@@ -20,7 +21,7 @@ function App() {
         <Route path="/" element={<Landing />} /> {/* Je l'ai mis temporairement pour pouvoir tester la page Signup. À enlever une fois les tests terminés.*/}
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} /> {/* Next time bascule juste sur la route http://localhost:5173/signup pour voir ton rendu*/}
-        <Route path="/forgot-password" element={<Landing />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} /> {/* Forgot Password page route */}
         <Route path="/faq" element={<FAQs />} />
 
         {/* protected routes */}
