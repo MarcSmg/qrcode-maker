@@ -554,6 +554,16 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
 
     public static $classMap = array (
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\QrCodeController' => __DIR__ . '/../..' . '/app/Http/Controllers/QrCodeController.php',
+        'App\\Http\\Controllers\\QrCodeRedirectController' => __DIR__ . '/../..' . '/app/Http/Controllers/QrCodeRedirectController.php',
+        'App\\Http\\Controllers\\QrCodeScanController' => __DIR__ . '/../..' . '/app/Http/Controllers/QrCodeScanController.php',
+        'App\\Http\\Requests\\StoreQrCodeRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreQrCodeRequest.php',
+        'App\\Http\\Requests\\StoreRedirectRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreRedirectRequest.php',
+        'App\\Http\\Requests\\UpdateQrCodeRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateQrCodeRequest.php',
+        'App\\Models\\QrCode' => __DIR__ . '/../..' . '/app/Models/QrCode.php',
+        'App\\Models\\QrCodeRedirect' => __DIR__ . '/../..' . '/app/Models/QrCodeRedirect.php',
+        'App\\Models\\QrCodeScan' => __DIR__ . '/../..' . '/app/Models/QrCodeScan.php',
+        'App\\Models\\QrCodeSetting' => __DIR__ . '/../..' . '/app/Models/QrCodeSetting.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
