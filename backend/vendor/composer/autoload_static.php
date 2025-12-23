@@ -648,7 +648,6 @@ class ComposerStaticInit2686e7d0d23d15d082092f9aca44575c
         'App\\Http\\Controllers\\Auth\\RegisteredUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisteredUserController.php',
         'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-<<<<<<< HEAD
         'App\\Http\\Controllers\\QrCodeController' => __DIR__ . '/../..' . '/app/Http/Controllers/QrCodeController.php',
         'App\\Http\\Controllers\\QrCodeRedirectController' => __DIR__ . '/../..' . '/app/Http/Controllers/QrCodeRedirectController.php',
         'App\\Http\\Controllers\\QrCodeScanController' => __DIR__ . '/../..' . '/app/Http/Controllers/QrCodeScanController.php',
@@ -659,10 +658,8 @@ class ComposerStaticInit2686e7d0d23d15d082092f9aca44575c
         'App\\Models\\QrCodeRedirect' => __DIR__ . '/../..' . '/app/Models/QrCodeRedirect.php',
         'App\\Models\\QrCodeScan' => __DIR__ . '/../..' . '/app/Models/QrCodeScan.php',
         'App\\Models\\QrCodeSetting' => __DIR__ . '/../..' . '/app/Models/QrCodeSetting.php',
-=======
         'App\\Http\\Middleware\\EnsureEmailIsVerified' => __DIR__ . '/../..' . '/app/Http/Middleware/EnsureEmailIsVerified.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
->>>>>>> main
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',

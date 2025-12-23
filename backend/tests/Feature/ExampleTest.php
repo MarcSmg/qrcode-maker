@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< HEAD
 namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,10 +17,8 @@ class ExampleTest extends TestCase
         $response->assertStatus(200);
     }
 }
-=======
 test('example', function () {
     $response = $this->get('/');
 
     $response->assertStatus(200);
 });
->>>>>>> cc90ae66666b1111bd3292d2e54cb809f3555cd3

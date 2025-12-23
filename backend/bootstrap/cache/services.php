@@ -24,17 +24,6 @@
     20 => 'Illuminate\\Translation\\TranslationServiceProvider',
     21 => 'Illuminate\\Validation\\ValidationServiceProvider',
     22 => 'Illuminate\\View\\ViewServiceProvider',
-<<<<<<< HEAD
-    23 => 'Laravel\\Pail\\PailServiceProvider',
-    24 => 'Laravel\\Sail\\SailServiceProvider',
-    25 => 'Laravel\\Sanctum\\SanctumServiceProvider',
-    26 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    27 => 'Carbon\\Laravel\\ServiceProvider',
-    28 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    29 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    30 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
-    31 => 'App\\Providers\\AppServiceProvider',
-=======
     23 => 'Laravel\\Breeze\\BreezeServiceProvider',
     24 => 'Laravel\\Pail\\PailServiceProvider',
     25 => 'Laravel\\Sail\\SailServiceProvider',
@@ -46,7 +35,6 @@
     31 => 'Pest\\Laravel\\PestServiceProvider',
     32 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
     33 => 'App\\Providers\\AppServiceProvider',
->>>>>>> main
   ),
   'eager' => 
   array (
@@ -65,14 +53,9 @@
     12 => 'Carbon\\Laravel\\ServiceProvider',
     13 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     14 => 'Termwind\\Laravel\\TermwindServiceProvider',
-<<<<<<< HEAD
-    15 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
-    16 => 'App\\Providers\\AppServiceProvider',
-=======
     15 => 'Pest\\Laravel\\PestServiceProvider',
     16 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
     17 => 'App\\Providers\\AppServiceProvider',
->>>>>>> main
   ),
   'deferred' => 
   array (
