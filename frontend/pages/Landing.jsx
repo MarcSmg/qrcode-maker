@@ -12,8 +12,6 @@ import {
     Menu,
     X,
     Twitter,
-    Facebook,
-    Instagram
 } from 'lucide-react';
 import '../styles/Landing.css';
 import { useNavigate } from 'react-router-dom';
@@ -22,6 +20,9 @@ function Landing() {
     const navigate = useNavigate()
     const [activeTab, setActiveTab] = useState('text');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const handleNavigate = (link) =>{
+        navigate(link);
+    }
 
     return (
         <div className="landing-page">
@@ -35,18 +36,18 @@ function Landing() {
                     </div>
 
                     <div className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
-                        <a href="#home">Accueil</a>
+                        <a href="#">Accueil</a>
                         <a href="#features">Fonctionnalités</a>
                         <a href="#about">A propos</a>
                         <div className="mobile-actions">
                             <a href="/signup" className="login-link">Se connecter</a>
-                            <button className="btn-primary">Commencer</button>
+                            <button className="btn-primary" onClick={()=>handleNavigate('/signup')}>Commencer</button>
                         </div>
                     </div>
 
                     <div className="nav-actions">
                         <a href="/signup" className="login-link">Se connecter</a>
-                        <button className="btn-primary">Commencer</button>
+                        <button className="btn-primary" onClick={()=>handleNavigate('/signup')}>Commencer</button>
                     </div>
 
                     <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -148,7 +149,7 @@ function Landing() {
             </section>
 
             {/* Showcase Section */}
-            <section className="showcase">
+            <section className="showcase" id="about">
                 <div className="showcase-container">
                     <div className="showcase-content">
                         <h2 className="showcase-title">Créez des codes QR sur mesure</h2>
