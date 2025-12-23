@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
+    //Identité
+    public function me(Request $request){
+        return response()->json([
+            'user' => $request->user(),
+        ]);
+    }
+
     // Inscription
     public function register(Request $request)
     {
