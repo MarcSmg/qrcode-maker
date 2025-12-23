@@ -263,9 +263,7 @@ body {
   color: #1883ff;
 }
 
-/* ========================================
-           BOUTON SIGNUP
-        ======================================== */
+/* BOUTON SIGNUP */
 .signup-button {
   width: 100%;
   padding: 16px;
@@ -294,9 +292,7 @@ body {
   transform: translateY(0);
 }
 
-/* ========================================
-           DIVIDER
-        ======================================== */
+/* DIVIDER */
 .divider {
   display: flex;
   align-items: center;
@@ -316,9 +312,7 @@ body {
   font-weight: 500;
 }
 
-/* ========================================
-           BOUTONS OAUTH
-        ======================================== */
+/* BOUTONS OAUTH */
 .oauth-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -346,9 +340,7 @@ body {
   background: #e3f2ff;
 }
 
-/* ========================================
-           LIEN CONNEXION
-        ======================================== */
+/* LIEN CONNEXION */
 .signin-link {
   text-align: center;
   margin-top: 32px;
@@ -367,9 +359,7 @@ body {
   color: #004ee0;
 }
 
-/* ========================================
-           RESPONSIVE
-        ======================================== */
+/* RESPONSIVE */
 @media (max-width: 1024px) {
   .signup-card {
     grid-template-columns: 1fr;
