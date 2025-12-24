@@ -10,15 +10,25 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
+    //Identité
+    public function me(Request $request){
+        return response()->json([
+            'user' => $request->user(),
+        ]);
+    }
+
     // Inscription
     public function register(Request $request)
     {
         $request->validate([
+            'name' => 'required|string|max:255',
             'email'=>'required|email|unique:users',
             'password'=>'required|min:6'
         ]);
 
         $user = User::create([
+            'name' => $request->name,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
         ]);
@@ -26,8 +36,11 @@ class AuthController extends Controller
         // Envoyer email de vérification
         $user->sendEmailVerificationNotification();
 
+        $token = $user->createToken('auth_token')->plainTextToken;
+
         return response()->json([
-            'message'=>'Utilisateur créé. Email de vérification envoyé !'
+            'user' => $user,
+            'token' => $token,
         ], 201);
     }
 

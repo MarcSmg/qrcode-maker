@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('qr_code_scans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('qr_code_id')
+                    ->constrained('qr_codes')
+                    ->cascadeOnDelete();
+
+            $table->string('ip_address')->nullable();
+            $table->text('user_agent')->nullable();
+
             $table->timestamps();
         });
     }
@@ -25,3 +32,11 @@ return new class extends Migration
         Schema::dropIfExists('qr_code_scans');
     }
 };
+
+
+
+
+
+
+
+
