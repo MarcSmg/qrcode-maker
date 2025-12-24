@@ -36,3 +36,12 @@ Route::get('/qr-codes/{qrCode}/stats', [QRStatsController::class, 'showBasicStat
 
 Route::get('/test-graphics/{qrCodeId}', [QRStatsController::class, 'showGraphics']);
 
+// Après la route des stats basiques, ajoute :
+
+// Route pour les graphiques
+Route::get('/qr-codes/{qrCode}/graphics', [QRStatsController::class, 'showGraphics'])
+    ->name('qr.graphics')
+    ->whereNumber('qrCode');
+
+
+    
