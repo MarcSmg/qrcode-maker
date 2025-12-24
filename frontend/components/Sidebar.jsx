@@ -1,36 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     LayoutDashboard,
-    BookOpen,
     CalendarDays,
-    FolderOpen,
-    MessageSquare,
-    ClipboardList,
-    Settings,
     LogOut,
+    ChartBar,
+    Clock,
 } from "lucide-react";
 
 function Sidebar() {
     const menuItems = [
         { icon: LayoutDashboard, label: "Dashboard", active: true },
-        { icon: BookOpen, label: "Lessons" },
-        { icon: CalendarDays, label: "Schedule" },
-        { icon: FolderOpen, label: "Materials" },
-        { icon: MessageSquare, label: "Forum" },
-        { icon: ClipboardList, label: "Assessments" },
-        { icon: Settings, label: "Settings" },
+        { icon: ChartBar, label: "Statistiques" },
+        { icon: Clock, label: "Historique" },
     ];
+
+const [activeItemIndex, setActiveItemIndex] = useState(0)
 
     return (
         <div className="sidebar">
             <div className="sidebar-logo">
-                <div className="logo-icon"></div>
-                <h2>Smart</h2>
+                <div className="logo-icon">
+                    <img style={{width:"32px",height:"32px",}} src="logo_light.svg" alt="logo"/>
+                </div>
+                <h2>QR It</h2>
             </div>
 
             <nav className="sidebar-nav">
                 {menuItems.map((item, index) => (
-                    <a key={index} href="#" className={`nav-item ${item.active ? "active" : ""}`}>
+                    <a key={index} href="#" className={`nav-item ${activeItemIndex ==index ? "active" : ""}`} onClick={()=>setActiveItemIndex(index)}>
                         <item.icon size={20} />
                         <span>{item.label}</span>
                     </a>
