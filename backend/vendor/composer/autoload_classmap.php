@@ -14,7 +14,6 @@ return array(
     'App\\Http\\Controllers\\Auth\\RegisteredUserController' => $baseDir . '/app/Http/Controllers/Auth/RegisteredUserController.php',
     'App\\Http\\Controllers\\Auth\\VerifyEmailController' => $baseDir . '/app/Http/Controllers/Auth/VerifyEmailController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
-<<<<<<< HEAD
     'App\\Http\\Controllers\\QrCodeController' => $baseDir . '/app/Http/Controllers/QrCodeController.php',
     'App\\Http\\Controllers\\QrCodeRedirectController' => $baseDir . '/app/Http/Controllers/QrCodeRedirectController.php',
     'App\\Http\\Controllers\\QrCodeScanController' => $baseDir . '/app/Http/Controllers/QrCodeScanController.php',
@@ -25,10 +24,8 @@ return array(
     'App\\Models\\QrCodeRedirect' => $baseDir . '/app/Models/QrCodeRedirect.php',
     'App\\Models\\QrCodeScan' => $baseDir . '/app/Models/QrCodeScan.php',
     'App\\Models\\QrCodeSetting' => $baseDir . '/app/Models/QrCodeSetting.php',
-=======
     'App\\Http\\Middleware\\EnsureEmailIsVerified' => $baseDir . '/app/Http/Middleware/EnsureEmailIsVerified.php',
     'App\\Http\\Requests\\Auth\\LoginRequest' => $baseDir . '/app/Http/Requests/Auth/LoginRequest.php',
->>>>>>> main
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',

@@ -30,7 +30,7 @@ function App() {
           <Route path="/stats" element={<Stats />} />
           <Route path="/history" element={<History />} />
           <Route path="/edition" element={<Edition />} />
-          <Route path="/history" element={<Landing />} />
+          <Route path="/dash" element={<Dashboard />} />
         </Route>
 
         {/* <Route path="/about" element={<About />} /> pour ajouter des pages use this method, just follow this blueprint */}
