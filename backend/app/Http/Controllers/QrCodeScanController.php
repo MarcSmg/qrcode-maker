@@ -17,7 +17,12 @@ class QrCodeScanController extends Controller
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);
+        
+        if ($qrCode->type === 'text') {
+            return view('qr.text', [
+                'content' => $qrCode->content,
+            ]);
+        }
 
-        return redirect()->to($qrCode->destination_url);
     }
 }
