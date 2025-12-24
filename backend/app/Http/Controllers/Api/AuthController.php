@@ -22,13 +22,15 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email'=>'required|email|unique:users',
             'password'=>'required|min:6'
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
         ]);
@@ -39,7 +41,13 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'user' => $user,
+            'message'=> 'Utilisateur enrégistré avec succès',
+            'user' => [
+                'id'=>$user->id,
+                'first_name'=>$user->first_name,
+                'last_name'=>$user->first_name,
+                'email'=>$user->email,
+            ],   
             'token' => $token,
         ], 201);
     }
@@ -56,7 +64,8 @@ class AuthController extends Controller
             return response()->json(['message'=>'Identifiants incorrects'], 401);
         }
 
-        $user = Auth::user();
+        $user = $request->user();
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         // Vérifier email
         if (!$user->hasVerifiedEmail()) {
@@ -64,8 +73,24 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'message'=>'Connexion réussie',
-            'user'=>$user
+            'token'=>$token,
+            'user'=>[
+                'id'=>$user->id,
+                'first_name'=>$user->first_name,
+                'last_name'=>$user->first_name,
+                'email'=>$user->email,
+                'email_verified_at'=>$user->email_verified_at,
+            ]
+        ]);
+    }
+
+    //Déconnexion
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'logged out'
         ]);
     }
 }
