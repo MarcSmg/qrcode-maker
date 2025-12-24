@@ -33,3 +33,6 @@ Route::get('/qr-codes/{qrCode}/stats', [QRStatsController::class, 'showBasicStat
 // Tu peux ajouter d'autres routes pour les stats ici plus tard, par exemple :
 // Route::get('/qr-codes/{qrCode}/advanced-stats', [QRStatsController::class, 'showAdvancedStats']);
 // Route::get('/qr-codes/{qrCode}/export', [QRStatsController::class, 'exportStats']);
+
+Route::get('/test-graphics/{qrCodeId}', [QRStatsController::class, 'showGraphics']);
+

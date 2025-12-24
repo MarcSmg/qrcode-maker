@@ -1,9 +1,11 @@
 <?php
-// app/Http/Controllers/QrCodeScanController.php
+// app/Http\Controllers/QrCodeScanController.php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\QRCode;
+use App\Models\QRCodeScan;
 
 class QrCodeScanController extends Controller
 {
@@ -12,25 +14,67 @@ class QrCodeScanController extends Controller
      */
     public function handle($uuid)
     {
-        // Logique pour gérer le scan
-        // Exemple basique :
-        
         // 1. Trouver le QR code par UUID
-        // $qrCode = \App\Models\QRCode::where('uuid', $uuid)->firstOrFail();
+        $qrCode = QRCode::where('uuid', $uuid)->first();
+        
+        if (!$qrCode) {
+            return response()->json([
+                'error' => 'QR Code non trouvé',
+                'uuid' => $uuid
+            ], 404);
+        }
         
         // 2. Enregistrer le scan
-        // $scan = \App\Models\QRCodeScan::create([
-        //     'qr_code_id' => $qrCode->id,
-        //     'scanned_at' => now(),
-        //     'ip' => request()->ip()
-        // ]);
-        
-        // 3. Rediriger ou retourner une réponse
-        // return redirect($qrCode->content);
-        
-        return response()->json([
-            'message' => 'Scan endpoint - À implémenter',
-            'uuid' => $uuid
+        $scan = QRCodeScan::create([
+            'qr_code_id' => $qrCode->id,
+            'scanned_at' => now(),
+            'ip' => request()->ip(),
+            'device_type' => $this->getDeviceType(),
+            'is_unique' => $this->checkIfUniqueScan($qrCode->id, request()->ip())
         ]);
+        
+        // 3. Rediriger ou retourner une réponse selon le type de QR code
+        if ($qrCode->type === 'url') {
+            return redirect($qrCode->content);
+        } elseif ($qrCode->type === 'text') {
+            return view('qr.text', [
+                'content' => $qrCode->content,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Scan enregistré avec succès',
+                'qr_code' => $qrCode,
+                'scan_id' => $scan->id
+            ]);
+        }
+    }
+    
+    /**
+     * Détermine le type d'appareil
+     */
+    private function getDeviceType()
+    {
+        $userAgent = request()->userAgent();
+        
+        if (strpos($userAgent, 'Mobile') !== false) {
+            return 'mobile';
+        } elseif (strpos($userAgent, 'Tablet') !== false) {
+            return 'tablet';
+        } else {
+            return 'desktop';
+        }
+    }
+    
+    /**
+     * Vérifie si le scan est unique (même IP dans les dernières 24h)
+     */
+    private function checkIfUniqueScan($qrCodeId, $ip)
+    {
+        $recentScan = QRCodeScan::where('qr_code_id', $qrCodeId)
+            ->where('ip', $ip)
+            ->where('scanned_at', '>', now()->subDay())
+            ->first();
+            
+        return !$recentScan; // Unique si aucun scan récent trouvé
     }
 }
