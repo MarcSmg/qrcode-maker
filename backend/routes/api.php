@@ -31,4 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware(['auth:sanctum','verified'])->group(function() {
     Route::get('/dashboard', fn () =>'Email verified access');
 });     
+
+Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
+
  
