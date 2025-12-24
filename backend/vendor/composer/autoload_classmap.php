@@ -26,11 +26,6 @@ return array(
     'App\\Models\\QrCodeRedirect' => $baseDir . '/app/Models/QrCodeRedirect.php',
     'App\\Models\\QrCodeScan' => $baseDir . '/app/Models/QrCodeScan.php',
     'App\\Models\\QrCodeSetting' => $baseDir . '/app/Models/QrCodeSetting.php',
- HEAD
-
-    'App\\Http\\Middleware\\EnsureEmailIsVerified' => $baseDir . '/app/Http/Middleware/EnsureEmailIsVerified.php',
-    'App\\Http\\Requests\\Auth\\LoginRequest' => $baseDir . '/app/Http/Requests/Auth/LoginRequest.php',
- f1debd78bad606c4e6db21335b420adac5d6676c
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
