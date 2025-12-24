@@ -25,3 +25,11 @@ return new class extends Migration
         Schema::dropIfExists('qr_code_scans');
     }
 };
+
+
+
+
+
+
+
+
