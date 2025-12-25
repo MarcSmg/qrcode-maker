@@ -2,7 +2,7 @@ import React from 'react'
 
 function History() {
   return (
-    <div>
+    <div style={{backgroundColor:'red',}}>
       Hist
     </div>
   )
