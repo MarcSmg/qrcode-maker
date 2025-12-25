@@ -7,7 +7,7 @@ import {
     Clock,
 } from "lucide-react";
 
-function Sidebar() {
+function Sidebar({setCurrentMenu}) {
     const menuItems = [
         { icon: LayoutDashboard, label: "Dashboard", active: true },
         { icon: ChartBar, label: "Statistiques" },
@@ -27,7 +27,7 @@ const [activeItemIndex, setActiveItemIndex] = useState(0)
 
             <nav className="sidebar-nav">
                 {menuItems.map((item, index) => (
-                    <a key={index} href="#" className={`nav-item ${activeItemIndex ==index ? "active" : ""}`} onClick={()=>setActiveItemIndex(index)}>
+                    <a key={index} href="#" className={`nav-item ${activeItemIndex ==index ? "active" : ""}`} onClick={()=>{setActiveItemIndex(index); setCurrentMenu(index)}}>
                         <item.icon size={20} />
                         <span>{item.label}</span>
                     </a>
