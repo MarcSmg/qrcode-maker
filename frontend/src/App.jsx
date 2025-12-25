@@ -8,6 +8,7 @@ import Dashboard from "../pages/Dashboard";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
 import FAQs from "../pages/FAQs";
 import ProtectedRoute from "../routes/ProtectedRoutes";
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} /> {/* Next time bascule juste sur la route http://localhost:5173/signup pour voir ton rendu*/}
         <Route path="/forgot-password" element={<ForgotPassword />} /> {/* Forgot Password page route */}
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/faq" element={<FAQs />} />
 
         {/* protected routes */}

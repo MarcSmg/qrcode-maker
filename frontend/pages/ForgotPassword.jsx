@@ -57,12 +57,6 @@ export default function ForgotPassword() {
         <div className="forgot-form-section">
           {/* Header avec icône */}
           <div className="forgot-form-header">
-            <div className="forgot-icon-container">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 8v4M12 16h.01"/>
-              </svg>
-            </div>
             <h2 className="forgot-form-title">Mot de passe oublié ?</h2>
             <p className="forgot-form-subtitle">
               Ne vous inquiétez pas, nous vous enverrons des instructions de réinitialisation par e-mail.
