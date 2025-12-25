@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QRStatsController;
-use App\Http\Controllers\QrCodeScanController;
+use App\Http\Controllers\Api\QrScanController;
 
 // Route racine
 Route::get('/', function () {
@@ -21,7 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // Route pour scanner un QR code (accessible sans auth probablement)
-Route::get('/qr/{uuid}', [QrCodeScanController::class, 'handle']);
+Route::get('/qr/{uuid}', [QrScanController::class, 'handle']);
 
 // TES NOUVELLES ROUTES POUR LES STATISTIQUES
 // Route pour les statistiques basiques d'un QR Code
