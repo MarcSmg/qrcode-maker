@@ -23,7 +23,7 @@ Suivez ces étapes pour mettre en place le projet localement.
 
 > **Note sur la syntaxe :** Les blocs de code ci-dessous utilisent la syntaxe `bash`. Vous devez copier et exécuter ces commandes dans votre terminal Linux.
 
-### 1. Cloner et installer les dépendances
+1. Cloner et installer les dépendances
 
 ```bash
 # Clonez le dépôt (remplacez l'URL)
@@ -35,7 +35,8 @@ cd backend
 # Installez les bibliothèques PHP via Composer
 composer install
 ```
-### 2. Configurer l'environnement
+
+2. Configurer l'environnement
 
 ```bash
 # Créez le fichier de configuration local à partir de l'exemple
@@ -43,4 +44,11 @@ cp .env.example .env
 
 # Générez la clé de sécurité unique de l'application
 php artisan key:generate
+
+# Effectuez les migrations
+php artisan migrate
+
+# Pour lancer le serveur
+php artisan serve
+
 ```
