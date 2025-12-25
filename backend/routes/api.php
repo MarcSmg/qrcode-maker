@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\EmailVerificationController;
+
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -24,8 +27,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', fn (Request $request) => $request->user());
-    Route::post('/logout',
- [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 Route::middleware(['auth:sanctum','verified'])->group(function() {
@@ -33,5 +35,10 @@ Route::middleware(['auth:sanctum','verified'])->group(function() {
 });     
 
 Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 
- 
+Route::middleware('auth:sanctum')->get('/users', [UserController::class, 'index']);
+
+Route::get('/email/verify/{id}/{hash}', EmailVerificationController::class)
+    ->middleware(['signed'])
+    ->name('verification.verify');

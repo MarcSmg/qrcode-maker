@@ -30,7 +30,7 @@ return array(
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'BaconQrCode\\Common\\AbstractEnum' => $vendorDir . '/bacon/bacon-qr-code/src/BaconQrCode/Common/AbstractEnum.php',
-    'BaconQrCode\\Common\\BitArray' => $vendorDir . '/bacon/bacon-qr-code/src/BaconQrCode/Common/BitArray.php',
+    'BaconQrCode\\Common\\BitArra0y' => $vendorDir . '/bacon/bacon-qr-code/src/BaconQrCode/Common/BitArray.php',
     'BaconQrCode\\Common\\BitMatrix' => $vendorDir . '/bacon/bacon-qr-code/src/BaconQrCode/Common/BitMatrix.php',
     'BaconQrCode\\Common\\BitUtils' => $vendorDir . '/bacon/bacon-qr-code/src/BaconQrCode/Common/BitUtils.php',
     'BaconQrCode\\Common\\CharacterSetEci' => $vendorDir . '/bacon/bacon-qr-code/src/BaconQrCode/Common/CharacterSetEci.php',

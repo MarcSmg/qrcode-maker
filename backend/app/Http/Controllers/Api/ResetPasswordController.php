@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
@@ -23,14 +24,23 @@ class ResetPasswordController extends Controller
             function ($user, $password) {
                 $user->forceFill([
                     'password' => Hash::make($password),
+                    'remember_token' => Str::random(60),
                 ])->save();
             }
         );
 
         return $status === Password::PASSWORD_RESET
-            ? response()->json(['message' => 'Password reset successfully'])
-            : response()->json(['message' => 'Invalid token'], 400);
-    }
+            ? response()->json([
+                'ok' => true,
+                'code' => 'PASSWORD_RESET_SUCCESS',
+                'message' => 'Password reset successfully',
+            ], 200)
+            : response()->json([
+                'ok' => false,
+                'code' => 'INVALID_RESET_TOKEN',
+                'message' => 'Invalid or expired token',
+            ], 400);
+            }
     
     
 }
