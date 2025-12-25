@@ -1,13 +1,13 @@
 <?php
-// app/Http\Controllers/QrCodeScanController.php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\QRCode;
-use App\Models\QRCodeScan;
+use App\Models\QrCode;
+use App\Models\QrScan;
 
-class QrCodeScanController extends Controller
+class QrScanController extends Controller
 {
     /**
      * Gère le scan d'un QR code par son UUID
@@ -15,7 +15,7 @@ class QrCodeScanController extends Controller
     public function handle($uuid)
     {
         // 1. Trouver le QR code par UUID
-        $qrCode = QRCode::where('uuid', $uuid)->first();
+        $qrCode = QrCode::where('uuid', $uuid)->first();
         
         if (!$qrCode) {
             return response()->json([
@@ -25,7 +25,7 @@ class QrCodeScanController extends Controller
         }
         
         // 2. Enregistrer le scan
-        $scan = QRCodeScan::create([
+        $scan = QrScan::create([
             'qr_code_id' => $qrCode->id,
             'scanned_at' => now(),
             'ip' => request()->ip(),
@@ -70,7 +70,7 @@ class QrCodeScanController extends Controller
      */
     private function checkIfUniqueScan($qrCodeId, $ip)
     {
-        $recentScan = QRCodeScan::where('qr_code_id', $qrCodeId)
+        $recentScan = QrScan::where('qr_code_id', $qrCodeId)
             ->where('ip', $ip)
             ->where('scanned_at', '>', now()->subDay())
             ->first();
