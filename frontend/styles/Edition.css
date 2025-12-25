@@ -68,7 +68,6 @@ h2 {
 .main-content{
     width: 100%;
     height: 80vh;
-    background-color: red;
 }
 .nav-buttons{
     position: absolute;
@@ -79,4 +78,31 @@ h2 {
     align-items: center;
     justify-content: space-between;
     padding: 30px 30%;
+}
+
+/* QR types styles */
+.qrtype{
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.qrtypes-container{
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background-color: #fff;
+}
+
+.qrtypes-container div{
+    background-color: green;
+}
+
+.option-card{
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
 }
