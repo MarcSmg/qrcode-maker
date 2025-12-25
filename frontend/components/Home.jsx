@@ -14,6 +14,7 @@ function Home() {
                     <Card/>
                     <Card/>
                 </div>
+                <button className="btn-secondary"> Tout voir</button>
             </div>
         </div>
     )

@@ -18,9 +18,17 @@ body {
     align-items: center;
     min-height: 100vh;
 }
-.btn-primary{
+
+.btn-primary {
     background-color: #2563ed;
     padding: 15px;
+}
+
+.btn-secondary {
+    background-color: #2563ed;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
 }
 
 .dashboard-container {
@@ -82,12 +90,13 @@ body {
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
-    border-radius: 30px;    
+    border-radius: 30px;
     border-radius: 30px;
     transition: all 0.2s;
     position: relative;
 }
-.nav-item.active::after{
+
+.nav-item.active::after {
     content: "";
     width: 58px;
     height: 127px;
@@ -96,12 +105,14 @@ body {
     position: absolute;
     right: -7px;
     top: 50%;
-    transform: translate(16px, -50%); /*to cover the initial padding of the sidebar*/
+    transform: translate(16px, -50%);
+    /*to cover the initial padding of the sidebar*/
     clip-path: url(../src/assets/paths/inner_clip_path.svg#innerClipPath);
 
 }
 
-.nav-item:hover, .nav-item.active {
+.nav-item:hover,
+.nav-item.active {
     background-color: #F7FAFF;
     color: var(--primary-blue);
 }
@@ -124,7 +135,7 @@ body {
     overflow-y: auto;
 }
 
-.home{
+.home {
     width: 100%;
     height: 100%;
     display: flex;
@@ -234,31 +245,43 @@ body {
     height: 100%;
 }
 
-.content-grid h2{
+.content-grid h2 {
     width: 100%;
     padding-left: 30px;
 }
 
-.grid-container{
-    width: 55%;
+.grid-container {
+    width: 60%;
     max-width: 950px;
     padding: 30px;
     height: max-content;
-    /* background-color: green; */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 20px;
 }
 
 
 /* Cards */
 .card {
+    position: relative;
     width: 100%;
     aspect-ratio: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     background: white;
     border-radius: 20px;
-    padding: 20px;
+    transition: all .2s;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    /* Ensures padding/border are included in 100% width/height */
+}
+
+.card p {
+    width: 100%;
+    text-align: end;
+    font-size: 13px;
 }
 
 .card-header {
@@ -274,6 +297,45 @@ body {
     font-weight: 700;
     color: #1F2937;
 }
+
+.card-menu {
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    transform: translate(0, 100%);
+    padding: 10px;
+    z-index: 100;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    background-color: white;
+}
+
+.card-menu ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.card-menu li{
+    padding: 10px 25px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.card-menu li:hover{
+    background: #c7c7c728;
+}
+
+.hidden{
+    display: none;
+}
+
+.card:hover {
+    box-shadow: 0 8px 12px -6px #0059ff34;
+}
+
 
 .month-selector {
     background: #F3F4F6;
