@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
@@ -92,5 +93,27 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'logged out'
         ]);
+    }
+
+    public function forgotPassword(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+            ? response()->json([
+                'ok' => true,
+                'code' => 'RESET_LINK_SENT',
+                'message' => 'If the email exists, a reset link has been sent.',
+            ], 200)
+            : response()->json([
+                'ok' => false,
+                'code' => 'RESET_LINK_FAILED',
+                'message' => 'Unable to send reset link.',
+            ], 400);
     }
 }
