@@ -18,7 +18,7 @@ function App() {
 
         {/* non-protected routes */}
         <Route path="/" element={<Landing />} />
-        <Route path="/signin" element={<SignIn />} />
+        <Route path = "/signin" element= {<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<Landing />} />
         <Route path="/faq" element={<FAQs />} />
