@@ -1,5 +1,5 @@
 import React from 'react'
-import PDFTypeForm from '../components/PDFTypeForm'
+import PDFTypeForm from '../components/FormsTypes/PDFTypeForm'
 
 function QrInfos({qrType}) {
   return (

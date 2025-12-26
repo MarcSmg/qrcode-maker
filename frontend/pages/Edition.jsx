@@ -44,9 +44,7 @@ function Edition() {
           )
         })}
       </div>
-      <div className='main-content'>
-        <div className="hero-background-glow-2"></div>
-        <div className="hero-background-glow-3"></div>
+      <div className='main-content no-scrollbar'>
         {activeElementId == 1 && <QrType />}
         {activeElementId == 2 && <QrInfos qrType={'pdf'} />}
         {activeElementId == 3 && <QrCustom />}

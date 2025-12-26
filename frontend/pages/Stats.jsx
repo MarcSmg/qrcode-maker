@@ -34,17 +34,17 @@ export default function Stats() {
     <div className="stats-container">
       {/* Header */}
       <div className="stats-header">
-        <h1 className="stats-title">Statistiques</h1>
+        <h2 className="stats-title">Statistiques</h2>
         <p className="stats-subtitle">
           Vue d'ensemble de l'activité de vos QR codes
         </p>
       </div>
 
       {/* Cards verticales */}
-      <div className='stats-cards-container'>
+      <div className='stats-cards-container no-scrollbar'>
         <div className="stats-cards-grid">
           {/* 1. CODES GÉNÉRÉS */}
-          <div className="stats-card stats-card-primary">
+          <div className="stats-card ">{/*stats-card-primary*/}
             <div className="stats-card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -94,7 +94,7 @@ export default function Stats() {
           </div>
 
           {/* 2. CODES SCANNÉS */}
-          <div className="stats-card stats-card-secondary">
+          <div className="stats-card">
             <div className="stats-card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
@@ -142,7 +142,7 @@ export default function Stats() {
           </div>
 
           {/* 3. CODES ACTIFS */}
-          <div className="stats-card stats-card-accent">
+          <div className="stats-card">
             <div className="stats-card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
