@@ -4,31 +4,67 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\EmailVerificationController;
+use App\Http\Controllers\Api\AuthController;
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::get('/', function (Request $request) {
     return "API";
 });
 
+Route::middleware(['auth:sanctum','verified'])->group(function() {
+    Route::get('/dashboard', fn () =>'Email verified access');
+}); 
+
+// User related routes
 
 Route::middleware('auth:sanctum')->get('/me', [AuthController::class, 'me']);
-
-use App\Http\Controllers\Api\AuthController;
-
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 
+Route::get('/email/verify/{id}/{hash}', EmailVerificationController::class)
+    ->middleware(['signed'])
+    ->name('verification.verify');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', fn (Request $request) => $request->user());
-    Route::post('/logout',
- [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::middleware(['auth:sanctum','verified'])->group(function() {
-    Route::get('/dashboard', fn () =>'Email verified access');
-});     
+Route::middleware(['auth:sanctum', 'is.admin'])->get('/users', [UserController::class, 'index']);
+
+// Qr code related routes
+Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
+
  
+
+
+
+// Types de QR code
+    Route::get('/qr-types', [QrTypeController::class, 'index']);
+    Route::get('/qr-types/{qrType}', [QrTypeController::class, 'show']);
+    // QR Codes
+    Route::apiResource('qrcodes', QrCodeController::class)->except(['edit', 'create']);
+    
+    // Génération de QR code
+    Route::get('/qrcodes/{shortCode}/generate', [QrCodeController::class, 'generateQrCode']);
+    
+    Route::get('/qrcodes/{qrcode}/stats', [QrCodeController::class, 'getStats']);
+    // Routes spécifiques par type de QR code
+    Route::prefix('qrcodes')->group(function () {
+        // Création de QR code de type texte
+        Route::post('/text', [QrCodeController::class, 'createTextQrCode']);
+        
+        // Création de QR code de site web
+        Route::post('/website', [QrCodeController::class, 'createWebsiteQrCode']);
+        
+        // Création de QR code pour réseaux sociaux
+        Route::post('/social', [QrCodeController::class, 'createSocialQrCode']);
+        
+        // Création de QR code pour PDF
+        Route::post('/pdf', [QrCodeController::class, 'createPdfQrCode']);
+    });
+
