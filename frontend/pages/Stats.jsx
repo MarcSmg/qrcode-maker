@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/Stats.css'
 
 export default function Stats() {
   // Il faudra intégré des appels API ici pour récupérer les vraies données
