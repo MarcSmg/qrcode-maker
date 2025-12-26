@@ -18,13 +18,16 @@ body {
 /*CONTAINER */
 .stats-container {
   padding: 40px;
-  max-width: 1200px;
+  height: 100%;
+  width: 100%;
   margin: 0 auto;
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* HEADER */
 .stats-header {
+  background-color: red;
   margin-bottom: 40px;
 }
 
@@ -43,8 +46,19 @@ body {
 }
 
 /* CARDS GRID */
+.stats-cards-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: green;
+  overflow-y: scroll;
+}
+
 .stats-cards-grid {
   display: flex;
+  width: 100%;
+  max-width: 1200px;
   flex-direction: column;
   gap: 20px;
 }
@@ -72,12 +86,10 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(24, 131, 255, 0.05),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(24, 131, 255, 0.05),
+      transparent);
   transition: left 0.6s ease;
 }
 
