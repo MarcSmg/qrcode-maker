@@ -1,5 +1,6 @@
 import React from 'react'
 import PDFTypeForm from '../components/FormsTypes/PDFTypeForm'
+import URLTypeForm from '../components/FormsTypes/URLTypeForm'
 
 function QrInfos({qrType}) {
   return (
@@ -12,6 +13,11 @@ function QrInfos({qrType}) {
         fontWeight:'600',
       }}>2. Remplissez les informations du code QR</h3>
       {qrType == 'pdf' && <PDFTypeForm/>}
+      {qrType == 'url' && <URLTypeForm/>}
+      {/* {qrType == 'text' && <PDFTypeForm/>}
+      {qrType == 'link' && <PDFTypeForm/>}
+      {qrType == 'mp3' && <PDFTypeForm/>}
+      {qrType == 'mail' && <PDFTypeForm/>} */}
     </div>
   )
 }
