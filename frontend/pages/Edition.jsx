@@ -30,23 +30,25 @@ function Edition() {
   ]
   return (
     <div className='edition-main'>
-      <h2><ChevronLeft style={{ cursor: 'pointer' }} width={30} height={30} onClick={() => console.log("nigger")} />Generer un code QR</h2>
+      <h2 style={{ fontWeight: '500', }}><ChevronLeft style={{ cursor: 'pointer' }} width={30} height={30} onClick={() => console.log("nigger")} />Generer un code QR</h2>
       <div className='breadcrumb'>
         {steps.map((element) => {
           return (
             <>
-            <div key={element.id} className={`breadcrumb-element ${activeElementId == element.id ? 'active-element' : ''}`}>
-              <span>{element.id}</span>
-              <p>{element.title}</p>
-            </div>
-            {element.id < 4 && <ChevronRight width={'30px'} height={'30px'}/>}
+              <div key={element.id} className={`breadcrumb-element ${activeElementId == element.id ? 'active-element' : ''}`}>
+                <span>{element.id}</span>
+                <p>{element.title}</p>
+              </div>
+              {element.id < 4 && <ChevronRight width={'30px'} height={'30px'} />}
             </>
           )
         })}
       </div>
       <div className='main-content'>
+        <div className="hero-background-glow-2"></div>
+        <div className="hero-background-glow-3"></div>
         {activeElementId == 1 && <QrType />}
-        {activeElementId == 2 && <QrInfos />}
+        {activeElementId == 2 && <QrInfos qrType={'pdf'} />}
         {activeElementId == 3 && <QrCustom />}
         {activeElementId == 4 && <QrDownload />}
       </div>
