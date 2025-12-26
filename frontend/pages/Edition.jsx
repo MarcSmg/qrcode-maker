@@ -1,6 +1,10 @@
-import { ArrowBigLeft, ArrowLeft, ChevronLeft } from 'lucide-react'
+import { ArrowBigLeft, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react'
 import React, { useState } from 'react'
 import "../styles/Edition.css";
+import QrType from '../EditionPages/QrType';
+import QrInfos from '../EditionPages/QrInfos';
+import QrCustom from '../EditionPages/QrCustom';
+import QrDownload from '../EditionPages/QrDownload';
 
 
 function Edition() {
@@ -26,16 +30,39 @@ function Edition() {
   ]
   return (
     <div className='edition-main'>
-      <h2><ChevronLeft />Generer un code QR</h2>
-      <div className='breadcrum'>
+      <h2><ChevronLeft style={{ cursor: 'pointer' }} width={30} height={30} onClick={() => console.log("nigger")} />Generer un code QR</h2>
+      <div className='breadcrumb'>
         {steps.map((element) => {
           return (
-            <div key={element.id} className={`breadcrum-element ${activeElementId == element.id ? 'active-element' : ''}`}>
+            <>
+            <div key={element.id} className={`breadcrumb-element ${activeElementId == element.id ? 'active-element' : ''}`}>
               <span>{element.id}</span>
               <p>{element.title}</p>
             </div>
+            {element.id < 4 && <ChevronRight width={'30px'} height={'30px'}/>}
+            </>
           )
         })}
+      </div>
+      <div className='main-content'>
+        {activeElementId == 1 && <QrType />}
+        {activeElementId == 2 && <QrInfos />}
+        {activeElementId == 3 && <QrCustom />}
+        {activeElementId == 4 && <QrDownload />}
+      </div>
+      <div className='nav-buttons'>
+        <button className="btn-primary" onClick={() => {
+          if (activeElementId > 1) {
+            setActiveElementId(activeElementId => activeElementId - 1)
+          }
+        }
+        }>Precedent</button>
+        <button className="btn-primary" onClick={() => {
+          if (activeElementId < 4) {
+            setActiveElementId(activeElementId => activeElementId + 1)
+          }
+        }
+        }>Suivant</button>
       </div>
     </div>
   )
