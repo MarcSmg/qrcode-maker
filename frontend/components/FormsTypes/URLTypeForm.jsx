@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { CloudUpload, FileText, FileSpreadsheet, Music, File, X } from 'lucide-react';
-import '../styles/Forms.css';
+import '../../styles/Forms.css';
 
 
-function PDFTypeForm() {
+function URLTypeForm() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
@@ -130,4 +130,4 @@ function PDFTypeForm() {
     );
 };
 
-export default PDFTypeForm
+export default URLTypeForm
