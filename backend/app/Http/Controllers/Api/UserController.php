@@ -11,7 +11,7 @@ class UserController extends Controller
     {
         return response()->json([
             'ok' => true,
-            'data' => User::select('id', 'first_name', 'last_name', 'email')->get(),
+            'data' => User::select('id', 'first_name', 'last_name', 'email', 'email_verified_at', 'created_at', 'updated_at', 'role')->get(),
         ]);
     }
 }
