@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Models\QrCode;
 use SimpleSoftwareIO\QrCode\Facades\QrCode as QrCodeGenerator;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,6 +23,14 @@ class QrCodeController extends Controller
         $types = QrType::all();
         return response()->json($types);
     }
+
+    public function show($id){
+        $qrcode = QrCode::with('type')->findOrFail($id);
+
+        return response()->json([
+            'data' => $qrcode
+    ]);
+}
 
     // Créer un nouveau QR code
     public function store(Request $request): JsonResponse
@@ -72,15 +81,30 @@ class QrCodeController extends Controller
         $this->recordScan($qrCode);
         
         // Récupérer les paramètres de design
-        $design = $qrCode->design ?? [
+
+        $defaultDesign = [
             'color' => [0, 0, 0],
             'background' => [255, 255, 255],
             'size' => 300,
             'margin' => 1,
-            // 'style' => 'square',
-            // 'eye' => 'square',
-            // 'gradient' => null, 
+            'style' => 'square',
+            'eye' => 'square',
         ];
+
+        $design = array_merge(
+            $defaultDesign,
+            $qrCode->design ?? []
+        );
+
+        // $design = $qrCode->design ?? [
+        //     'color' => [0, 0, 0],
+        //     'background' => [255, 255, 255],
+        //     'size' => 300,
+        //     'margin' => 1,
+        //     // 'style' => 'square',
+        //     // 'eye' => 'square',
+        //     // 'gradient' => null, 
+        // ];
 
         // Générer le QR code avec les options de design
         $qrImage = QrCodeGenerator::format('svg')
