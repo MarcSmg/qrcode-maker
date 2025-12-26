@@ -55,19 +55,19 @@ Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
         
         Route::get('/qrcodes/stats/{qrcode}/', [QrCodeController::class, 'getStats']);
         // Routes spécifiques par type de QR code
-        Route::prefix('qrcodes')->group(function () {
-            // Création de QR code de type texte
-            Route::post('/text', [QrCodeController::class, 'createTextQrCode']);
+        // Route::prefix('qrcodes')->group(function () {
+        //     // Création de QR code de type texte
+        //     Route::post('/text', [QrCodeController::class, 'createTextQrCode']);
             
-            // Création de QR code de site web
-            Route::post('/website', [QrCodeController::class, 'createWebsiteQrCode']);
+        //     // Création de QR code de site web
+        //     Route::post('/website', [QrCodeController::class, 'createWebsiteQrCode']);
             
-            // Création de QR code pour réseaux sociaux
-            Route::post('/social', [QrCodeController::class, 'createSocialQrCode']);
+        //     // Création de QR code pour réseaux sociaux
+        //     Route::post('/social', [QrCodeController::class, 'createSocialQrCode']);
             
-            // Création de QR code pour PDF
-            Route::post('/pdf', [QrCodeController::class, 'createPdfQrCode']);
-        });
+        //     // Création de QR code pour PDF
+        //     Route::post('/pdf', [QrCodeController::class, 'createPdfQrCode']);
+        // });
     
     });
 
