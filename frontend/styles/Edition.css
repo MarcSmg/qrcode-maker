@@ -118,6 +118,8 @@ h2 {
     justify-content: center;
     transition: all 0.35s ease;
     gap: 20px;
+    user-select: none;
+    cursor: pointer;
 }
 
 .option-card:hover {

@@ -5,10 +5,19 @@ import QrType from '../EditionPages/QrType';
 import QrInfos from '../EditionPages/QrInfos';
 import QrCustom from '../EditionPages/QrCustom';
 import QrDownload from '../EditionPages/QrDownload';
+import { useNavigate } from 'react-router-dom';
 
 
 function Edition() {
+  const navigate = useNavigate();
   const [activeElementId, setActiveElementId] = useState(1)
+  const handleNavigate = (link) => {
+    navigate(link);
+  }
+
+  const [qrType, setQrType] = useState('email')
+
+
   const steps = [
     {
       id: 1,
@@ -30,7 +39,7 @@ function Edition() {
   ]
   return (
     <div className='edition-main'>
-      <h2 style={{ fontWeight: '500', }}><ChevronLeft style={{ cursor: 'pointer' }} width={30} height={30} onClick={() => console.log("nigger")} />Generer un code QR</h2>
+      <h2 style={{ fontWeight: '500', }}><ChevronLeft style={{ cursor: 'pointer' }} width={30} height={30} onClick={() => handleNavigate('/dash')} />Generer un code QR</h2>
       <div className='breadcrumb'>
         {steps.map((element) => {
           return (
@@ -45,8 +54,8 @@ function Edition() {
         })}
       </div>
       <div className='main-content no-scrollbar'>
-        {activeElementId == 1 && <QrType />}
-        {activeElementId == 2 && <QrInfos qrType={'pdf'} />}
+        {activeElementId == 1 && <QrType setQrType={setQrType} />}
+        {activeElementId == 2 && <QrInfos qrType={qrType} />}
         {activeElementId == 3 && <QrCustom />}
         {activeElementId == 4 && <QrDownload />}
       </div>
