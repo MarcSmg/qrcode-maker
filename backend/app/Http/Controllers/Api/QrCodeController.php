@@ -38,6 +38,9 @@ class QrCodeController extends Controller
         $type = QrType::findOrFail($validated['type_id']);
         $content = $this->formatContentForType($type->name, $validated['content'], $validated['metadata'] ?? []);
 
+        // dd(Auth::id());
+
+
         $qrCode = QrCodeModel::create([
             'user_id' => Auth::id(),
             'type_id' => $validated['type_id'],
@@ -74,20 +77,21 @@ class QrCodeController extends Controller
             'background' => [255, 255, 255],
             'size' => 300,
             'margin' => 1,
-            'style' => 'square',
-            'eye' => 'square',
-            'gradient' => null,
+            // 'style' => 'square',
+            // 'eye' => 'square',
+            // 'gradient' => null, 
         ];
 
         // Générer le QR code avec les options de design
-        $qrImage = QrCodeGenerator::format('png')
+        $qrImage = QrCodeGenerator::format('svg')
             ->size($design['size'])
             ->color($design['color'][0] ?? 0, $design['color'][1] ?? 0, $design['color'][2] ?? 0)
             ->backgroundColor($design['background'][0] ?? 255, $design['background'][1] ?? 255, $design['background'][2] ?? 255)
             ->margin($design['margin'])
             ->generate($qrCode->content);
+            
 
-        return response($qrImage)->header('Content-Type', 'image/png');
+        return response($qrImage)->header('Content-Type', 'image/svg+xml');
     }
 
     // Enregistrer un scan
@@ -234,3 +238,4 @@ class QrCodeController extends Controller
         return $code;
     }
 }
+
