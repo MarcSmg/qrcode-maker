@@ -18,10 +18,11 @@ h2 {
 
 .breadcrumb {
     width: 90%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
 .breadcrumb-element {
@@ -33,8 +34,9 @@ h2 {
     color: #2563ed;
     padding: 8px 20px;
     border-radius: 24px;
-    background-color: rgba(37, 99, 235, 0.08);
-    transition: all 0.35s ease; /* Smoother timing with easing */
+    background-color: #2563eb14;
+    transition: all 0.35s ease;
+    /* Smoother timing with easing */
     cursor: default;
 }
 
@@ -49,7 +51,8 @@ h2 {
     justify-content: center;
     font-size: 14px;
     font-weight: 600;
-    transition: all 0.35s ease; /* Circle also transitions smoothly */
+    transition: all 0.35s ease;
+    /* Circle also transitions smoothly */
 }
 
 .active-element {
@@ -65,11 +68,12 @@ h2 {
     font-size: 16px;
 }
 
-.main-content{
+.main-content {
     width: 100%;
     height: 80vh;
 }
-.nav-buttons{
+
+.nav-buttons {
     position: absolute;
     bottom: 0;
     width: 100vw;
@@ -81,28 +85,59 @@ h2 {
 }
 
 /* QR types styles */
-.qrtype{
+.qrtype {
     width: 100%;
     height: 100%;
-    background-color: blue;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 10px;
 }
-.qrtypes-container{
-    width: 90%;
+
+.qrtypes-container {
+    width: max-content;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    background-color: #fff;
+    align-items: center;
+    justify-items: center;
+    gap: 20px;
 }
 
-.qrtypes-container div{
-    background-color: green;
+.option-card {
+    width: 250px;
+    aspect-ratio: 1;
+    background-color: #fff;
+    border-radius: 15px;
+    box-sizing: border-box;
+    background-color: #2563eb14;
+    border: 2px solid #2564eb2d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s ease;
+    gap: 20px;
 }
 
-.option-card{
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
+.option-card:hover {
+    transform: scale(1.01);
+    background-color: #2563eb14;
+    border: 2px solid #2564eb7a;
+    box-shadow: 0 8px 12px -4px #095fff50;
+    border: 2px solid #2564eb5d;
+
+}
+
+.option-card div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.option-card p {
+    font-size: 14px;
+    color: #757575;
+
 }
