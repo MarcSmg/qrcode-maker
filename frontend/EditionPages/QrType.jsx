@@ -4,13 +4,13 @@ import { Menu } from 'lucide-react'
 
 function QrType() {
   return (
-    <div className='qrtype'>
+    <div className='edit-main'>
       <h3 style={{
-        paddingTop: '30px',
         paddingLeft: '30px',
         fontSize: '20px',
         width: '100%',
         marginBottom:'30px',
+        fontWeight:'600',
       }}>1. Selectionnez un type de code QR</h3>
       <div className='qrtypes-container'>
         <OptionCard icon={'Mail'} title={"E mail"} description={"Nigger go back home"}/>
