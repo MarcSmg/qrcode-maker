@@ -82,7 +82,7 @@ Mailhog est un outil de developpement qui imite les services de mail comme gmail
 
 Assurez vous d'installer Mailhog.
 
-🛠 Installation de Mailhog
+### 🛠 Installation de Mailhog
 
 Mailhog est un outil local.
 Chaque membre de l’équipe doit l’installer sur sa machine.

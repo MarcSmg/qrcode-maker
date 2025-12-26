@@ -36,9 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware(['auth:sanctum', 'is.admin'])->get('/users', [UserController::class, 'index']);
 
-<<<<<<< Updated upstream
 // Qr code related routes
-=======
 Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 
  
@@ -70,4 +68,3 @@ Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
         Route::post('/pdf', [QrCodeController::class, 'createPdfQrCode']);
     });
 
->>>>>>> Stashed changes

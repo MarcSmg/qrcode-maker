@@ -1,4 +1,4 @@
-import { ArrowBigLeft, ArrowLeft, ChevronLeft } from 'lucide-react'
+import { ArrowBigLeft, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react'
 import React, { useState } from 'react'
 import "../styles/Edition.css";
 import QrType from '../EditionPages/QrType';
@@ -34,10 +34,13 @@ function Edition() {
       <div className='breadcrumb'>
         {steps.map((element) => {
           return (
+            <>
             <div key={element.id} className={`breadcrumb-element ${activeElementId == element.id ? 'active-element' : ''}`}>
               <span>{element.id}</span>
               <p>{element.title}</p>
             </div>
+            {element.id < 4 && <ChevronRight width={'30px'} height={'30px'}/>}
+            </>
           )
         })}
       </div>
