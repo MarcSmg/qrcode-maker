@@ -1,6 +1,5 @@
 import React from 'react'
 import OptionCard from '../components/OptionCard'
-import { Menu } from 'lucide-react'
 
 function QrType({setQrType}) {
   const qrTypes = [

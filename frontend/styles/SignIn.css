@@ -1,11 +1,9 @@
-
-
-body{
+body {
   background-color: #f0f4ff;
-  background-image: 
-  radial-gradient(at 0% 0%, hsla(225, 100%, 90%, 1) 0%, transparent 50%),
-  radial-gradient(at 100% 0% hsla(260, 100%, 95%, 1) 0%,transparent 50% ),
-  radial-gradient(at 50% 100%, hsla(200, 100%, 92%, 1) 0%, transparent 50%);
+  background-image:
+    radial-gradient(at 0% 0%, hsla(225, 100%, 90%, 1) 0%, transparent 50%),
+    radial-gradient(at 100% 0% hsla(260, 100%, 95%, 1) 0%, transparent 50%),
+    radial-gradient(at 50% 100%, hsla(200, 100%, 92%, 1) 0%, transparent 50%);
   height: 100vh;
   overflow: hidden;
 }
@@ -19,12 +17,12 @@ body{
   font-family: "Inter", sans-serif;
   border-radius: 24px;
 
- background-color:hsla(0,0%,100%,1);
-background-image:
-radial-gradient(at 72% 17%, rgb(187, 168, 231) 0px, transparent 50%),
-radial-gradient(at 69% 52%, hsla(212,0%,100%,1) 0px, transparent 50%),
-radial-gradient(at 79% 0%, hsla(212,100%,54%,0.68) 0px, transparent 50%),
-radial-gradient(at 13% 0%, hsla(210,100%,79%,1) 0px, transparent 50%);
+  background-color: hsla(0, 0%, 100%, 1);
+  background-image:
+    radial-gradient(at 72% 17%, rgb(187, 168, 231) 0px, transparent 50%),
+    radial-gradient(at 69% 52%, hsla(212, 0%, 100%, 1) 0px, transparent 50%),
+    radial-gradient(at 79% 0%, hsla(212, 100%, 54%, 0.68) 0px, transparent 50%),
+    radial-gradient(at 13% 0%, hsla(210, 100%, 79%, 1) 0px, transparent 50%);
 }
 
 .signin-card {
@@ -34,7 +32,7 @@ radial-gradient(at 13% 0%, hsla(210,100%,79%,1) 0px, transparent 50%);
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 
-  
+
 }
 
 
@@ -58,51 +56,59 @@ radial-gradient(at 13% 0%, hsla(210,100%,79%,1) 0px, transparent 50%);
 }
 
 .input-group label {
-color: #1883FF;
-display: block;
-margin-bottom: 8px;
-width: 100%;
-text-align: left;
+  color: #1883FF;
+  display: block;
+  margin-bottom: 8px;
+  width: 100%;
+  text-align: left;
 }
 
 
-.input-wrapper{
+.input-wrapper {
   position: relative;
   width: 100%;
   display: flex;
-align-items: center;
+  align-items: center;
 
 }
 
-.input-icon { 
-  position: absolute; top: 50%; transform: translateY(-50%); color: #1883FF;
- }
-.input-icon.left { 
-  left: 12px; 
+.input-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #1883FF;
 }
-.input-icon.right { 
-  right: 12px; 
-  cursor: pointer; 
+
+.input-icon.left {
+  left: 12px;
 }
-.input-wrapper input {
+
+.input-icon.right {
+  right: 12px;
+  cursor: pointer;
+}
+
+.input-wrapper {
   display: block;
   margin: 0 auto;
   width: 100%;
   padding: 14px 40px;
   border-radius: 12px;
-  border: 1px solid  #99CAFF;
+  border: 1px solid #99CAFF;
   font-size: 14px;
 }
 
-.input-wrapper.has-left input { 
-  padding-left: 40px; 
+.input-wrapper.has-left input {
+  padding-left: 40px;
 }
-.input-wrapper.has-right input { 
-  padding-right: 40px; 
+
+.input-wrapper.has-right input {
+  padding-right: 40px;
 }
+
 .input-wrapper input:focus {
   outline: none;
-  border-color:  #1883FF;
+  border-color: #1883FF;
 }
 
 .input-icon {
@@ -122,6 +128,7 @@ align-items: center;
 }
 
 .options {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -132,6 +139,21 @@ align-items: center;
 .options a {
   color: #1883FF;
   text-decoration: none;
+}
+
+.remember {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+
+.remember input {
+  height: 20px;
+  width: 20px;
 }
 
 .submit-btn {
@@ -147,7 +169,7 @@ align-items: center;
 
 .submit-btn:hover {
   background: #99CAFF;
-  
+
 }
 
 .signup {
@@ -157,7 +179,7 @@ align-items: center;
 }
 
 .signup a {
-  color:#1883FF;
+  color: #1883FF;
   font-weight: 500;
 }
 
@@ -165,7 +187,8 @@ align-items: center;
   display: flex;
 
 }
-.signin-extra{
+
+.signin-extra {
   display: none;
 }
 
@@ -178,14 +201,15 @@ align-items: center;
     justify-content: center;
   }
 
-  
 
- 
-  .signin-page{
-    box-shadow: 0px 15px 60px #b5c7db;    
+
+
+  .signin-page {
+    box-shadow: 0px 15px 60px #b5c7db;
     padding: 30px;
   }
-  .signin-card{
+
+  .signin-card {
     box-shadow: none;
   }
 }
@@ -211,7 +235,7 @@ align-items: center;
 
 @media (max-width: 768px) {
   .blob {
-    opacity: 0.5; 
+    opacity: 0.5;
   }
 }
 
@@ -223,5 +247,5 @@ align-items: center;
 
 .input-wrapper.error input {
   border-color: #d64545;
-  box-shadow: 0 0 0 3px rgba(214,69,69,0.06);
+  box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.06);
 }

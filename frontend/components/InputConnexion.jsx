@@ -1,41 +1,43 @@
 
-function InputConnexion  ({
+import * as Icons from "lucide-react";
+import '../styles/Signup.css';
+
+function InputConnexion({
     id,
+    name,
+    className,
     label,
     value,
-    onChange, 
-    placeholder, 
+    onChange,
+    placeholder,
     type,
-    icon: Icon, 
-    rightIcon: RightIcon,
-    error,
-    onRightClick
-    
-}){
+    icon,
 
-     function handleChange(e) {
-    onChange(e);
-  }
+}) {
+
+    const Icon = icon ? Icons[icon] : null;
+
+    function handleChange(e) {
+        onChange(e);
+    }
 
     return (
-    <div className="input-group">
-        <label htmlFor={id} className="input-label"> {label} </label>
-        <div className={`input-wrapper ${error ? 'error' : ''}`}>
-        {Icon && <div className="input-icon left"><Icon size={18} /></div>}
-
-            <input
-            id= {id}
-            type={type} 
-            placeholder= {placeholder} 
-            value={value}
-            onChange={handleChange}
-            style={{ paddingLeft: Icon ? "40px" : undefined, paddingRight: RightIcon ? "40px" : undefined }}
-            />
-           {RightIcon && <div className="input-icon right" onClick={onRightClick}><RightIcon size={18} /></div>}
-
+        <div className="form-group">
+            <label className="form-label" htmlFor="name">{label}</label>
+            <div className="input-wrapper">
+                <Icon className="input-icon" />
+                <input
+                    type={type}
+                    id={id}
+                    name={name}
+                    className={className}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
         </div>
-        
-    </div>
     )
 }
 
