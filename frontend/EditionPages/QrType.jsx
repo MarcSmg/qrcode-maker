@@ -1,7 +1,7 @@
 import React from 'react'
 import OptionCard from '../components/OptionCard'
 
-function QrType({setQrType}) {
+function QrType({setQrType, setActiveElementId}) {
   const qrTypes = [
     {
       type: 'email',
@@ -56,7 +56,7 @@ function QrType({setQrType}) {
               key={qrTypes.indexOf(element)}
               icon={element.icon} title={element.title}
               description={element.description} 
-              onClick = {()=>{setQrType(element.type);console.log(element.type)}}
+              onClick = {()=>{setQrType(element.type); setActiveElementId(2)}}
               />
           )
         })}

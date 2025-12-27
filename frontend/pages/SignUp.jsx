@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/Signup.css';
 import LogoAATW from "../public/logo.svg";
-import { UserCircle, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react'
+import { UserCircle, Mail, Lock, Eye, EyeOff, ArrowRight, ChevronDown } from 'lucide-react'
 import InputConnexion from '../components/InputConnexion';
 import PasswordInput from '../components/PasswordInput';
 
@@ -9,6 +9,7 @@ export default function Signup() {
 
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [window2Small, setWindow2Small] = useState(window.innerHeight <= 830)
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -45,6 +46,27 @@ export default function Signup() {
       setMatch(false)
     }
   }
+
+  useEffect(() => {
+    let timeout;
+
+    const handleResize = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        setWindow2Small(window.innerHeight <= 1024);
+      }, 100);
+      
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -139,7 +161,7 @@ export default function Signup() {
             <h2 className="form-title">Créez votre compte</h2>
             <p className="form-subtitle">Commencez votre aventure avec QR It.</p>
           </div>
-          <div className="signup-form">
+          <div className="signup-form no-scrollbar">
             {/* Champ Prenom */}
             <InputConnexion
               type={"text"}
@@ -221,6 +243,27 @@ export default function Signup() {
             </button>
             <div className="signin-link">
               Vous avez déjà un compte ? <a href="/signin">Connexion</a>
+            </div>
+          </div>
+          <div style={{
+            width: '100%',
+            display: `${window2Small ? 'flex' : 'none'}`,
+            alignItems: 'center',
+            justifyContent: 'center',
+            filter: "drop-shadow(2px 2px 8px rgba(4, 46, 123, 0.15))",
+            position: 'absolute',
+            bottom: '20px',
+            left: '0',
+          }}>
+            <div style={{
+              padding: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'white',
+              borderRadius: '100%',
+            }}>
+              <ChevronDown color='#004ee0' width={30} height={30} />
             </div>
           </div>
         </div >
