@@ -287,5 +287,19 @@ class QrCodeController extends Controller
         ]);
     }
 
+    public function updateStatus(Request $request, QrCode $qrcode){
+        $validated = $request->validate([
+            'is_active' => 'required|boolean',
+        ]);
+
+        $qrcode->is_active = $validated['is_active'];
+        $qrcode->save();
+
+        return response()->json([
+            'message' => 'Statut du QR code mis à jour',
+            'is_active' => $qrcode->is_active,
+        ]);
+    }
+
 }
 
