@@ -47,7 +47,7 @@ class AuthController extends Controller
             'user' => [
                 'id'=>$user->id,
                 'first_name'=>$user->first_name,
-                'last_name'=>$user->first_name,
+                'last_name'=>$user->last_name,
                 'email'=>$user->email,
             ],   
             'token' => $token,
@@ -80,11 +80,11 @@ class AuthController extends Controller
             'user'=>[
                 'id'=>$user->id,
                 'first_name'=>$user->first_name,
-                'last_name'=>$user->first_name,
+                'last_name'=>$user->last_name,
                 'email'=>$user->email,
                 'email_verified_at'=>$user->email_verified_at,
             ]
-        ]);
+        ], 200);
     }
 
     //Déconnexion
@@ -119,3 +119,4 @@ class AuthController extends Controller
             ], 400);
     }
 }
+

@@ -3,13 +3,13 @@ import React from 'react'
 import * as Icons from "lucide-react";
 
 
-function OptionCard({ icon, title, description }) {
+function OptionCard({ icon, title, description, onClick }) {
 
   const IconComponent = icon ? Icons[icon] : null;
 
 
   return (
-    <div className='option-card'>
+    <div className='option-card' onClick={onClick}>
       <div style={{
         padding:'10px',
         backgroundColor:'#2564ed2b',

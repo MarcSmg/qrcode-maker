@@ -69,7 +69,7 @@ Un compte admin est automatiquement créé via un seeder.
 
 ## Authentification
 
-Auth via Sanctum
+Auth via Laravel Sanctum
 
 Fournir le token dans :
 Authorization: Bearer <token>

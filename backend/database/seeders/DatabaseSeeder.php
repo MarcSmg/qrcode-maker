@@ -21,6 +21,10 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
         ]);
 
+        $this->call([
+            QrTypeSeeder::class,
+        ]);
+
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

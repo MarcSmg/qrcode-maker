@@ -77,7 +77,7 @@ function Landing() {
                                 placeholder="Entrez votre URL ici..."
                                 className="url-input"
                             />
-                            <button className="btn-generate">Générer</button>
+                            <button className="btn-generate" onClick={()=>handleNavigate('/dash')}>Générer</button> {/*Might change that in the future */}
                         </div>
 
                         <div className="generator-tabs">

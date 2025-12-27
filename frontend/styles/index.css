@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /*background-color: #242424;*/
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -52,6 +52,15 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
+}
+
+.no-scrollbar{
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;  
 }
 
 @media (prefers-color-scheme: light) {

@@ -21,77 +21,77 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #e3f2ff 0%, #99caff 50%, #1883ff 100%);
-  padding: 40px 20px;
+  background: #f7faff;
 }
 
 /* CARTE CENTRALE  */
 .signup-card {
-  width: 100%;
-  max-width: 1200px;
-  margin: auto;
+  position: relative;
+  width: 85%;
+  height: 85vh;
+  max-width: 1400px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: white;
-  border-radius: 32px;
-  overflow: hidden;
+  grid-template-columns: repeat(2, 1fr);
+  background: #f8f7fc;
+  border-radius: 30px;
   box-shadow: 0 20px 60px rgba(4, 46, 123, 0.15);
+  overflow: hidden;
+  align-items: center;
+}
+
+.blob-1 {
+  position: absolute;
+  width: 80%;
+  top: -55%;
+  right: -30%;
+  transform: rotate(-15deg);
+  filter: blur(70px);
+}
+
+.blob-2 {
+  position: absolute;
+  width: 60%;
+  top: -50%;
+  left: -20%;
+  transform: rotate(30deg);
+  filter: blur(70px);
+
 }
 
 /* COLONNE GAUCHE - BRANDING */
 .branding-section {
-  background: linear-gradient(165deg, #e3f2ff 0%, #d4e9ff 100%);
-  padding: 60px 50px;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 38px;
   position: relative;
   overflow: hidden;
 }
 
-/* Décoration cercle  */
-.branding-section::before {
-  content: "";
-  position: absolute;
-  top: -50px;
-  right: -50px;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  border: 60px solid rgba(24, 131, 255, 0.05);
-}
 
-.branding-section::after {
-  content: "";
-  position: absolute;
-  bottom: -100px;
-  left: -80px;
-  width: 250px;
-  height: 250px;
-  background: rgba(153, 202, 255, 0.2);
-  border-radius: 40% 60% 50% 50%;
-}
 
 /* Logo */
 .logo-container {
   position: relative;
   z-index: 2;
-  margin-bottom: 80px;
 }
 
 .brand-logo {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-size: 28px;
+  font-size: 1.4em;
   font-weight: 800;
   color: #042e7b;
   letter-spacing: -0.5px;
 }
 
 .brand-logo-image {
-  width: 48px;
-  height: 48px;
+  width: 35px;
+  height: 35px;
   object-fit: contain;
 }
 
@@ -102,23 +102,24 @@ body {
 
 /* Contenu branding */
 .branding-content {
+  width: 90%;
   position: relative;
+  margin-inline: auto;
   z-index: 2;
 }
 
 .branding-title {
-  font-family: "Playfair Display", serif;
-  font-size: 52px;
-  font-weight: 800;
-  color: #042e7b;
-  line-height: 1.2;
-  margin-bottom: 24px;
+  font-family: "Inter";
+  font-size: 2em;
+  font-weight: 600;
+  color: #333333;
   letter-spacing: -1px;
+  margin-bottom: 20px;
 }
 
 .branding-description {
-  font-size: 18px;
-  color: #004ee0;
+  font-size: 1.5;
+  color: #00000065;
   line-height: 1.7;
   max-width: 400px;
   font-weight: 400;
@@ -131,25 +132,6 @@ body {
   display: flex;
   align-items: center;
   gap: 32px;
-  padding-top: 20px;
-}
-
-.language-selector {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: white;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #042e7b;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(4, 46, 123, 0.08);
-}
-
-.language-selector:hover {
-  box-shadow: 0 4px 12px rgba(4, 46, 123, 0.15);
 }
 
 .footer-links {
@@ -170,53 +152,72 @@ body {
 
 /* COLONNE DROITE - FORMULAIRE */
 .form-section {
-  padding: 60px 50px;
+  max-height: max-content;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: #ffffff;
+  margin: 40px 60px;
+  border-radius: 20px;
+  box-shadow: 0 20px 20px rgba(4, 46, 123, 0.15);
+  padding: 10px;
 }
 
 .form-header {
-  margin-bottom: 40px;
+  padding: 20px;
+  padding-bottom: 0px;
 }
 
 .form-title {
-  font-size: 42px;
-  font-weight: 800;
-  color: #042e7b;
-  margin-bottom: 12px;
+  font-size: 1.7em;
+  font-weight: 700;
+  color: #313131;
   letter-spacing: -0.5px;
+  padding: 0;
 }
 
 .form-subtitle {
-  font-size: 16px;
-  color: #667085;
+  font-size: 1em;
+  color: #979797;
 }
 
 /* FORMULAIRE */
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  align-items: center;
+  gap: 10px;
+  padding: 30px;
+  padding-top: 20px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 100%;
 }
+
 
 .form-label {
   text-align: left;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  color: #042e7b;
+  color: #2b2b2b;
 }
 
 .input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
+  padding: 0 0 0 48px;
+  font-size: 15px;
+  border: 2px solid #e3f2ff;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .input-icon {
@@ -228,11 +229,8 @@ body {
 
 .form-input {
   width: 100%;
-  padding: 14px 16px 14px 48px;
-  font-size: 15px;
-  border: 2px solid #e3f2ff;
-  border-radius: 12px;
-  transition: all 0.3s ease;
+  padding: 14px 16px 14px 0;
+  border: none;
   font-family: "Inter", sans-serif;
   background: white;
   color: #042e7b;
@@ -244,6 +242,9 @@ body {
 
 .form-input:focus {
   outline: none;
+}
+
+.input-wrapper:focus-within {
   border-color: #1883ff;
   box-shadow: 0 0 0 4px rgba(24, 131, 255, 0.1);
 }
@@ -361,9 +362,18 @@ body {
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
+  .signup-container {
+    width: 100%;
+  }
+
   .signup-card {
     grid-template-columns: 1fr;
-    max-width: 500px;
+    max-width: 1000px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .branding-footer{
+    display: none;
   }
 
   .branding-section {
@@ -381,19 +391,41 @@ body {
 
 @media (max-width: 640px) {
   .signup-container {
-    padding: 20px;
+    width: 100%;
+    background-color: white;
+  }
+
+  .signup-card {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
   }
 
   .branding-section,
   .form-section {
     padding: 30px 24px;
+    margin: 0;
+  }
+
+  .branding-section {
+    height: max-content;
+  }
+
+  .branding-content {
+    display: none;
+  }
+
+  .branding-footer {
+    display: none;
   }
 
   .form-title {
-    font-size: 32px;
+    font-size: 2em;
   }
 
-  .oauth-buttons {
-    grid-template-columns: 1fr;
-  }
 }
