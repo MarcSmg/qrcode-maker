@@ -1,0 +1,145 @@
+.edition-main {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+
+}
+
+h2 {
+    width: 100%;
+    padding: 35px 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+}
+
+.breadcrumb {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.breadcrumb-element {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #2563ed;
+    padding: 8px 20px;
+    border-radius: 24px;
+    background-color: #2563eb14;
+    transition: all 0.35s ease;
+    /* Smoother timing with easing */
+    cursor: default;
+}
+
+.breadcrumb-element span {
+    background-color: #2563ed;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.35s ease;
+    /* Circle also transitions smoothly */
+}
+
+.active-element {
+    background-color: #2563ed;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.active-element span {
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+}
+
+.main-content {
+    width: 100%;
+    height: 80vh;
+}
+
+.nav-buttons {
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 30%;
+}
+
+.edit-main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* QR types styles */
+.qrtypes-container {
+    width: max-content;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    justify-items: center;
+    gap: 20px;
+}
+
+.option-card {
+    width: 250px;
+    aspect-ratio: 1;
+    background-color: #fff;
+    border-radius: 15px;
+    box-sizing: border-box;
+    background-color: #2563eb14;
+    border: 2px solid #2564eb2d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s ease;
+    gap: 20px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.option-card:hover {
+    transform: scale(1.01);
+    background-color: #2563eb14;
+    border: 2px solid #2564eb7a;
+    box-shadow: 0 8px 12px -4px #095fff50;
+    border: 2px solid #2564eb5d;
+
+}
+
+.option-card div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.option-card p {
+    font-size: 14px;
+    color: #757575;
+
+}

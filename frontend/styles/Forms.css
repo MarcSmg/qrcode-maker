@@ -1,0 +1,232 @@
+:root {
+    --primary-blue: #546FFF;
+    --primary-blue-hover: #455ce0;
+    --bg-color: #EBF1FF;
+    --border-color: #F3F4F6;
+    --text-primary: #1F2937;
+    --text-secondary: #9CA3AF;
+}
+
+.pdf-type-container {
+    font-family: 'Inter', sans-serif;
+    background-color: white;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    max-width: 900px;
+    margin: 40px auto;
+    box-sizing: border-box;
+}
+
+.pdf-type-header {
+    margin-bottom: 32px;
+}
+
+.pdf-type-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin: 0 0 8px 0;
+}
+
+.pdf-type-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.pdf-type-content {
+    display: flex;
+    gap: 32px;
+}
+
+/* Upload Area */
+.upload-area {
+    flex: 1.2;
+    border: 2px dashed #E5E7EB;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+    background-color: #FAFAFA;
+    transition: all 0.2s;
+}
+
+.upload-area:hover {
+    border-color: var(--primary-blue);
+    background-color: #F8FAFF;
+}
+
+.upload-area.drag-active {
+    border-color: var(--primary-blue);
+    background-color: #EBF1FF;
+    transform: scale(1.01);
+}
+
+.upload-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-blue);
+    margin-bottom: 8px;
+}
+
+.upload-subtext {
+    font-size: 14px;
+    color: #9CA3AF;
+    margin-bottom: 24px;
+}
+
+.browse-btn {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.browse-btn:hover {
+    background-color: var(--primary-blue-hover);
+}
+
+/* File List */
+.file-list-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.file-list-section h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0 0 8px 0;
+}
+
+.no-file-message {
+    padding: 32px;
+    text-align: center;
+    color: var(--text-secondary);
+    background: #F9FAFB;
+    border-radius: 12px;
+    border: 1px dashed #E5E7EB;
+    font-size: 14px;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    background-color: white;
+    position: relative;
+}
+
+.file-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.file-icon.pdf {
+    background-color: #FEE2E2;
+    color: #DC2626;
+}
+
+.file-icon.xsl {
+    background-color: #DCFCE7;
+    color: #16A34A;
+}
+
+.file-icon.doc {
+    background-color: #DBEAFE;
+    color: #2563EB;
+}
+
+.file-icon.sound {
+    background-color: #FEE2E2;
+    color: #DC2626;
+}
+
+.file-icon.default {
+    background-color: #E5E7EB;
+    color: #6B7280;
+}
+
+.file-info {
+    flex: 1;
+}
+
+.file-name-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.file-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4B5563;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.file-status {
+    font-size: 10px;
+    color: #6B7280;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 4px;
+    background-color: #F3F4F6;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: var(--primary-blue);
+    border-radius: 2px;
+}
+
+.remove-btn {
+    background: transparent;
+    border: none;
+    color: #9CA3AF;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.remove-btn:hover {
+    background-color: #F3F4F6;
+    color: #EF4444;
+}

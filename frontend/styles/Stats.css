@@ -1,0 +1,308 @@
+/* GLOBAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: #f8fbff;
+}
+
+/*CONTAINER */
+.stats-container {
+  padding:0 40px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* HEADER */
+.stats-header {
+  margin-bottom: 40px;
+}
+
+.stats-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+  padding-left: 0;
+}
+
+.stats-subtitle {
+  color: #667085;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* CARDS GRID */
+.stats-cards-container{
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.stats-cards-grid {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* CARD BASE */
+.stats-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 28px;
+  border-radius: 20px;
+  background: #2564ed;
+  border: 2px solid #e3f2ff;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet de shimmer au survol */
+.stats-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(24, 131, 255, 0.05),
+      transparent);
+  transition: left 0.6s ease;
+}
+
+.stats-card:hover::before {
+  left: 100%;
+}
+
+.stats-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(4, 46, 123, 0.12);
+  border-color: #1883ff;
+}
+
+/* CARD VARIANTS */
+.stats-card-primary {
+  background: linear-gradient(135deg, #e3f2ff 0%, #ffffff 100%);
+}
+
+.stats-card-secondary {
+  background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+}
+
+.stats-card-accent {
+  background: linear-gradient(135deg, #e8f4ff 0%, #ffffff 100%);
+}
+
+/* ICON */
+.stats-card-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #dae7ff 100%);
+  color: #2563ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 24px;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(0, 52, 110, 0.3);
+  transition: all 0.3s ease;
+}
+
+.stats-card:hover .stats-card-icon {
+  transform: scale(1.05) rotate(-5deg);
+  box-shadow: 0 12px 28px rgba(24, 131, 255, 0.4);
+}
+
+.stats-card-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* CONTENT */
+.stats-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stats-card-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #cdddff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stats-card-value {
+  font-size: 48px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  margin: 8px 0;
+  letter-spacing: -1px;
+}
+
+.stats-card-period {
+  font-size: 14px;
+  color: #bfd7f0;
+  font-weight: 500;
+}
+
+/* DETAILS (Animation au survol) */
+.stats-card-details {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #ffffff62;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: translateY(-10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stats-card:hover .stats-card-details {
+  opacity: 1;
+  max-height: 300px;
+  transform: translateY(0);
+}
+
+/*DETAIL ITEM */
+.stats-card-details-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(24, 131, 255, 0.04);
+  border-radius: 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.stats-card-details-item:hover {
+  background: rgba(255, 255, 255, 0.205);
+  transform: translateX(4px);
+}
+
+.stats-card-details-item-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffffa4;
+  font-weight: 500;
+}
+
+.stats-card-details-item-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: #1883ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.stats-card-details-item-value {
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+/* Barre de progression */
+.stats-card-details-item-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(24, 131, 255, 0.1);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.stats-card-details-item-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1883ff, #004ee0);
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/*RESPONSIVE */
+@media (max-width: 768px) {
+  .stats-container {
+    padding: 24px 16px;
+  }
+
+  .stats-title {
+    font-size: 28px;
+  }
+
+  .stats-subtitle {
+    font-size: 14px;
+  }
+
+  .stats-card {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .stats-card-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .stats-card-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .stats-card-value {
+    font-size: 38px;
+  }
+
+  .stats-cards-grid {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .stats-card-value {
+    font-size: 32px;
+  }
+}
