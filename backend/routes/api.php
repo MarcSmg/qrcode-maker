@@ -49,7 +49,6 @@ Route::get('/qr-types/{qrType}', [QrTypeController::class, 'show']);
 // QR Codes
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('qrcodes', QrCodeController::class)->except(['edit', 'create']);
-    Route::patch('/qrcodes/{qrcode}/design', [QrCodeController::class, 'updateDesign']);
 
     // Génération de QR code
     Route::get('/qrcodes/generate/{shortCode}', [QrCodeController::class, 'generateQrCode']);
@@ -69,5 +68,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //     // Création de QR code pour PDF
     //     Route::post('/pdf', [QrCodeController::class, 'createPdfQrCode']);
     // });
-
 });
+
+Route::patch('/qrcodes/{qrcode}/design', [QrCodeController::class, 'updateDesign']);
+Route::patch('/qrcodes/{qrcode}/status', [QrCodeController::class, 'updateStatus']);
