@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import '../styles/Signup.css';
 import LogoAATW from "../public/logo.svg";
 import { UserCircle, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react'
+import InputConnexion from '../components/InputConnexion';
+import PasswordInput from '../components/PasswordInput';
 
 export default function Signup() {
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -23,13 +23,22 @@ export default function Signup() {
   const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    setFormData(prev => {
+      const updated = { ...prev, [name]: value };
+      console.log(updated);
+      return updated;
+    });
   };
 
-  const checkPasswordCompatibility = (current, comp) => {
+  const checkPasswordCompatibility = (e, current, comp) => {
+    console.log('current: ', current);
+    console.log('comp: ', comp);
     if (current == comp) {
       console.log("match");
       setMatch(true)
+      handleChange(e)
     }
     else {
       console.log("no match");
@@ -132,124 +141,78 @@ export default function Signup() {
           </div>
           <div className="signup-form">
             {/* Champ Prenom */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="name">Prenom</label>
-              <div className="input-wrapper">
-                <UserCircle className="input-icon" />
-                <input
-                  type="text"
-                  id="first_name"
-                  name="first_name"
-                  className="form-input"
-                  placeholder="Hannah"
-                  value={formData.first_name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
+            <InputConnexion
+              type={"text"}
+              id={"first_name"}
+              name={"first_name"}
+              label={"Prenom"}
+              icon={"UserCircle"}
+              className={"form-input"}
+              placeholder={"Hannah"}
+              value={formData.first_name}
+              onChange={handleChange}
+            />
 
             {/* Champ Nom */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="name">Nom</label>
-              <div className="input-wrapper">
-                <UserCircle className="input-icon" />
-                <input
-                  type="text"
-                  id="last_name"
-                  name="last_name"
-                  className="form-input"
-                  placeholder="JOHNSON"
-                  value={formData.last_name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
+            <InputConnexion
+              type={"text"}
+              id={"last_name"}
+              name={"last_name"}
+              label={"Nom"}
+              icon={"UserCircle"}
+              className={"form-input"}
+              placeholder={"JOHNSON"}
+              value={formData.last_name}
+              onChange={handleChange}
+            />
 
             {/* Champ Email */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="email">Adresse mail</label>
-              <div className="input-wrapper">
-                <Mail className='input-icon' />
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="form-input"
-                  placeholder="name@example.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
+
+            <InputConnexion
+              type={"email"}
+              id={"email"}
+              name={"email"}
+              label={"Adresse mail"}
+              icon={"Mail"}
+              className={"form-input"}
+              placeholder={"name@example.com"}
+              value={formData.email}
+              onChange={handleChange}
+            />
 
             {/* Champ Mot de passe */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="password">Mot de passe</label>
-              <div className="input-wrapper">
-                <Lock className='input-icon' />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  name="password"
-                  className="form-input"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => { setPassword(e.target.value); console.log(e.target.value); checkPasswordCompatibility(e.target.value, confirmPassword) }}
-                  required
-                />
-                <button
-                  type="button"
-                  className="toggle-password"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff />
+            <PasswordInput
+              id={"password"}
+              name={"password"}
+              className={"form-input"}
+              label={"Mot de passe"}
+              comp={confirmPassword}
+              checkPasswordCompatibility={checkPasswordCompatibility}
+              setPassword={setPassword}
+              value={password}
 
-                  ) : (
-                    <Eye />
-                  )}
-                </button>
-              </div>
-            </div>
+            />
 
             {/* Champ Confirmation mot de passe */}
-            <div className="form-group">
-              <label className="form-label" htmlFor="confirmPassword">Confirmation du mot de passe</label>
-              <div className="input-wrapper">
-                <Lock className='input-icon' />
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  className="form-input"
-                  placeholder="••••••••"
-                  value={confirmPassword}
-                  onChange={(e) => { setConfirmPassword(e.target.value); console.log(e.target.value); checkPasswordCompatibility(e.target.value, password) }}
-                  required
-                />
-                <button
-                  type="button"
-                  className="toggle-password"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff />
-                  ) : (
-                    <Eye />
-                  )}
-                </button>
-              </div>
-              <span
-                style={{
-                  display: `${password == '' && confirmPassword == '' ? 'none' : 'inline'}`,
-                  color: `${match ? 'green' : 'red'}`
-                }}>
-                {match ? 'Mot de passes identiques ' : 'Vos mot de passes sont differents'}
-              </span>
-            </div>
+            <PasswordInput
+              id={"passwconfirmPasswordord"}
+              name={"confirmPassword"}
+              className={"form-input"}
+              label={"Confirmation du mot de passe"}
+              comp={password}
+              checkPasswordCompatibility={checkPasswordCompatibility}
+              setPassword={setConfirmPassword}
+              value={confirmPassword}
+
+            />
+            <span
+              style={{
+                width: '100%',
+                display: `${password == '' && confirmPassword == '' ? 'none' : 'inline'}`,
+                color: `${match ? 'green' : 'red'}`
+              }}>
+              {match ? 'Mot de passes identiques ' : 'Vos mot de passes sont differents'}
+            </span>
 
             {/* Bouton Signup */}
             <button type="button" className="signup-button" onClick={handleSubmit}>
@@ -265,185 +228,6 @@ export default function Signup() {
     </div >
   );
 }
-
-
-
-
-//  <div className="branding-section">
-//           {/* Logo */}
-//           <div className="logo-container">
-//             <div className="brand-logo">
-//               <img
-//                 src={LogoAATW}
-//                 alt="AATW Logo"
-//                 className="brand-logo-image"
-//               />
-//               <span className="brand-name">QR It</span>
-//             </div>
-//           </div>
-
-//           {/* Contenu branding */}
-//           <div className="branding-content">
-//             <h1 className="branding-title">
-//               Là où les QR codes prennent du sens
-//             </h1>
-//             <p className="branding-description">
-//               Une plateforme pensée pour créer et gérer vos QR codes en toute simplicité.
-//             </p>
-//           </div>
-
-//           {/* Footer */}
-//           <div className="branding-footer">
-//             <div className="language-selector">
-//               <span>🇬🇧</span>
-//               <span>English</span>
-//               <span>▾</span>
-//             </div>
-//             <div className="footer-links">
-//               <a href="#" className="footer-link">Termes</a>
-//               <a href="#" className="footer-link">Contactez-nous</a>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* COLONNE DROITE - FORMULAIRE */}
-//         <div className="form-section">
-//           {/* Header */}
-//           <div className="form-header">
-//             <h2 className="form-title">Créez votre compte</h2>
-//             <p className="form-subtitle">Commencez votre aventure avec QR It.</p>
-//           </div>
-
-//           {/* Formulaire */}
-//           <div className="signup-form">
-//             {/* Champ Prenom */}
-//             <div className="form-group">
-//               <label className="form-label" htmlFor="name">Prenom</label>
-//               <div className="input-wrapper">
-//                 <UserCircle className="input-icon" />
-//                 <input
-//                   type="text"
-//                   id="first_name"
-//                   name="first_name"
-//                   className="form-input"
-//                   placeholder="Hannah"
-//                   value={formData.first_name}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-//             </div>
-
-//             {/* Champ Nom */}
-//             <div className="form-group">
-//               <label className="form-label" htmlFor="name">Nom</label>
-//               <div className="input-wrapper">
-//                 <UserCircle className="input-icon" />
-//                 <input
-//                   type="text"
-//                   id="last_name"
-//                   name="last_name"
-//                   className="form-input"
-//                   placeholder="JOHNSON"
-//                   value={formData.last_name}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-//             </div>
-
-//             {/* Champ Email */}
-//             <div className="form-group">
-//               <label className="form-label" htmlFor="email">Adresse mail</label>
-//               <div className="input-wrapper">
-//                 <Mail className='input-icon' />
-//                 <input
-//                   type="email"
-//                   id="email"
-//                   name="email"
-//                   className="form-input"
-//                   placeholder="name@example.com"
-//                   value={formData.email}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-//             </div>
-
-//             {/* Champ Mot de passe */}
-//             <div className="form-group">
-//               <label className="form-label" htmlFor="password">Mot de passe</label>
-//               <div className="input-wrapper">
-//                 <Lock className='input-icon' />
-//                 <input
-//                   type={showPassword ? "text" : "password"}
-//                   id="password"
-//                   name="password"
-//                   className="form-input"
-//                   placeholder="••••••••"
-//                   value={password}
-//                   onChange={(e) => { setPassword(e.target.value); console.log(e.target.value); checkPasswordCompatibility(e.target.value, confirmPassword) }}
-//                   required
-//                 />
-//                 <button
-//                   type="button"
-//                   className="toggle-password"
-//                   onClick={() => setShowPassword(!showPassword)}
-//                 >
-//                   {showPassword ? (
-//                     <EyeOff />
-
-//                   ) : (
-//                     <Eye />
-//                   )}
-//                 </button>
-//               </div>
-//             </div>
-
-//             {/* Champ Confirmation mot de passe */}
-//             <div className="form-group">
-//               <label className="form-label" htmlFor="confirmPassword">Confirmation du mot de passe</label>
-//               <div className="input-wrapper">
-//                 <Lock className='input-icon' />
-//                 <input
-//                   type={showConfirmPassword ? "text" : "password"}
-//                   id="confirmPassword"
-//                   name="confirmPassword"
-//                   className="form-input"
-//                   placeholder="••••••••"
-//                   value={confirmPassword}
-//                   onChange={(e) => { setConfirmPassword(e.target.value); console.log(e.target.value); checkPasswordCompatibility(e.target.value, password) }}
-//                   required
-//                 />
-//                 <button
-//                   type="button"
-//                   className="toggle-password"
-//                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-//                 >
-//                   {showConfirmPassword ? (
-//                     <EyeOff />
-//                   ) : (
-//                     <Eye />
-//                   )}
-//                 </button>
-//               </div>
-//               <span
-//                 style={{
-//                   display: `${password == '' && confirmPassword == '' ? 'none' : 'inline'}`,
-//                   color: `${match ? 'green' : 'red'}`
-//                 }}>
-//                 {match ? 'Mot de passes identiques ' : 'Vos mot de passes sont differents'}
-//               </span>
-//             </div>
-
-//             {/* Bouton Signup */}
-//             <button type="button" className="signup-button" onClick={handleSubmit}>
-//               Créer un compte
-//               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-//                 <path d="M5 12h14M12 5l7 7-7 7" />
-//               </svg>
-//             </button>
-//           </div>
 
 //           {/* Divider */}
 //           <div className="divider">
@@ -464,9 +248,3 @@ export default function Signup() {
 //               Google
 //             </button>
 //           </div>
-
-//           {/* Lien connexion */}
-//           <div className="signin-link">
-//             Vous avez déjà un compte ? <a href="/signin">Connexion</a>
-//           </div>
-//         </div>
