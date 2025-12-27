@@ -77,4 +77,65 @@ class QrScanController extends Controller
             
         return !$recentScan; // Unique si aucun scan récent trouvé
     }
+
+    public function scan(string $code, Request $request){
+
+        $qrCode = QrCode::where('short_code', $code)->first();
+
+        if (! $qrCode) {
+            abort(404, 'QR code introuvable');
+        }
+
+        if (! $qrCode->is_active) {
+            abort(410, 'QR code désactivé');
+        }
+
+        if ($qrCode->isReachedScanLimit()) {
+            abort(429, 'Limite de scans atteinte');
+        }
+
+        $qrCode->scans()->create([
+            'qr_code_id' => $qrCode->id,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
+
+        $qrCode->increment('scan_count');
+
+        switch ($qrCode->type->name) {
+            case 'website':
+                return $this->handleWebsite($qrCode);
+
+            case 'text':
+                return $this->handleText($qrCode);
+
+            case 'pdf':
+                return $this->handlePdf($qrCode);
+
+            case 'social':
+                return $this->handleSocial($qrCode);
+
+            default:
+                abort(400, 'Type de QR non supporté');
+        }
+
+    }
+
+    protected function handleWebsite(QrCode $qrCode){
+        return redirect()->away($qrCode->content);
+    }
+
+    protected function handleText(QrCode $qrCode){
+        
+        return $qrCode->content;
+    }
+
+    protected function handleSocial(QrCode $qrCode){
+        return redirect()->away($qrCode->content);
+    }
+
+    protected function handlePdf(QrCode $qrCode){
+        return redirect()->away($qrCode->content);
+    }
+
 }

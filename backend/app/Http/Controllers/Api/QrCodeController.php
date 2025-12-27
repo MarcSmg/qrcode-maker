@@ -78,7 +78,7 @@ class QrCodeController extends Controller
         }
         
         // Enregistrer le scan
-        $this->recordScan($qrCode);
+        // $this->recordScan($qrCode);
         
         // Récupérer les paramètres de design
 
@@ -107,13 +107,15 @@ class QrCodeController extends Controller
         // ];
 
         // Générer le QR code avec les options de design
+
+        $url =rtrim(config('app.domain'), '/') . '/r/' . $qrCode->short_code;
+
         $qrImage = QrCodeGenerator::format('svg')
             ->size($design['size'])
             ->color($design['color'][0] ?? 0, $design['color'][1] ?? 0, $design['color'][2] ?? 0)
             ->backgroundColor($design['background'][0] ?? 255, $design['background'][1] ?? 255, $design['background'][2] ?? 255)
             ->margin($design['margin'])
-            ->generate($qrCode->content);
-            
+            ->generate($url);
 
         return response($qrImage)->header('Content-Type', 'image/svg+xml');
     }
@@ -261,5 +263,29 @@ class QrCodeController extends Controller
         
         return $code;
     }
+
+    public function updateDesign(Request $request, QrCode $qrcode){
+        $validated = $request->validate([
+            'margin' => 'sometimes|integer|min:0|max:10',
+            'size' => 'sometimes|integer|min:100|max:1000',
+            'color' => 'sometimes|array|size:3',
+            'background' => 'sometimes|array|size:3',
+        ]);
+
+        $design = $qrcode->design ?? [];
+
+        foreach ($validated as $key => $value) {
+            $design[$key] = $value;
+        }
+
+        $qrcode->design = $design;
+        $qrcode->save();
+
+        return response()->json([
+            'message' => 'Design mis à jour',
+            'design' => $qrcode->design,
+        ]);
+    }
+
 }
 

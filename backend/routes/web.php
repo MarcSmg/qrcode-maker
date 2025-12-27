@@ -43,5 +43,8 @@ Route::get('/qr-codes/{qrCode}/graphics', [QRStatsController::class, 'showGraphi
     ->name('qr.graphics')
     ->whereNumber('qrCode');
 
+Route::get('/r/{code}', [QrScanController::class, 'scan'])
+    ->name('qr.scan');
+
 
     
