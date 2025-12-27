@@ -17,15 +17,9 @@ function App() {
       <Routes>
 
         {/* non-protected routes */}
-<<<<<<< HEAD
         <Route path="/" element={<Landing />} />
         <Route path = "/signin" element= {<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-=======
-        <Route path="/" element={<Landing />} /> {/* Je l'ai mis temporairement pour pouvoir tester la page Signup. À enlever une fois les tests terminés.*/}
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} /> {/* Next time bascule juste sur la route http://localhost:5173/signup pour voir ton rendu*/}
->>>>>>> 4ff3d255e4597989fc2f44757ef1eb61be416728
         <Route path="/forgot-password" element={<Landing />} />
         <Route path="/faq" element={<FAQs />} />
 
