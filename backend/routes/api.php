@@ -44,31 +44,30 @@ Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 
 
 // Types de QR code
-    Route::get('/qr-types', [QrTypeController::class, 'index']);
-    Route::get('/qr-types/{qrType}', [QrTypeController::class, 'show']);
-    // QR Codes
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::apiResource('qrcodes', QrCodeController::class)->except(['edit', 'create']);
+Route::get('/qr-types', [QrTypeController::class, 'index']);
+Route::get('/qr-types/{qrType}', [QrTypeController::class, 'show']);
+// QR Codes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('qrcodes', QrCodeController::class)->except(['edit', 'create']);
+    Route::patch('/qrcodes/{qrcode}/design', [QrCodeController::class, 'updateDesign']);
+
+    // Génération de QR code
+    Route::get('/qrcodes/generate/{shortCode}', [QrCodeController::class, 'generateQrCode']);
     
-        // Génération de QR code
-        Route::get('/qrcodes/generate/{shortCode}', [QrCodeController::class, 'generateQrCode']);
+    Route::get('/qrcodes/stats/{qrcode}/', [QrCodeController::class, 'getStats']);
+    // Routes spécifiques par type de QR code
+    // Route::prefix('qrcodes')->group(function () {
+    //     // Création de QR code de type texte
+    //     Route::post('/text', [QrCodeController::class, 'createTextQrCode']);
         
-        Route::get('/qrcodes/stats/{qrcode}/', [QrCodeController::class, 'getStats']);
-        // Routes spécifiques par type de QR code
-        // Route::prefix('qrcodes')->group(function () {
-        //     // Création de QR code de type texte
-        //     Route::post('/text', [QrCodeController::class, 'createTextQrCode']);
-            
-        //     // Création de QR code de site web
-        //     Route::post('/website', [QrCodeController::class, 'createWebsiteQrCode']);
-            
-        //     // Création de QR code pour réseaux sociaux
-        //     Route::post('/social', [QrCodeController::class, 'createSocialQrCode']);
-            
-        //     // Création de QR code pour PDF
-        //     Route::post('/pdf', [QrCodeController::class, 'createPdfQrCode']);
-        // });
-    
-    });
+    //     // Création de QR code de site web
+    //     Route::post('/website', [QrCodeController::class, 'createWebsiteQrCode']);
+        
+    //     // Création de QR code pour réseaux sociaux
+    //     Route::post('/social', [QrCodeController::class, 'createSocialQrCode']);
+        
+    //     // Création de QR code pour PDF
+    //     Route::post('/pdf', [QrCodeController::class, 'createPdfQrCode']);
+    // });
 
-
+});
