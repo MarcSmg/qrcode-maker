@@ -68,8 +68,8 @@ function PDFTypeForm() {
     return (
         <div className="pdf-type-container">
             <div className="pdf-type-header">
-                <h2>Upload Files</h2>
-                <p>Upload documents you want to share with your team</p>
+                <h2>Importez votre PDF</h2>
+                <p>Importez votre document PDF a transformer en code QR</p>
             </div>
 
             <div className="pdf-type-content">
@@ -89,18 +89,18 @@ function PDFTypeForm() {
                         <CloudUpload size={48} color={isDragging ? "#546FFF" : "#9CA3AF"} />
                     </div>
                     <div className="upload-text">
-                        {isDragging ? 'Drop file here' : 'Drag and drop files here'}
+                        {isDragging ? 'Deposez vos fichiers ici' : 'Glissez et deposez vos fichiers ici'}
                     </div>
-                    <div className="upload-subtext">- OR -</div>
-                    <button className="browse-btn" onClick={handleBrowseClick}>Browse Files</button>
+                    <div className="upload-subtext">- OU -</div>
+                    <button className="browse-btn" onClick={handleBrowseClick}>Ouvrir l'explorateur de fichiers</button>
                 </div>
 
                 <div className="file-list-section">
-                    <h3>Uploaded Files</h3>
+                    <h3>Fichiers importés</h3>
 
                     {!selectedFile && (
                         <div className="no-file-message">
-                            <p>No file selected yet</p>
+                            <p>Aucun fichier selectionné</p>
                         </div>
                     )}
 

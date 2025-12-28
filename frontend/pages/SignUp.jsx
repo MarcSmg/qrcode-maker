@@ -246,6 +246,7 @@ export default function Signup() {
             </div>
           </div>
           <div style={{
+            pointerEvents:'none',
             width: '100%',
             display: `${window2Small ? 'flex' : 'none'}`,
             alignItems: 'center',

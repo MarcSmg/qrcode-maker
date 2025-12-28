@@ -1,44 +1,45 @@
 import React from 'react'
 import OptionCard from '../components/OptionCard'
 
-function QrType({setQrType, setActiveElementId}) {
+function QrType({ setQrType, setActiveElementId }) {
   const qrTypes = [
     {
       type: 'email',
       icon: 'Mail',
       title: 'E-mail',
-      description: 'Nigger go back home',
+      description: 'Ouvre un email pré-rempli au scan.',
     },
     {
       type: 'url',
       icon: 'Link',
       title: 'URL',
-      description: 'Nigger go back home',
+      description: 'Un scan pour ouvrir instantanément un site web.',
     },
     {
       type: 'facebook',
       icon: 'Facebook',
       title: 'Facebook',
-      description: 'Nigger go back home',
+      description: 'Dirigez vers une page, un profil ou un événement Facebook.',
     },
     {
       type: 'text',
       icon: 'Type',
       title: 'Texte',
-      description: 'Nigger go back home',
+      description: 'Affiche un texte ou un message directement au scan.',
     },
     {
       type: 'pdf',
       icon: 'FileText',
       title: 'PDF',
-      description: 'Nigger go back home',
+      description: 'Ouvre ou télécharge un document PDF en un scan.',
     },
     {
       type: 'mp3',
       icon: 'Music',
-      title: 'Mp3',
-      description: 'Nigger go back home',
+      title: 'MP3',
+      description: 'Lance la lecture ou le téléchargement d’un audio.',
     },
+
   ]
   return (
     <div className='edit-main'>
@@ -55,9 +56,9 @@ function QrType({setQrType, setActiveElementId}) {
             <OptionCard
               key={qrTypes.indexOf(element)}
               icon={element.icon} title={element.title}
-              description={element.description} 
-              onClick = {()=>{setQrType(element.type); setActiveElementId(2)}}
-              />
+              description={element.description}
+              onClick={() => { setQrType(element.type); setActiveElementId(2) }}
+            />
           )
         })}
       </div>

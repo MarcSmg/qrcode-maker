@@ -2,19 +2,18 @@ import '../../styles/Forms.css';
 import InputConnexion from '../InputConnexion';
 
 
-function URLTypeForm() {
+function TextTypeForm() {
 
 
     return (
         <div className="url-type-container">
             <div className="url-type-header">
-                <h2>Entrez votre lien a convertir en code QR</h2>
+                <h2>Entrez votre texte a convertir en code QR</h2>
                 <div className='input-container'>
                     <InputConnexion
-                        icon='Link'
                         className={'form-input'}
-                        label={"Entrez votre lien"}
-                        placeholder={"https://..."}
+                        label={"Entrez votre texte"}
+                        placeholder={"Votre texte ici..."}
                     />
                 </div>
 
@@ -23,4 +22,4 @@ function URLTypeForm() {
     );
 };
 
-export default URLTypeForm
+export default TextTypeForm
