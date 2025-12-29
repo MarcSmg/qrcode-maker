@@ -116,7 +116,6 @@ export default function Signup() {
 
       }
 
-      // Tu peux stocker le token si tu veux
       localStorage.setItem("token", data.token);
       handleNavigate("/dashboard");
 

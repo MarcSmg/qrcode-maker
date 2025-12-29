@@ -53,6 +53,7 @@ function SignIn() {
         if (res.status == 500) errorOut.current.innerHTML = "Erreur Serveur!"
         throw new Error(data.message || "Erreur lors de la connexion");
       }
+      localStorage.setItem("token", data.token);
       handleNavigate("/dashboard");
 
     } catch (err) {
