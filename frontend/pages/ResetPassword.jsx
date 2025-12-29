@@ -76,7 +76,7 @@ export default function ResetPassword() {
       if (!res.ok) {
         throw new Error(data.message || "Erreur lors de l'envoi du mail");
       }
-      handleNavigate('/dashboard');
+      handleNavigate('/signin');
 
       setIsSubmitted(true);
 

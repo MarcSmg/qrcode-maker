@@ -4,11 +4,15 @@ import '../styles/SignIn.css'
 import '../styles/Signup.css'
 import InputConnexion from '../components/InputConnexion';
 import PasswordInput from '../components/PasswordInput';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 function SignIn() {
   const errorOut = useRef(null)
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+  const { login } = useAuth();
+
 
   const [formData, setFormData] = useState({
     email: "",
@@ -27,6 +31,7 @@ function SignIn() {
     });
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -44,15 +49,17 @@ function SignIn() {
       const data = await res.json();
 
       if (!res.ok) {
-        if (res.status == 422) errorOut.current.innerHTML = "Veuillez correctement remplir les champs!"
         if (res.status == 500) errorOut.current.innerHTML = "Erreur Serveur!"
         throw new Error(data.message || "Erreur lors de la connexion");
       }
-      localStorage.setItem("token", data.token);
-      <Navigate to="/dashboard"/>
+
+      login(data.token);
+      navigate("/dashboard");
 
     } catch (err) {
+      errorOut.current.innerHTML = "Veuillez correctement remplir les champs :<br/> <strong>" + err.message + "</strong>"
       console.log("erreur lors de la connexion:", err.message);
+
     } finally {
       setLoading(false);
     }
@@ -175,93 +182,6 @@ function SignIn() {
       </div >
     </div >
   );
-  // return (
-  //   <div className="signin-page">
-
-  //     <div className="blob blob-top-left">
-  //         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  //           <path fill="#1883FF" d="M32.9,-48.6C39.2,-33.9,38.5,-20.3,33.6,-11.3C28.8,-2.3,19.8,2,16.3,10.6C12.8,19.3,14.6,32.2,8.8,42.2C3,52.1,-10.5,59.1,-18.1,54.3C-25.6,49.5,-27.1,33.1,-37.9,19.5C-48.6,5.8,-68.5,-4.9,-70.3,-15.5C-72.2,-26.2,-56,-36.9,-41.3,-50.1C-26.6,-63.3,-13.3,-79.1,0,-79.1C13.3,-79.1,26.6,-63.3,32.9,-48.6Z" transform="translate(100 100)" />
-  //         </svg>
-  //     </div>
-
-  //     <div className="signin-container">
-  //       <div className="signin-extra">
-  //         <h2>NOUS SIMPLIFIONS LES QR CODES</h2>
-  //         <p>Créer des QR CODES <strong>puissants</strong>  et <strong>hautement performants</strong>  </p>
-  //       </div>
-  //       <div className="signin-card">
-
-  //         <h1>Bon retour! </h1>
-  //         <p className='subtitle'>Connectez-vous pour continuer </p>
-
-  //         <form className='signin-form' onSubmit={handleSubmit}>
-
-  //           <InputConnexion
-  //             id="email"
-  //             label="Adresse email"
-  //             icon = {Mail}
-  //             type="email"
-  //             value={email}
-  //             onChange={ (e) =>{
-  //               setEmail(e.target.value);
-  //               setErrors(prev => ({ ...prev, email: '' }));
-
-  //             }}
-  //             error={!!errors.email} 
-  //             placeholder= "votre@email.com"
-  //             required 
-  //           />
-  //           {errors.email && <p className="input-error">{errors.email}</p>}
-
-
-  //           <InputConnexion
-  //             id="password"
-  //             label="Mot de passe"
-  //             icon = {Lock}
-  //             type="password"
-  //             value={password}
-  //             onChange={ (e) =>{
-  //               setPassword(e.target.value);
-  //               setErrors(prev => ({ ...prev, password: '' }));
-
-  //             }}
-  //             placeholder= "........"
-  //             required
-  //             rightIcon = {Eye}
-  //           />
-  //           {errors.password && <p className="input-error">{errors.password}</p>}
-
-
-
-  //           <div className="options">
-  //             <label className="remember">
-  //               <input type="checkbox" />
-  //               Se souvenir
-  //             </label>
-  //             <a href="#">Mot de passe oublié ?</a>
-  //           </div>
-
-  //           <button type="submit" className="submit-btn" >
-  //             Se connecter →
-  //           </button>
-
-  //         </form>
-
-  //         <p className="signup">
-  //           Pas encore de compte ? <a href="#">S'inscrire</a>
-  //         </p>
-  //       </div>
-  //     </div>
-  //     <div className="blob blob-bottom-right">
-  //       <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  //         <path fill="#99CAFF" d="M22.4,16.2C8.9,36.3,-35.9,41.4,-44.9,23.9C-53.9,6.4,-26.9,-33.8,-4.5,-36.4C17.9,-39,35.9,-3.9,22.4,16.2Z" transform="translate(100 100)" />
-  //       </svg>
-
-  //     </div>
-
-  //   </div>
-
-  // )
 }
 
 export default SignIn
