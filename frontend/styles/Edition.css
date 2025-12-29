@@ -145,12 +145,20 @@ h2 {
 }
 
 @media (max-width: 640px) {
-    .qrtypes-container{
+    .qrtypes-container {
         grid-template-columns: 1fr;
         margin-bottom: 50px;
     }
-    .breadcrumb{
+
+    .breadcrumb {
         display: none;
     }
+
+    .nav-buttons {
+        padding: 30px 10px;
+        background-color: #bae0ff5e;
+        backdrop-filter: blur(10px);
+    }
+
 
 }

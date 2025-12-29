@@ -2,7 +2,7 @@ import '../../styles/Forms.css';
 import InputConnexion from '../InputConnexion';
 
 
-function TextTypeForm() {
+function TextTypeForm({setData}) {
 
 
     return (

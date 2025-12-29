@@ -3,7 +3,7 @@ import { CloudUpload, FileText, FileSpreadsheet, Music, File, X } from 'lucide-r
 import '../../styles/Forms.css';
 
 
-function PDFTypeForm() {
+function PDFTypeForm({setData}) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);

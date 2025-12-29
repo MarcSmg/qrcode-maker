@@ -41,12 +41,19 @@ export default function Signup() {
   };
 
   const checkPasswordCompatibility = (e, current, comp) => {
+    
+    const { value } = e.target;
     console.log('current: ', current);
     console.log('comp: ', comp);
+
     if (current == comp) {
       console.log("match");
       setMatch(true)
-      handleChange(e)
+      setFormData(prev => {
+        const updated = { ...prev, ['password']: value };
+        console.log(updated);
+        return updated;
+      });
     }
     else {
       console.log("no match");

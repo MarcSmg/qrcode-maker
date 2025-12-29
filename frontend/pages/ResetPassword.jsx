@@ -21,7 +21,7 @@ export default function ResetPassword() {
 
 
   const [formData, setFormData] = useState({
-    email: "",
+    email: email,
     token: searchParams.get('token'),
     password: '',
     confirmPassword: ''
@@ -146,19 +146,6 @@ export default function ResetPassword() {
             </p>
           </div>
           <div className="forgot-password-form no-scrollbar">
-            {/* Champ Email */}
-
-            <InputConnexion
-              type={"email"}
-              id={"email"}
-              name={"email"}
-              label={"Adresse mail"}
-              icon={"Mail"}
-              className={"form-input"}
-              placeholder={"name@example.com"}
-              value={formData.email}
-              onChange={handleChange}
-            />
 
             {/* Champ Mot de passe */}
             <PasswordInput

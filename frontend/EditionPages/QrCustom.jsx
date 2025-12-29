@@ -1,34 +1,37 @@
 import { useEffect, useRef, useState } from "react";
 import QRCodeStyling from "qr-code-styling";
 
-const qrCode = new QRCodeStyling({
-  width: 260,
-  height: 260,
-  data: "https://example.com",
-  dotsOptions: {
-    type: "square",
-    color: "#000000",
-  },
-  backgroundOptions: {
-    color: "#ffffff",
-  },
-  imageOptions: {
-    crossOrigin: "anonymous",
-    margin: 10,
-  },
-});
 
-export default function QrGenerator() {
+export default function QrCustom({data}) {
+
+  const qrCode = new QRCodeStyling({
+    width: 260,
+    height: 260,
+    data: "https://Get-the-fuck-out-nigga.com",
+    dotsOptions: {
+      type: "square",
+      color: "#000000",
+    },
+    backgroundOptions: {
+      color: "#ffffff",
+    },
+    imageOptions: {
+      crossOrigin: "anonymous",
+      margin: 10,
+    },
+  });
+
+
   const qrRef = useRef(null);
   const fileInputRef = useRef(null);
   const [openId, setOpenId] = useState(null);
 
-  
+
   useEffect(() => {
     qrCode.append(qrRef.current);
   }, []);
 
-  
+
   const handlePatternChange = type => {
     qrCode.update({
       dotsOptions: { type },
@@ -41,22 +44,22 @@ export default function QrGenerator() {
     });
   };
 
- const handleLogoChange = file => {
-  if (!file) return;
+  const handleLogoChange = file => {
+    if (!file) return;
 
-  if (!file.type.startsWith("image/")) {
-    alert("Veuillez sélectionner une image");
-    return;
-  }
+    if (!file.type.startsWith("image/")) {
+      alert("Veuillez sélectionner une image");
+      return;
+    }
 
-  const reader = new FileReader();
-  reader.onload = () => {
-    qrCode.update({
-      image: reader.result,
-    });
+    const reader = new FileReader();
+    reader.onload = () => {
+      qrCode.update({
+        image: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
   };
-  reader.readAsDataURL(file);
-};
 
 
   const toggle = id => {
@@ -69,7 +72,7 @@ export default function QrGenerator() {
         .page {
           display: flex;
           justify-content: space-between;
-          align-items: flex-start;
+          align-items: center;
           gap: 40px;
           max-width: 1100px;
           margin: auto;
@@ -80,7 +83,8 @@ export default function QrGenerator() {
         }
 
         .right {
-          width: 360px;
+          width: 60vw;
+          max-width: 500px;
         }
 
         .qr-box {
@@ -96,6 +100,7 @@ export default function QrGenerator() {
           padding: 16px;
           margin-bottom: 12px;
           box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+          user-select: none;
         }
 
         .header {
@@ -164,6 +169,20 @@ export default function QrGenerator() {
           border: 1px solid #d1d5db;
           cursor: pointer;
         }
+
+        @media (max-width: 640px) {
+          .page{
+            flex-direction: column-reverse;
+            width: 100%;
+            flex-direction-flex-start;
+            padding-bottom: 100px;
+          }
+
+          .right {
+            width: 100vw;
+            padding-inline: 20px;
+          }
+        }
       `}</style>
 
       <div className="page">
@@ -173,7 +192,9 @@ export default function QrGenerator() {
           </div>
         </div>
         <div className="right">
-          <div className="section">
+          <div className="section"
+            onClick={() => toggle("pattern")}
+          >
             <div className="header">
               <div className="header-left">
                 <div className="icon">
@@ -187,7 +208,6 @@ export default function QrGenerator() {
 
               <div
                 className={`arrow ${openId === "pattern" ? "open" : ""}`}
-                onClick={() => toggle("pattern")}
               >
                 ►
               </div>
@@ -208,7 +228,9 @@ export default function QrGenerator() {
             )}
           </div>
 
-          <div className="section">
+          <div className="section"
+            onClick={() => toggle("color")}
+          >
             <div className="header">
               <div className="header-left">
                 <div className="icon"><img src="/images/couleur.png" alt="Couleur" /></div>
@@ -220,7 +242,6 @@ export default function QrGenerator() {
 
               <div
                 className={`arrow ${openId === "color" ? "open" : ""}`}
-                onClick={() => toggle("color")}
               >
                 ►
               </div>
@@ -236,7 +257,9 @@ export default function QrGenerator() {
             )}
           </div>
 
-          <div className="section">
+          <div className="section"
+            onClick={() => toggle("logo")}
+          >
             <div className="header">
               <div className="header-left">
                 <div className="icon"><img src="/images/logo.png" alt="logo" /></div>
@@ -248,7 +271,6 @@ export default function QrGenerator() {
 
               <div
                 className={`arrow ${openId === "logo" ? "open" : ""}`}
-                onClick={() => toggle("logo")}
               >
                 ►
               </div>
@@ -257,14 +279,14 @@ export default function QrGenerator() {
             {openId === "logo" && (
               <div className="content">
                 <input
-                 type="file"
+                  type="file"
                   accept="image/*"
                   ref={fileInputRef}
-                 style={{ display: "none" }}
+                  style={{ display: "none" }}
                   onChange={e => handleLogoChange(e.target.files[0])}
                 />
 
-               <button onClick={() => fileInputRef.current.click()}>
+                <button onClick={() => fileInputRef.current.click()}>
                   Choisir un logo
                 </button>
               </div>

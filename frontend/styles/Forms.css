@@ -7,6 +7,7 @@
     --text-secondary: #9CA3AF;
 }
 
+
 /*/////////////////////*/
 /* PDF type */
 /*/////////////////////*/
@@ -237,6 +238,10 @@
     color: #EF4444;
 }
 
+.input-container {
+    background-color: white;
+}
+
 /*/////////////////////*/
 /* URL type */
 /*/////////////////////*/
@@ -244,7 +249,6 @@
 .url-type-container .input-container {
     width: 60vw;
     max-width: 800px;
-    background-color: white;
     padding: 60px 30px;
     border-radius: 20px;
 }
@@ -263,7 +267,6 @@
 .social-type-container .input-container {
     width: 60vw;
     max-width: 800px;
-    background-color: white;
     padding: 60px 30px;
     border-radius: 20px;
 }
@@ -283,7 +286,6 @@
 .mp3-type-container .input-container {
     width: 60vw;
     max-width: 800px;
-    background-color: white;
     padding: 60px 30px;
     border-radius: 20px;
 }
@@ -303,7 +305,6 @@
 .text-type-container .input-container {
     width: 60vw;
     max-width: 800px;
-    background-color: white;
     padding: 60px 30px;
     border-radius: 20px;
 }
@@ -322,7 +323,6 @@
 .email-type-container .input-container {
     width: 60vw;
     max-width: 800px;
-    background-color: white;
     padding: 60px 30px;
     border-radius: 20px;
     display: flex;
@@ -348,8 +348,8 @@
 }
 
 .email-type-container textarea:focus {
-  border-color: #1883ff;
-  box-shadow: 0 0 0 4px rgba(24, 131, 255, 0.1);
+    border-color: #1883ff;
+    box-shadow: 0 0 0 4px rgba(24, 131, 255, 0.1);
 }
 
 @media (max-width: 640px) {
@@ -359,6 +359,11 @@
 
     .email-type-container .inline-container {
         flex-direction: column;
+    }
+
+    .input-container {
+        background-color: transparent;
+        margin-bottom: 15vh;
     }
 
 }

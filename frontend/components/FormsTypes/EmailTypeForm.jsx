@@ -1,8 +1,27 @@
+import { useState } from 'react';
 import '../../styles/Forms.css';
 import InputConnexion from '../InputConnexion';
 
 
-function EmailTypeForm() {
+function EmailTypeForm({ setData }) {
+    const [formData, setFormData] = useState({
+        email: "",
+        subject: "",
+        content: ""
+    });
+
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        setFormData(prev => {
+            const updated = { ...prev, [name]: value };
+            console.log(updated);
+            return updated;
+        });
+    };
+
+
 
 
     return (
@@ -12,20 +31,27 @@ function EmailTypeForm() {
                 <div className='input-container'>
                     <div className='inline-container'>
                         <InputConnexion
-                            id='email_address'
-                            name='email_address'
+                            type={'text'}
+                            id='email'
+                            name='email'
                             icon='Mail'
                             className={'form-input'}
                             label={"E-mail"}
                             placeholder={"qrit@qr.com"}
+                            onChange={handleChange}
+                            value={formData.email}
                         />
                         <InputConnexion
+                            type={'text'}
                             id='subject'
                             name='subject'
                             icon='Info'
                             className={'form-input'}
                             label={"Sujet"}
                             placeholder={"Demande de.."}
+                            onChange={handleChange}
+                            value={formData.subject}
+
                         />
                     </div>
                     <label style={{
@@ -38,6 +64,7 @@ function EmailTypeForm() {
                         name="content"
                         id="content"
                         placeholder='Entrez votre message'
+                        onChange={handleChange}
                     ></textarea>
                 </div>
 

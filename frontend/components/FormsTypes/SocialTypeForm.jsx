@@ -2,7 +2,7 @@ import '../../styles/Forms.css';
 import InputConnexion from '../InputConnexion';
 
 
-function SocialTypeForm() {
+function SocialTypeForm({setData}) {
 
 
     return (

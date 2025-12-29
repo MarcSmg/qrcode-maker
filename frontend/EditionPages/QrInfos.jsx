@@ -6,7 +6,7 @@ import TextTypeForm from '../components/FormsTypes/TextTypeForm'
 import SocialTypeForm from '../components/FormsTypes/SocialTypeForm'
 import Mp3TypeForm from '../components/FormsTypes/Mp3TypeForm'
 
-function QrInfos({ qrType }) {
+function QrInfos({ qrType, setData }) {
   return (
     <div className='edit-main'>
       <h3 style={{
@@ -17,12 +17,12 @@ function QrInfos({ qrType }) {
         fontWeight: '600',
       }}>2. Remplissez les informations du code QR</h3>
       <div>
-        {qrType == 'email' && <EmailTypeForm />}
-        {qrType == 'url' && <URLTypeForm />}
-        {qrType == 'facebook' && <SocialTypeForm />}
-        {qrType == 'text' && <TextTypeForm />}
-        {qrType == 'pdf' && <PDFTypeForm />}
-        {qrType == 'mp3' && <Mp3TypeForm />}
+        {qrType == 'email' && <EmailTypeForm setData={setData} />}
+        {qrType == 'url' && <URLTypeForm setData={setData} />}
+        {qrType == 'facebook' && <SocialTypeForm setData={setData} />}
+        {qrType == 'text' && <TextTypeForm setData={setData} />}
+        {qrType == 'pdf' && <PDFTypeForm setData={setData} />}
+        {qrType == 'mp3' && <Mp3TypeForm setData={setData} />}
       </div>
     </div>
   )

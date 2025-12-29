@@ -2,7 +2,7 @@ import '../../styles/Forms.css';
 import InputConnexion from '../InputConnexion';
 
 
-function Mp3TypeForm() {
+function Mp3TypeForm({setData}) {
 
 
     return (
