@@ -34,10 +34,11 @@ class AuthController extends Controller
             'last_name' => $request->last_name,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
+            'email_verified_at' => now(),
         ]);
 
         // Envoyer email de vérification
-        $user->sendEmailVerificationNotification();
+        // $user->sendEmailVerificationNotification();
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -70,9 +71,9 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         // Vérifier email
-        if (!$user->hasVerifiedEmail()) {
-            return response()->json(['message'=>'Email non vérifié'], 403);
-        }
+        // if (!$user->hasVerifiedEmail()) {
+        //     return response()->json(['message'=>'Email non vérifié'], 403);
+        // }
 
         return response()->json([
             'ok' => true,
