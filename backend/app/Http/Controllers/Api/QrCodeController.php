@@ -25,7 +25,7 @@ class QrCodeController extends Controller
     }
 
     public function show($id){
-        $qrcode = QrCode::with('type')->findOrFail($id);
+        $qrcode = QrCodeModel::with('type')->findOrFail($id);
 
         return response()->json([
             'data' => $qrcode
@@ -50,6 +50,17 @@ class QrCodeController extends Controller
         // dd(Auth::id());
 
 
+        // $qrCode = QrCodeModel::create([
+        //     'user_id' => Auth::id(),
+        //     'type_id' => $validated['type_id'],
+        //     'name' => $validated['name'],
+        //     'content' => $content,
+        //     'short_code' => $this->generateUniqueShortCode(),
+        //     'scan_limit' => $validated['scan_limit'] ?? null,
+        //     'design' => $validated['design'] ?? null,
+        //     'metadata' => $validated['metadata'] ?? [],
+        // ]);
+        
         $qrCode = QrCodeModel::create([
             'user_id' => Auth::id(),
             'type_id' => $validated['type_id'],
@@ -63,7 +74,7 @@ class QrCodeController extends Controller
 
         return response()->json([
             'message' => 'QR code créé avec succès',
-            'data' => $qrCode->load('type')
+            'data' => $qrCode->load('type'),
         ], 201);
     }
 
