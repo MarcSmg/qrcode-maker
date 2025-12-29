@@ -12,14 +12,28 @@ import ResetPassword from "../pages/ResetPassword";
 import FAQs from "../pages/FAQs";
 import ProtectedRoute from "../routes/ProtectedRoutes";
 
+
+function isTokenValid(token) {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.exp * 1000 > Date.now();
+  } catch {
+    return false;
+  }
+}
+
 function App() {
+
+  const token = localStorage.getItem("token");
+  const isAuth = token && isTokenValid(token);
 
   return (
     <BrowserRouter>
       <Routes>
 
         {/* non-protected routes */}
-        <Route path="/" element={<Landing />} /> {/* Je l'ai mis temporairement pour pouvoir tester la page Signup. À enlever une fois les tests terminés.*/}
+        {!isAuth && <Route path="/" element={<Landing />} />} {/* Je l'ai mis temporairement pour pouvoir tester la page Signup. À enlever une fois les tests terminés.*/}
+        <Route path="/landing" element={<Landing />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} /> {/* Next time bascule juste sur la route http://localhost:5173/signup pour voir ton rendu*/}
         <Route path="/forgot-password" element={<ForgotPassword />} /> {/* Forgot Password page route */}
@@ -28,11 +42,11 @@ function App() {
 
         {/* protected routes */}
         <Route element={<ProtectedRoute />}>
+          {isAuth && <Route path="/" element={<Dashboard />} />}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="/history" element={<History />} />
           <Route path="/edition" element={<Edition />} />
-          <Route path="/dash" element={<Dashboard />} />
         </Route>
 
         {/* <Route path="/about" element={<About />} /> pour ajouter des pages use this method, just follow this blueprint */}

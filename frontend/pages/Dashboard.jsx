@@ -9,7 +9,7 @@ export default function Dashboard() {
     return (
         <div className="dashboard-container">
             <Sidebar setCurrentMenu={setCurrentMenu} />
-            <MainContent currentMenu={currentMenu} />
+            <MainContent currentMenu={currentMenu} setCurrentMenu={setCurrentMenu}/>
         </div>
     );
 }

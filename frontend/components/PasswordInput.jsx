@@ -11,6 +11,7 @@ function PasswordInput(
         checkPasswordCompatibility,
         value,
         setPassword,
+        handleChange,
     }
 ) {
 
@@ -29,7 +30,7 @@ function PasswordInput(
                     className={className}
                     placeholder="••••••••"
                     value={value}
-                    onChange={(e) => { checkPasswordCompatibility(e, e.target.value, comp); setPassword(e.target.value) }}
+                    onChange={(e) => { checkPasswordCompatibility && checkPasswordCompatibility(e, e.target.value, comp); handleChange && handleChange(e); setPassword && setPassword(e.target.value) }}
                     required
                 />
                 <button

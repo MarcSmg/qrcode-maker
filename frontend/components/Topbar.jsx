@@ -1,7 +1,7 @@
 import { Bell, ChevronDown, Mail, Search } from 'lucide-react';
 import React from 'react'
 
-function Topbar() {
+function Topbar({setCurrentMenu}) {
     return (
         <header className="topbar">
             <div className="search-bar">
@@ -23,7 +23,7 @@ function Topbar() {
                     <span className="notification-dot"></span>
                 </button>
 
-                <div className="user-profile">
+                <div className="user-profile" onClick={()=>setCurrentMenu("profile")}>
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80" alt="Profile" />
                     <span>Grace Stanley</span>
                     <ChevronDown size={14} />

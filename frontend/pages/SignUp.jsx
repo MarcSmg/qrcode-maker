@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/Signup.css';
 import LogoAATW from "../public/logo.svg";
-import { UserCircle, Mail, Lock, Eye, EyeOff, ArrowRight, ChevronDown } from 'lucide-react'
+import { UserCircle, Mail, Lock, Eye, EyeOff, ArrowRight, ChevronDown, LoaderCircle } from 'lucide-react'
 import InputConnexion from '../components/InputConnexion';
 import PasswordInput from '../components/PasswordInput';
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
 
+  const form = useRef(null)
+  const errorOut = useRef(null)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [window2Small, setWindow2Small] = useState(window.innerHeight <= 830)
@@ -17,11 +20,15 @@ export default function Signup() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate()
+
+
+  const handleNavigate = (link) => {
+    navigate(link);
+  }
 
   const [loading, setLoading] = useState(false);
   const [match, setMatch] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,7 +62,7 @@ export default function Signup() {
       timeout = setTimeout(() => {
         setWindow2Small(window.innerHeight <= 1024);
       }, 100);
-      
+
     };
 
     handleResize();
@@ -68,11 +75,19 @@ export default function Signup() {
   }, []);
 
 
+  const scrollToBottom = () => {
+    const element = form.current;
+    element.scrollTo({
+      top: element.scrollHeight,
+      behavior: "smooth",
+    });
+  }
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-    setSuccess("");
 
     try {
       const res = await fetch("http://localhost:8000/api/register", {
@@ -87,17 +102,24 @@ export default function Signup() {
       const data = await res.json();
 
       if (!res.ok) {
+        console.log(res.status);
+        if (res.status == 422) errorOut.current.innerHTML = "Veuillez correctement remplir les champs!"
+        if (res.status == 500) errorOut.current.innerHTML = "Erreur Serveur!"
         throw new Error(data.message || "Erreur lors de l'inscription");
+
       }
 
       // Tu peux stocker le token si tu veux
       localStorage.setItem("token", data.token);
+      handleNavigate("/dashboard");
 
-      setSuccess(
+
+      console.log(
         "Compte créé avec succès. Vérifie ton email avant de te connecter."
       );
     } catch (err) {
-      setError(err.message);
+      console.log("Erreur lors de l'inscription: ", err.message);
+
     } finally {
       setLoading(false);
     }
@@ -155,13 +177,13 @@ export default function Signup() {
         </div>
 
         {/* COLONNE DROITE - FORMULAIRE */}
-        <div className='form-section'>
+        <div className='form-section' >
           {/* Header */}
           <div className="form-header">
             <h2 className="form-title">Créez votre compte</h2>
             <p className="form-subtitle">Commencez votre aventure avec QR It.</p>
           </div>
-          <div className="signup-form no-scrollbar">
+          <div className="signup-form no-scrollbar" ref={form}>
             {/* Champ Prenom */}
             <InputConnexion
               type={"text"}
@@ -235,18 +257,25 @@ export default function Signup() {
               }}>
               {match ? 'Mot de passes identiques ' : 'Vos mot de passes sont differents'}
             </span>
+            <span
+              style={{
+                width: '100%',
+                color: 'red',
+              }}
+              ref={errorOut}>
+
+            </span>
 
             {/* Bouton Signup */}
             <button type="button" className="signup-button" onClick={handleSubmit}>
-              Créer un compte
-              <ArrowRight />
+              {!loading ? <>Créer mon compte<ArrowRight /></> : <>Inscription.. <LoaderCircle className='animate-spin' /> </>}
             </button>
             <div className="signin-link">
               Vous avez déjà un compte ? <a href="/signin">Connexion</a>
             </div>
           </div>
           <div style={{
-            pointerEvents:'none',
+            pointerEvents: 'none',
             width: '100%',
             display: `${window2Small ? 'flex' : 'none'}`,
             alignItems: 'center',
@@ -255,15 +284,20 @@ export default function Signup() {
             position: 'absolute',
             bottom: '20px',
             left: '0',
-          }}>
+          }}
+          >
             <div style={{
+              pointerEvents: 'visible',
+              cursor: 'pointer',
               padding: '10px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               backgroundColor: 'white',
               borderRadius: '100%',
-            }}>
+            }}
+              onClick={() => scrollToBottom()}
+            >
               <ChevronDown color='#004ee0' width={30} height={30} />
             </div>
           </div>

@@ -39,7 +39,7 @@ function Edition() {
   ]
   return (
     <div className='edition-main'>
-      <h2 style={{ fontWeight: '500', }}><ChevronLeft style={{ cursor: 'pointer' }} width={30} height={30} onClick={() => handleNavigate('/dash')} />Generer un code QR</h2>
+      <h2 style={{ fontWeight: '500', }}><ChevronLeft style={{ cursor: 'pointer' }} width={30} height={30} onClick={() => handleNavigate('/dashboard')} />Generer un code QR</h2>
       <div className='breadcrumb'>
         {steps.map((element) => {
           return (

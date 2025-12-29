@@ -8,7 +8,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
@@ -49,19 +49,27 @@ body {
   min-height: 100vh;
 }
 
-.no-scrollbar{
-  -ms-overflow-style: none;  
-  scrollbar-width: none;  
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none;  
+  display: none;
 }
 
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* animations */
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
 
-} */
+  to {
+    transform: rotate(360deg);
+  }
+}

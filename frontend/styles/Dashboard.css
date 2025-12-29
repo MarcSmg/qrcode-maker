@@ -122,8 +122,13 @@ body {
     margin-top: auto;
 }
 
-.nav-item.logout {
+.logout {
     color: rgba(255, 255, 255, 0.7);
+}
+
+.logout:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgba(255, 100, 100, 0.884);
 }
 
 /* Main Content */
@@ -319,17 +324,17 @@ body {
     gap: 10px;
 }
 
-.card-menu li{
+.card-menu li {
     padding: 10px 25px;
     border-radius: 15px;
     cursor: pointer;
 }
 
-.card-menu li:hover{
+.card-menu li:hover {
     background: #c7c7c728;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
@@ -382,4 +387,3 @@ body {
     max-width: 300px;
     line-height: 1.5;
 }
-

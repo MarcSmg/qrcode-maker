@@ -33,7 +33,7 @@ function InputConnexion({
                     className={className}
                     placeholder={placeholder}
                     value={value}
-                    onChange={handleChange}
+                    onChange={(e)=>handleChange(e)}
                     required
                 />
             </div>
