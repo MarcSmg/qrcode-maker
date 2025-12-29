@@ -414,6 +414,7 @@ body {
   .form-section {
     padding: 30px 24px;
     margin: 0;
+    box-shadow: none;
   }
 
   .branding-section {

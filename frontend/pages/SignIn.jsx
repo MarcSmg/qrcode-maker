@@ -1,25 +1,26 @@
-import React, { useState } from 'react'
-import { Mail, Lock, Eye, ArrowRight } from "lucide-react";
+import React, { useRef, useState } from 'react'
+import { Mail, Lock, Eye, ArrowRight, LoaderCircle } from "lucide-react";
 import '../styles/SignIn.css'
 import '../styles/Signup.css'
 import InputConnexion from '../components/InputConnexion';
 import PasswordInput from '../components/PasswordInput';
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
+  const errorOut = useRef(null)
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const navigate = useNavigate()
+
+  const handleNavigate = (link) => {
+    navigate(link);
+  }
 
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
     email: "",
     password: "",
   });
 
   const [loading, setLoading] = useState(false);
-  const [match, setMatch] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,28 +32,12 @@ function SignIn() {
     });
   };
 
-  const checkPasswordCompatibility = (e, current, comp) => {
-    console.log('current: ', current);
-    console.log('comp: ', comp);
-    if (current == comp) {
-      console.log("match");
-      setMatch(true)
-      handleChange(e)
-    }
-    else {
-      console.log("no match");
-      setMatch(false)
-    }
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-    setSuccess("");
 
     try {
-      const res = await fetch("http://localhost:8000/api/register", {
+      const res = await fetch("http://localhost:8000/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,40 +49,18 @@ function SignIn() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Erreur lors de l'inscription");
+        if (res.status == 422) errorOut.current.innerHTML = "Veuillez correctement remplir les champs!"
+        if (res.status == 500) errorOut.current.innerHTML = "Erreur Serveur!"
+        throw new Error(data.message || "Erreur lors de la connexion");
       }
+      handleNavigate("/dashboard");
 
-      // Tu peux stocker le token si tu veux
-      localStorage.setItem("token", data.token);
-
-      setSuccess(
-        "Compte créé avec succès. Vérifie ton email avant de te connecter."
-      );
     } catch (err) {
-      setError(err.message);
+      console.log("erreur lors de la connexion:", err.message);
     } finally {
       setLoading(false);
     }
   };
-  // const [email, setEmail] = useState("");
-  // // const [password, setPassword] = useState("");
-  // const [errors, setErrors] = useState({ email: '', password: '' });
-
-  // function handleSubmit(event) {
-  //   event.preventDefault();
-  //   const newErrors = { email: '', password: '' };
-
-  //   if (!email || email.trim() === '') newErrors.email = 'Veuillez saisir votre email.';
-  //   if (!password || password.trim() === '') newErrors.password = 'Veuillez saisir votre mot de passe.';
-
-  //   setErrors(newErrors);
-
-  //   if (newErrors.email || newErrors.password) return;
-
-  //   console.log("Tentative de connexion", { email, password });
-  //   // appel a l'api pour la connexion
-  // }
-
 
   return (
     <div className="signup-container">
@@ -181,32 +144,32 @@ function SignIn() {
               name={"password"}
               className={"form-input"}
               label={"Mot de passe"}
-              comp={confirmPassword}
-              checkPasswordCompatibility={checkPasswordCompatibility}
+              handleChange={handleChange}
               setPassword={setPassword}
               value={password}
 
             />
-            <span
-              style={{
-                width: '100%',
-                display: `${password == '' && confirmPassword == '' ? 'none' : 'inline'}`,
-                color: `${match ? 'green' : 'red'}`
-              }}>
-              {match ? 'Mot de passes identiques ' : 'Vos mot de passes sont differents'}
-            </span>
+
             <div className="options">
               <label className="remember">
                 <input type="checkbox" />
                 Se souvenir
               </label>
-              <a href="#">Mot de passe oublié ?</a>
+              <a href="/forgot-password">Mot de passe oublié ?</a>
             </div>
+
+            <span
+              style={{
+                width: '100%',
+                color: 'red',
+              }}
+              ref={errorOut}>
+
+            </span>
 
             {/* Bouton Signup */}
             <button type="button" className="signup-button" onClick={handleSubmit}>
-              Se connecter
-              <ArrowRight />
+              {!loading ? <>Se connecter <ArrowRight /></> : <>Connexion... <LoaderCircle className='animate-spin' /> </>}
             </button>
             <div className="signin-link">
               Vous n'avez pas de compte ? <a href="/signup">Créer un compte</a>

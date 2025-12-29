@@ -1,263 +1,257 @@
 import React, { useState } from 'react';
 import '../styles/ResetPassword.css';
+import '../styles/Signup.css';
 import LogoAATW from "../public/logo.svg";
+import InputConnexion from '../components/InputConnexion';
+import { ArrowLeft, ArrowRight, CircleCheckBig } from 'lucide-react';
+import PasswordInput from '../components/PasswordInput';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function ResetPassword() {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate()
+
+  const handleNavigate = (link) => {
+    navigate(link);
+  }
+  const [email, setEmail] = useState(searchParams.get("email"));
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+
   const [formData, setFormData] = useState({
+    email: "",
+    token: searchParams.get('token'),
     password: '',
     confirmPassword: ''
   });
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [match, setMatch] = useState(false);
+
+
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
+    const { name, value } = e.target;
+
+    setFormData(prev => {
+      const updated = { ...prev, [name]: value };
+      console.log(updated);
+      return updated;
     });
+
+    setEmail(value);
   };
 
-  const handleSubmit = () => {
-    // A faire: Appeler API pour changer le mot de passe, partie backend
-    console.log('Password reset:', formData);
-    setIsSubmitted(true); // Je l'ai mis ici pour tester l'affichage du message de succès
-  };
+  const checkPasswordCompatibility = (e, current, comp) => {
+    console.log('current: ', current);
+    console.log('comp: ', comp);
+    if (current == comp) {
+      console.log("match");
+      setMatch(true)
+      handleChange(e)
+    }
+    else {
+      console.log("no match");
+      setMatch(false)
+    }
+  }
 
-  const passwordsMatch = formData.password && formData.confirmPassword && 
-                         formData.password === formData.confirmPassword;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const res = await fetch("http://localhost:8000/api/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Erreur lors de l'envoi du mail");
+      }
+      handleNavigate('/dashboard');
+
+      setIsSubmitted(true);
+
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   return (
-    <div className="reset-password-container">
-      <div className="reset-password-card">
+    <div className="signup-container">
+      <div className="signup-card">
+
+        {/* Gradient glows */}
+        <svg className='blob-1' viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#c9ceffc4" d="M49,-57.4C62.1,-47.4,70.4,-30.6,69,-15.6C67.5,-0.6,56.3,12.7,46.8,25C37.3,37.3,29.6,48.6,18.3,54.5C7.1,60.3,-7.6,60.7,-20.1,55.9C-32.6,51,-43,40.9,-53.2,28.3C-63.4,15.6,-73.4,0.5,-74.2,-16.1C-74.9,-32.7,-66.3,-50.8,-52.4,-60.7C-38.5,-70.7,-19.2,-72.5,-0.7,-71.7C17.9,-71,35.9,-67.5,49,-57.4Z" transform="translate(100 100)" />
+        </svg>
+
+        <svg className='blob-2' viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#34a4ff35" d="M57.1,-58.8C71.7,-55.7,79.9,-35.6,76.8,-18.7C73.6,-1.8,59.1,12,48.8,26.8C38.6,41.6,32.6,57.4,20.2,67C7.7,76.7,-11.3,80,-20.7,70.7C-30.1,61.3,-29.9,39.2,-33.3,23.8C-36.7,8.5,-43.7,-0.2,-44,-9.4C-44.4,-18.6,-38.1,-28.3,-29.7,-32.5C-21.2,-36.8,-10.6,-35.6,5.3,-41.9C21.2,-48.2,42.4,-62,57.1,-58.8Z" transform="translate(100 100)" />
+        </svg>
+
         {/* COLONNE GAUCHE - BRANDING */}
-        <div className="reset-branding-section">
+        <div className="branding-section">
           {/* Logo */}
-          <div className="reset-logo-container">
-            <div className="reset-brand-logo">
-              <img 
+          <div className="logo-container">
+            <div className="brand-logo">
+              <img
                 src={LogoAATW}
-                alt="AATW Logo" 
-                className="reset-brand-logo-image"
+                alt="AATW Logo"
+                className="brand-logo-image"
               />
-              <span className="reset-brand-name">QR It</span>
+              <span className="brand-name">QR It</span>
             </div>
           </div>
 
           {/* Contenu branding */}
-          <div className="reset-branding-content">
-            <h1 className="reset-branding-title">
+          <div className="branding-content">
+            <h1 className="branding-title">
               Créez un nouveau mot de passe sécurisé
             </h1>
-            <p className="reset-branding-description">
-                Protégez votre compte en choisissant un mot de passe fort et unique.
+            <p className="branding-description">
+              Protégez votre compte en choisissant un mot de passe fort et unique.
             </p>
           </div>
 
           {/* Footer */}
-          <div className="reset-branding-footer">
-            <div className="reset-language-selector">
+          <div className="branding-footer">
+            <div className="language-selector">
               <span>🇬🇧</span>
               <span>English</span>
               <span>▾</span>
             </div>
-            <div className="reset-footer-links">
-              <a href="#" className="reset-footer-link">Termes</a>
-              <a href="#" className="reset-footer-link">Contactez-nous</a>
+            <div className="footer-links">
+              <a href="#" className="footer-link">Termes</a>
+              <a href="#" className="footer-link">Contactez-nous</a>
             </div>
           </div>
         </div>
 
         {/* COLONNE DROITE - FORMULAIRE */}
-        <div className="reset-form-section">
-          {!isSubmitted ? (
-            <>
-              {/* Header avec icône */}
-              <div className="reset-form-header">
-                <h2 className="reset-form-title">Créez un nouveau mot de passe</h2>
-                <p className="reset-form-subtitle">
-                  Votre nouveau mot de passe doit être différent des mots de passe précédemment utilisés.
-                </p>
-              </div>
+        <div className='form-section'>
+          {/* Header */}
+          <div className="form-header">
+            <h2 className="form-title">Créez un nouveau mot de passe</h2>
+            <p className="form-subtitle">
+              Votre nouveau mot de passe doit être différent des mots de passe précédemment utilisés.
+            </p>
+          </div>
+          <div className="forgot-password-form no-scrollbar">
+            {/* Champ Email */}
 
-              {/* Formulaire */}
-              <div className="reset-password-form">
-                {/* Champ Nouveau mot de passe */}
-                <div className="reset-form-group">
-                  <label className="reset-form-label" htmlFor="password">Nouveau mot de passe</label>
-                  <div className="reset-input-wrapper">
-                    <svg className="reset-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                    </svg>
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      id="password"
-                      name="password"
-                      className="reset-form-input"
-                      placeholder="••••••••"
-                      value={formData.password}
-                      onChange={handleChange}
-                    />
-                    <button
-                      type="button"
-                      className="reset-toggle-password"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-                          <line x1="1" y1="1" x2="23" y2="23"/>
-                        </svg>
-                      ) : (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                          <circle cx="12" cy="12" r="3"/>
-                        </svg>
-                      )}
-                    </button>
-                  </div>
+            <InputConnexion
+              type={"email"}
+              id={"email"}
+              name={"email"}
+              label={"Adresse mail"}
+              icon={"Mail"}
+              className={"form-input"}
+              placeholder={"name@example.com"}
+              value={formData.email}
+              onChange={handleChange}
+            />
 
-                  {/* Indicateur de force */}
-                  {formData.password && (
-                    <>
-                      <div className="reset-password-strength">
-                        <div className={`reset-strength-bar ${formData.password.length >= 3 ? 'weak' : ''}`}></div>
-                        <div className={`reset-strength-bar ${formData.password.length >= 6 ? 'medium' : ''}`}></div>
-                        <div className={`reset-strength-bar ${formData.password.length >= 8 ? 'strong' : ''}`}></div>
-                        <div className={`reset-strength-bar ${formData.password.length >= 10 ? 'strong' : ''}`}></div>
-                      </div>
-                      <div className={`reset-strength-text ${
-                        formData.password.length >= 10 ? 'strong' : 
-                        formData.password.length >= 8 ? 'medium' : 'weak'
-                      }`}>
-                        {formData.password.length >= 10 ? '✓ Strong password' : 
-                         formData.password.length >= 8 ? 'Medium strength' : 'Weak password'}
-                      </div>
-                    </>
-                  )}
+            {/* Champ Mot de passe */}
+            <PasswordInput
+              id={"password"}
+              name={"password"}
+              className={"form-input"}
+              label={"Mot de passe"}
+              comp={confirmPassword}
+              checkPasswordCompatibility={checkPasswordCompatibility}
+              setPassword={setPassword}
+              value={password}
 
-                  {/* Requirements */}
-                  <div className="reset-requirements">
-                    <div className={`reset-requirement ${formData.password.length >= 8 ? 'met' : ''}`}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="20 6 9 17 4 12"/>
-                      </svg>
-                      <span>Minimum 8 caractères</span>
-                    </div>
-                    <div className={`reset-requirement ${/[A-Z]/.test(formData.password) ? 'met' : ''}`}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="20 6 9 17 4 12"/>
-                      </svg>
-                      <span>Une lettre majuscule</span>
-                    </div>
-                    <div className={`reset-requirement ${/[0-9]/.test(formData.password) ? 'met' : ''}`}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="20 6 9 17 4 12"/>
-                      </svg>
-                      <span>Un nombre</span>
-                    </div>
+            />
+
+            {/* Champ Confirmation mot de passe */}
+            <PasswordInput
+              id={"passwconfirmPasswordord"}
+              name={"confirmPassword"}
+              className={"form-input"}
+              label={"Confirmation du mot de passe"}
+              comp={password}
+              checkPasswordCompatibility={checkPasswordCompatibility}
+              setPassword={setConfirmPassword}
+              value={confirmPassword}
+
+            />
+
+            <span
+              style={{
+                width: '100%',
+                display: `${password == '' && confirmPassword == '' ? 'none' : 'inline'}`,
+                color: `${match ? 'green' : 'red'}`
+              }}>
+              {match ? 'Mot de passes identiques ' : 'Vos mot de passes sont differents'}
+            </span>
+
+            {/* Bouton Reset */}
+            <button
+              type="button"
+              className="forgot-reset-button"
+              onClick={(e) => handleSubmit(e)}
+              disabled={!email || isSubmitted}
+            >
+              {isSubmitted ? (
+                <>
+                  <CircleCheckBig />
+                  Mot de passe reinitialisé
+                </>
+              ) : (
+                <>
+                  Réinitialiser
+                  <ArrowRight />
+                </>
+              )}
+            </button>
+
+            {/* Message de succès (si email envoyé) */}
+            {isSubmitted && (
+              <div className="forgot-success-message">
+                <CircleCheckBig stroke='#1883ff' />
+                <div className="forgot-success-content">
+                  <div className="forgot-success-title">Vérifiez votre boite mail !</div>
+                  <div className="forgot-success-text">
+                    Nous avons envoyé des instructions de réinitialisation du mot de passe à <strong>{email}</strong>.
+                    Veuillez vérifier votre boîte de réception et votre dossier spam.
                   </div>
                 </div>
+              </div>
+            )}
 
-                {/* Champ Confirmation mot de passe */}
-                <div className="reset-form-group">
-                  <label className="reset-form-label" htmlFor="confirmPassword">Confirmez votre mot de passe</label>
-                  <div className="reset-input-wrapper">
-                    <svg className="reset-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                    </svg>
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      className={`reset-form-input ${
-                        formData.confirmPassword ? (passwordsMatch ? 'valid' : 'invalid') : ''
-                      }`}
-                      placeholder="••••••••"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                    />
-                    <button
-                      type="button"
-                      className="reset-toggle-password"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    >
-                      {showConfirmPassword ? (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-                          <line x1="1" y1="1" x2="23" y2="23"/>
-                        </svg>
-                      ) : (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                          <circle cx="12" cy="12" r="3"/>
-                        </svg>
-                      )}
-                    </button>
+            {/* Message de succès (si email envoyé) */}
+            {(!isSubmitted && error != "") && (
+              <div className="forgot-error-message">
+                <X stroke='red' />
+                <div className="forgot-error-content">
+                  <div className="forgot-error-title">E-mail non envoyé !</div>
+                  <div className="forgot-error-text">
+                    {`Il semble qu'une erreur s'est produite lors de l'envoi du mail: ${error}.`}
                   </div>
-                  {formData.confirmPassword && !passwordsMatch && (
-                    <div className="reset-strength-text weak">
-                      ✗ Les mots de passe ne correspondent pas
-                    </div>
-                  )}
-                  {passwordsMatch && (
-                    <div className="reset-strength-text strong">
-                      ✓ Les mots de passe correspondent
-                    </div>
-                  )}
                 </div>
+              </div>
+            )}
 
-                {/* Bouton Reset */}
-                <button 
-                  type="button" 
-                  className="reset-submit-button" 
-                  onClick={handleSubmit}
-                  disabled={!passwordsMatch || formData.password.length < 8}
-                >
-                  Réinitialiser le mot de passe
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
-                </button>
-              </div>
-
-              {/* Lien retour connexion */}
-              <div className="reset-back-link">
-                <a href="#">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
-                  </svg>
-                  Retour à la connexion
-                </a>
-              </div>
-            </>
-          ) : (
-            <>
-              {/* Message de succès */}
-              <div className="reset-success-message">
-                <div className="reset-success-icon-large">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
-                </div>
-                <h2 className="reset-success-title">Réinitialisation du mot de passe réussie !</h2>
-                <p className="reset-success-text">
-                  Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe 
-                  et continuer à gérer vos codes QR.
-                </p>
-                <button className="reset-success-button">
-                  Aller à la connexion
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
+            {/* Lien retour connexion */}
+            < div className="forgot-back-link">
+              <a href="/signin">
+                <ArrowLeft />
+                Retour à la connexion
+              </a>
+            </div>
+          </div>
+        </div >
+      </div >
+    </div >
   );
 }
