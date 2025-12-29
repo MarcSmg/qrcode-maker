@@ -5,8 +5,8 @@ import {
     ChartBar,
     Clock,
 } from "lucide-react";
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function Sidebar({ setCurrentMenu }) {
     const menuItems = [
@@ -14,13 +14,31 @@ function Sidebar({ setCurrentMenu }) {
         { icon: ChartBar, label: "Statistiques" },
         { icon: Clock, label: "Historique" },
     ];
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
-    const handleNavigate = (link) => {
-        navigate(link);
-    }
 
-    const { logout } = useAuth();
+    const { token, logout } = useAuth();
+
+    const handleLogout = async () => {
+        try {
+            const res = await fetch("http://localhost:8000/api/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+            });
+
+            if (res.ok) {
+                logout(); // clears token from context & localStorage
+                navigate("/signin");
+            } else {
+                console.error("Logout failed");
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     const [activeItemIndex, setActiveItemIndex] = useState(0)
 
@@ -43,7 +61,7 @@ function Sidebar({ setCurrentMenu }) {
             </nav>
 
             <div className="sidebar-footer">
-                <a onClick={logout} className="nav-item logout">
+                <a onClick={handleLogout} className="nav-item logout">
                     <LogOut size={20} />
                     <span>Log Out</span>
                 </a>
