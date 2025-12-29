@@ -3,15 +3,15 @@ import * as Icons from "lucide-react";
 import '../styles/Signup.css';
 
 function InputConnexion({
-    id,
-    name,
-    className,
-    label,
-    value,
+    id ="",
+    name = "",
+    className = "",
+    label = "Label",
+    value = "",
     onChange,
-    placeholder,
-    type,
-    icon,
+    placeholder = "This is an input",
+    type = "text",
+    icon = "Pen",
 
 }) {
 

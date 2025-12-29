@@ -159,7 +159,7 @@ function SignIn() {
             <h2 className="form-title">Bon retour!</h2>
             <p className="form-subtitle">Connectez-vous pour continuer.</p>
           </div>
-          <div className="signup-form">
+          <div className="signup-form no-scrollbar">
 
             {/* Champ Email */}
 

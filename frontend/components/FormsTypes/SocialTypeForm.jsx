@@ -2,19 +2,19 @@ import '../../styles/Forms.css';
 import InputConnexion from '../InputConnexion';
 
 
-function URLTypeForm() {
+function SocialTypeForm() {
 
 
     return (
-        <div className="url-type-container">
-            <div className="url-type-header">
-                <h2>Entrez votre lien a convertir en code QR</h2>
+        <div className="social-type-container">
+            <div className="social-type-header">
+                <h2>Entrez le lien de votre profil</h2>
                 <div className='input-container'>
                     <InputConnexion
                         icon='Link'
                         className={'form-input'}
-                        label={"Entrez votre lien"}
-                        placeholder={"https://..."}
+                        label={"Lien de profil"}
+                        placeholder={"https://facebook.com/..."}
                     />
                 </div>
 
@@ -23,4 +23,4 @@ function URLTypeForm() {
     );
 };
 
-export default URLTypeForm
+export default SocialTypeForm

@@ -90,7 +90,7 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     gap: 10px;
 }
 
@@ -141,5 +141,16 @@ h2 {
 .option-card p {
     font-size: 14px;
     color: #757575;
+
+}
+
+@media (max-width: 640px) {
+    .qrtypes-container{
+        grid-template-columns: 1fr;
+        margin-bottom: 50px;
+    }
+    .breadcrumb{
+        display: none;
+    }
 
 }

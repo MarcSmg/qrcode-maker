@@ -152,7 +152,9 @@ body {
 
 /* COLONNE DROITE - FORMULAIRE */
 .form-section {
-  max-height: max-content;
+  position: relative;
+  height: max-content;
+  max-height: 72vh;
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -170,7 +172,7 @@ body {
 }
 
 .form-title {
-  font-size: 1.7em;
+  font-size: clamp(20px, 4vh, 40px);
   font-weight: 700;
   color: #313131;
   letter-spacing: -0.5px;
@@ -178,18 +180,20 @@ body {
 }
 
 .form-subtitle {
-  font-size: 1em;
+  font-size: clamp(.5em, 2vh, 1.2em);
   color: #979797;
 }
 
 /* FORMULAIRE */
 .signup-form {
+  height: max-content;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   padding: 30px;
   padding-top: 20px;
+  overflow-y: scroll;
 }
 
 .form-group {
@@ -232,7 +236,7 @@ body {
   padding: 14px 16px 14px 0;
   border: none;
   font-family: "Inter", sans-serif;
-  background: white;
+  background: transparent;
   color: #042e7b;
 }
 

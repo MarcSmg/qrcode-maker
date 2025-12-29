@@ -43,18 +43,18 @@ function Edition() {
       <div className='breadcrumb'>
         {steps.map((element) => {
           return (
-            <>
-              <div key={element.id} className={`breadcrumb-element ${activeElementId == element.id ? 'active-element' : ''}`}>
+            <div key={element.id} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              <div className={`breadcrumb-element ${activeElementId == element.id ? 'active-element' : ''}`}>
                 <span>{element.id}</span>
                 <p>{element.title}</p>
               </div>
               {element.id < 4 && <ChevronRight width={'30px'} height={'30px'} />}
-            </>
+            </div>
           )
         })}
       </div>
       <div className='main-content no-scrollbar'>
-        {activeElementId == 1 && <QrType setQrType={setQrType} />}
+        {activeElementId == 1 && <QrType setQrType={setQrType} setActiveElementId={setActiveElementId} />}
         {activeElementId == 2 && <QrInfos qrType={qrType} />}
         {activeElementId == 3 && <QrCustom />}
         {activeElementId == 4 && <QrDownload />}

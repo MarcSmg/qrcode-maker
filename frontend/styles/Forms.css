@@ -7,14 +7,20 @@
     --text-secondary: #9CA3AF;
 }
 
+/*/////////////////////*/
+/* PDF type */
+/*/////////////////////*/
+
+
 .pdf-type-container {
     font-family: 'Inter', sans-serif;
-    background-color: white;
+    background-color: #2563eb14;
+    border: 2px solid #2564eb28;
     border-radius: 24px;
     padding: 32px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     max-width: 900px;
-    margin: 40px auto;
+    margin: 10px auto;
     box-sizing: border-box;
 }
 
@@ -43,7 +49,7 @@
 /* Upload Area */
 .upload-area {
     flex: 1.2;
-    border: 2px dashed #E5E7EB;
+    border: 2px dashed #c5d9ff;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
@@ -51,18 +57,18 @@
     align-items: center;
     padding: 40px;
     text-align: center;
-    background-color: #FAFAFA;
+    background-color: #f7fbff;
     transition: all 0.2s;
 }
 
 .upload-area:hover {
     border-color: var(--primary-blue);
-    background-color: #F8FAFF;
+    background-color: #f7fbff;
 }
 
 .upload-area.drag-active {
     border-color: var(--primary-blue);
-    background-color: #EBF1FF;
+    background-color: #f7fbff;
     transform: scale(1.01);
 }
 
@@ -229,4 +235,130 @@
 .remove-btn:hover {
     background-color: #F3F4F6;
     color: #EF4444;
+}
+
+/*/////////////////////*/
+/* URL type */
+/*/////////////////////*/
+
+.url-type-container .input-container {
+    width: 60vw;
+    max-width: 800px;
+    background-color: white;
+    padding: 60px 30px;
+    border-radius: 20px;
+}
+
+@media (max-width: 640px) {
+    .url-type-container .input-container {
+        width: 100vw;
+    }
+
+}
+
+/*/////////////////////*/
+/* Social type */
+/*/////////////////////*/
+
+.social-type-container .input-container {
+    width: 60vw;
+    max-width: 800px;
+    background-color: white;
+    padding: 60px 30px;
+    border-radius: 20px;
+}
+
+@media (max-width: 640px) {
+    .social-type-container .input-container {
+        width: 100vw;
+    }
+
+}
+
+
+/*/////////////////////*/
+/* Mp3 type */
+/*/////////////////////*/
+
+.mp3-type-container .input-container {
+    width: 60vw;
+    max-width: 800px;
+    background-color: white;
+    padding: 60px 30px;
+    border-radius: 20px;
+}
+
+@media (max-width: 640px) {
+    .mp3-type-container .input-container {
+        width: 100vw;
+    }
+
+}
+
+
+/*/////////////////////*/
+/* Text type */
+/*/////////////////////*/
+
+.text-type-container .input-container {
+    width: 60vw;
+    max-width: 800px;
+    background-color: white;
+    padding: 60px 30px;
+    border-radius: 20px;
+}
+
+@media (max-width: 640px) {
+    .text-type-container .input-container {
+        width: 100vw;
+    }
+
+}
+
+/*/////////////////////*/
+/* Email type */
+/*/////////////////////*/
+
+.email-type-container .input-container {
+    width: 60vw;
+    max-width: 800px;
+    background-color: white;
+    padding: 60px 30px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.email-type-container .inline-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.email-type-container textarea {
+    background-color: transparent;
+    resize: none;
+    border: 2px solid #e3f2ff;
+    border-radius: 12px;
+    min-height: 125px;
+    padding: 20px;
+    outline: none;
+}
+
+.email-type-container textarea:focus {
+  border-color: #1883ff;
+  box-shadow: 0 0 0 4px rgba(24, 131, 255, 0.1);
+}
+
+@media (max-width: 640px) {
+    .email-type-container .input-container {
+        width: 100vw;
+    }
+
+    .email-type-container .inline-container {
+        flex-direction: column;
+    }
+
 }

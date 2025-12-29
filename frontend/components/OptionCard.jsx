@@ -11,15 +11,20 @@ function OptionCard({ icon, title, description, onClick }) {
   return (
     <div className='option-card' onClick={onClick}>
       <div style={{
-        padding:'10px',
-        backgroundColor:'#2564ed2b',
-        borderRadius:'100%',
+        padding: '10px',
+        backgroundColor: '#2564ed2b',
+        borderRadius: '100%',
       }}>
-        <IconComponent width={35} height={35} color={'#2564edab'}/>
+        <IconComponent width={35} height={35} color={'#2564edab'} />
       </div>
       <div>
         <h3>{title}</h3>
-        <p>{description}</p>
+        <p style={{
+          fontSize:'.95em',
+          paddingInline: '30px',
+          textAlign: 'center',
+          color: '#0000003e',
+        }}>{description}</p>
       </div>
     </div>
   )
