@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 
 function isTokenValid(token) {
@@ -9,16 +10,15 @@ function isTokenValid(token) {
         return false;
     }
 }
-export default function ProtectedRoute() {
 
-    const token = localStorage.getItem("token");
+export default function ProtectedRoute() {
+    const { token } = useAuth();
 
     const isAuth = token && isTokenValid(token);
 
     if (!isAuth) {
         return <Navigate to="/signin" replace />;
     }
-
 
     return <Outlet />;
 }
