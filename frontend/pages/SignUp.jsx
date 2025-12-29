@@ -4,7 +4,7 @@ import LogoAATW from "../public/logo.svg";
 import { UserCircle, Mail, Lock, Eye, EyeOff, ArrowRight, ChevronDown, LoaderCircle } from 'lucide-react'
 import InputConnexion from '../components/InputConnexion';
 import PasswordInput from '../components/PasswordInput';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 export default function Signup() {
 
@@ -20,12 +20,6 @@ export default function Signup() {
     email: "",
     password: "",
   });
-  const navigate = useNavigate()
-
-
-  const handleNavigate = (link) => {
-    navigate(link);
-  }
 
   const [loading, setLoading] = useState(false);
   const [match, setMatch] = useState(false);
@@ -41,7 +35,7 @@ export default function Signup() {
   };
 
   const checkPasswordCompatibility = (e, current, comp) => {
-    
+
     const { value } = e.target;
     console.log('current: ', current);
     console.log('comp: ', comp);
@@ -117,7 +111,7 @@ export default function Signup() {
       }
 
       localStorage.setItem("token", data.token);
-      handleNavigate("/dashboard");
+      <Navigate to="/dashboard" />
 
 
       console.log(

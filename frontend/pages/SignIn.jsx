@@ -4,16 +4,11 @@ import '../styles/SignIn.css'
 import '../styles/Signup.css'
 import InputConnexion from '../components/InputConnexion';
 import PasswordInput from '../components/PasswordInput';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 function SignIn() {
   const errorOut = useRef(null)
   const [password, setPassword] = useState('')
-  const navigate = useNavigate()
-
-  const handleNavigate = (link) => {
-    navigate(link);
-  }
 
   const [formData, setFormData] = useState({
     email: "",
@@ -54,7 +49,7 @@ function SignIn() {
         throw new Error(data.message || "Erreur lors de la connexion");
       }
       localStorage.setItem("token", data.token);
-      handleNavigate("/dashboard");
+      <Navigate to="/dashboard"/>
 
     } catch (err) {
       console.log("erreur lors de la connexion:", err.message);

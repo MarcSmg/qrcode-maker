@@ -56,7 +56,7 @@ function Edition() {
       </div>
       <div className='main-content no-scrollbar'>
         {activeElementId == 1 && <QrType setQrType={setQrType} setActiveElementId={setActiveElementId} />}
-        {activeElementId == 2 && <QrInfos qrType={qrType} setData={setData}/>}
+        {activeElementId == 2 && <QrInfos qrType={qrType} data={data} setData={setData}/>}
         {activeElementId == 3 && <QrCustom data={data}/>}
         {activeElementId == 4 && <QrDownload />}
       </div>

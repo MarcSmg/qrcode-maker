@@ -3,8 +3,8 @@ import '../../styles/Forms.css';
 import InputConnexion from '../InputConnexion';
 
 
-function URLTypeForm({ setData }) {
-    const [currentData, setCurrentData] = useState('')
+function URLTypeForm({ data, setData }) {
+    const [currentData, setCurrentData] = useState(data)
 
     const handleChange = (e) => {
         const { value } = e.target;

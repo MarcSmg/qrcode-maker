@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import QRCodeStyling from "qr-code-styling";
 
 
-export default function QrCustom({data}) {
+export default function QrCustom({ data }) {
 
   const qrCode = new QRCodeStyling({
     width: 260,
     height: 260,
-    data: "https://Get-the-fuck-out-nigga.com",
+    data: data,
     dotsOptions: {
       type: "square",
       color: "#000000",
@@ -36,6 +36,7 @@ export default function QrCustom({data}) {
     qrCode.update({
       dotsOptions: { type },
     });
+    console.log("Updated")
   };
 
   const handleColorChange = color => {
@@ -215,13 +216,13 @@ export default function QrCustom({data}) {
 
             {openId === "pattern" && (
               <div className="content">
-                <button onClick={() => handlePatternChange("square")}>
+                <button onClick={() => { handlePatternChange("square"); console.log("Carre") }}>
                   Carré
                 </button>
-                <button onClick={() => handlePatternChange("dots")}>
+                <button onClick={() => { handlePatternChange("dots"); console.log("Pounts") }}>
                   Points
                 </button>
-                <button onClick={() => handlePatternChange("rounded")}>
+                <button onClick={() => { handlePatternChange("rounded"); console.log("Arrondi") }}>
                   Arrondi
                 </button>
               </div>
