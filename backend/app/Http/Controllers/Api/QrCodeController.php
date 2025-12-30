@@ -68,7 +68,7 @@ class QrCodeController extends Controller
             'content' => $content,
             'short_code' => $this->generateUniqueShortCode(),
             'scan_limit' => $validated['scan_limit'] ?? null,
-            'design' => $validated['design'] ?? null,
+            'design' => $validated['design'] ?? [],
             'metadata' => $validated['metadata'] ?? [],
         ]);
 
@@ -77,6 +77,31 @@ class QrCodeController extends Controller
             'data' => $qrCode->load('type'),
         ], 201);
     }
+
+    public function storePdf(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'file' => 'required|file|mimes:pdf|max:10240',
+        ]);
+
+        $path = $request->file('file')->store('pdfs/qr');
+
+        $qrCode = QrCode::create([
+            'user_id' => Auth::id(),
+            'type_id' => 4,
+            'name' => $validated['name'],
+            'content' => $path,
+            'short_code' => Str::random(8),
+            'scan_count' => 0,
+            'is_active' => true,
+        ]);
+
+        return response()->json([
+            'data' => $qrCode->load('type'),
+        ], 201);
+    }
+
 
     // Générer l'image du QR code
     public function generateQrCode($shortCode)

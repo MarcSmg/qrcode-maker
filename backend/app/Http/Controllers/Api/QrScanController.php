@@ -135,7 +135,10 @@ class QrScanController extends Controller
     }
 
     protected function handlePdf(QrCode $qrCode){
-        return redirect()->away($qrCode->content);
+
+        return response()->file(
+            storage_path('app/private' . $qrCode->content)
+        );
     }
 
 }
