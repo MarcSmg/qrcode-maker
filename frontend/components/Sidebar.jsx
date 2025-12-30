@@ -53,7 +53,7 @@ function Sidebar({ setCurrentMenu }) {
 
             <nav className="sidebar-nav">
                 {menuItems.map((item, index) => (
-                    <a key={index} href="#" className={`nav-item ${activeItemIndex == index ? "active" : ""}`} onClick={() => { setActiveItemIndex(index); setCurrentMenu(index) }}>
+                    <a key={index} href="#" className={`nav-item ${activeItemIndex == index ? "active" : ""}`} onClick={() => { setActiveItemIndex(index); setCurrentMenu(index); localStorage.setItem('currentMenu', index) }}>
                         <item.icon size={20} />
                         <span>{item.label}</span>
                     </a>

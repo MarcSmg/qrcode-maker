@@ -4,30 +4,35 @@ import '../../styles/Forms.css';
 
 function PDFTypeForm({ setData }) {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [customName, setCustomName] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
 
-  // Update parent data whenever file changes
+  // Update parent whenever file or name changes
   useEffect(() => {
     if (!selectedFile) {
       setData((prev) => ({
         ...prev,
-        content: "",
-        name: "",
+        file: null,
+        name: '',
+        content: '',
       }));
       return;
     }
 
-    // Fake short URL for live preview (real one comes after creation)
-    const previewShortUrl = "https://qrit.app/r/abc123";
+    // This will be replaced by real code_url after backend response
+    const placeholderUrl = 'https://qrit.app/r/abc123';
 
     setData((prev) => ({
       ...prev,
-      name: selectedFile.name.replace(/\.pdf$/i, ""), // clean name without extension
-      content: previewShortUrl, // QR points to tracking link
-      file: selectedFile, // pass file for final submission
+      // Important: pass the actual File object
+      file: selectedFile,
+      // Use custom name or fallback to filename
+      name: customName || selectedFile.name.replace(/\.pdf$/i, ''),
+      // For live preview in Step 3
+      content: placeholderUrl,
     }));
-  }, [selectedFile, setData]);
+  }, [selectedFile, customName, setData]);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -42,23 +47,29 @@ function PDFTypeForm({ setData }) {
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-
     const file = e.dataTransfer.files[0];
-    if (file && file.type === "application/pdf") {
-      setSelectedFile(file);
-    } else {
-      alert("Veuillez déposer un fichier PDF valide");
-    }
+    validateAndSetFile(file);
   };
 
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
-    if (file && file.type === "application/pdf") {
-      setSelectedFile(file);
-    } else if (file) {
-      alert("Type de fichier non supporté. Veuillez sélectionner un PDF.");
-      e.target.value = "";
+    validateAndSetFile(file);
+  };
+
+  const validateAndSetFile = (file) => {
+    if (!file) return;
+
+    if (file.type !== 'application/pdf') {
+      alert('Veuillez sélectionner un fichier PDF valide.');
+      return;
     }
+
+    if (file.size > 10 * 1024 * 1024) { // 10MB limit (adjust to your backend)
+      alert('Le fichier est trop volumineux (max 10 Mo).');
+      return;
+    }
+
+    setSelectedFile(file);
   };
 
   const handleBrowseClick = () => {
@@ -67,27 +78,47 @@ function PDFTypeForm({ setData }) {
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+    setCustomName('');
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const formatFileSize = (bytes) => {
-    if (bytes < 1024) return bytes + " B";
-    else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB";
-    else return (bytes / 1048576).toFixed(1) + " MB";
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
   };
 
   return (
     <div className="pdf-type-container">
       <div className="pdf-type-header">
-        <h2>Importez votre PDF</h2>
-        <p style={{ color: "#64748b", marginBottom: "24px" }}>
+        <h2>QR Code PDF</h2>
+        <p style={{ color: '#64748b', marginBottom: '24px' }}>
           Transformez votre document en QR code téléchargeable avec suivi des scans
         </p>
       </div>
 
       <div className="pdf-type-content">
+        {/* Optional name input */}
+        <div style={{ marginBottom: '20px' }}>
+          <label style={{ fontWeight: 600, display: 'block', marginBottom: '8px' }}>
+            Nom du document (facultatif)
+          </label>
+          <input
+            type="text"
+            placeholder="Ex: Contrat 2025, Menu, Brochure..."
+            value={customName}
+            onChange={(e) => setCustomName(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '12px',
+              borderRadius: '8px',
+              border: '1px solid #cbd5e1',
+              fontSize: '15px',
+            }}
+          />
+        </div>
+
+        {/* Upload zone */}
         <div
           className={`upload-area ${isDragging ? 'drag-active' : ''}`}
           onDragOver={handleDragOver}
@@ -103,7 +134,7 @@ function PDFTypeForm({ setData }) {
           />
 
           <div className="upload-icon">
-            <CloudUpload size={48} color={isDragging ? "#546FFF" : "#9CA3AF"} />
+            <CloudUpload size={48} color={isDragging ? '#546FFF' : '#9CA3AF'} />
           </div>
 
           <div className="upload-text">
@@ -117,6 +148,7 @@ function PDFTypeForm({ setData }) {
           </button>
         </div>
 
+        {/* Selected file preview */}
         <div className="file-list-section">
           <h3>Fichier importé</h3>
 
@@ -143,28 +175,33 @@ function PDFTypeForm({ setData }) {
                 </div>
               </div>
 
-              <button className="remove-btn" onClick={handleRemoveFile} title="Supprimer">
+              <button className="remove-btn" onClick={handleRemoveFile}>
                 <X size={18} />
               </button>
             </div>
           )}
 
           {selectedFile && (
-            <div style={{ marginTop: "20px", padding: "16px", background: "#f0f9ff", borderRadius: "12px", textAlign: "center" }}>
-              <p style={{ fontSize: "14px", color: "#0369a1", margin: "0 0 8px" }}>
-                <strong>Prévisualisation du lien court :</strong>
-              </p>
+            <div style={{
+              marginTop: '24px',
+              padding: '16px',
+              background: '#f0f9ff',
+              borderRadius: '12px',
+              textAlign: 'center',
+              fontSize: '14px'
+            }}>
+              <strong>Prévisualisation du lien court :</strong><br/>
               <code style={{
-                background: "#e0f2fe",
-                color: "#0c4a6e",
-                padding: "8px 12px",
-                borderRadius: "8px",
-                fontSize: "15px",
-                wordBreak: "break-all",
+                background: '#e0f2fe',
+                color: '#0c4a6e',
+                padding: '8px 12px',
+                borderRadius: '8px',
+                display: 'inline-block',
+                marginTop: '8px'
               }}>
                 https://qrit.app/r/abc123
               </code>
-              <p style={{ fontSize: "13px", color: "#64748b", margin: "8px 0 0" }}>
+              <p style={{ margin: '8px 0 0', fontSize: '13px', color: '#64748b' }}>
                 Le vrai lien sera généré après création
               </p>
             </div>
