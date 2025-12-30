@@ -17,6 +17,9 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('/dashboard', fn () =>'Email verified access');
 }); 
 
+// Stats
+Route::get('/qrcodes/stats', [QrCodeStatsController::class, 'index']);
+
 // User related routes
 
 Route::middleware('auth:sanctum')->get('/me', [AuthController::class, 'me']);
@@ -53,7 +56,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Génération de QR code
     Route::get('/qrcodes/generate/{shortCode}', [QrCodeController::class, 'generateQrCode']);
     
-    Route::get('/qrcodes/stats/{qrcode}/', [QrCodeController::class, 'getStats']);
+    Route::get('/qrcodes/stats/{qrcode}', [QrCodeController::class, 'getStats']);
     // Routes spécifiques par type de QR code
     // Route::prefix('qrcodes')->group(function () {
     //     // Création de QR code de type texte
