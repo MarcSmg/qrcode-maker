@@ -76,7 +76,7 @@ Authorization: Bearer <token>
 
 ## Mails (développement)
 
-Le projet utilise Mailhog pour intercepter les emails (reset password, verification).
+Le projet utilise Mailhog pour intercepter les emails (reset password pour les mots de passes oubliés).
 Mailhog est un outil de developpement qui imite les services de mail comme gmail.
 👉 Aucun email réel n’est envoyé.
 
@@ -159,3 +159,4 @@ MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS="admin@qrit.app"
 MAIL_FROM_NAME="QrIt"
 ```
+

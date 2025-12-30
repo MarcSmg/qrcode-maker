@@ -5,11 +5,13 @@ import Sidebar from "../components/Sidebar";
 
 
 export default function Dashboard() {
-    const [currentMenu, setCurrentMenu] = useState(0)
+    console.log(JSON.parse(localStorage.getItem("currentMenu")));
+
+    const [currentMenu, setCurrentMenu] = useState(JSON.parse(localStorage.getItem("currentMenu")) || 0)
     return (
         <div className="dashboard-container">
             <Sidebar setCurrentMenu={setCurrentMenu} />
-            <MainContent currentMenu={currentMenu} setCurrentMenu={setCurrentMenu}/>
+            <MainContent currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />
         </div>
     );
 }

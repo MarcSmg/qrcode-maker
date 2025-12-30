@@ -1,257 +1,215 @@
-import React, { useState, useEffect } from 'react';
-import '../../styles/Stats.css';
+import React, { useState, useRef, useEffect } from 'react';
+import { CloudUpload, FileText, X } from 'lucide-react';
+import '../../styles/Forms.css';
 
-export default function Stats() {
-    const [statsData, setStatsData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+function PDFTypeForm({ setData }) {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [customName, setCustomName] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef(null);
 
-    useEffect(() => {
-        const fetchStats = async () => {
-            try {
-                setLoading(true);
-                setError(null);
-
-                const token = localStorage.getItem('token'); // Adjust if you store it elsewhere
-
-                const response = await fetch('http://localhost:8000/api/qrcodes/stats', {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        ...(token && { 'Authorization': `Bearer ${token}` }),
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Erreur ${response.status}`);
-                }
-
-                const result = await response.json();
-
-                // Transform the backend data into frontend format
-                const transformData = (dataArray) => {
-                    const map = {
-                        email: 0,
-                        link: 0,
-                        image: 0,
-                    };
-
-                    dataArray.forEach(item => {
-                        const type = item.type.toLowerCase(); // e.g., "Email" → "email"
-                        if (type.includes('email')) map.email = item.count;
-                        else if (type.includes('url') || type.includes('link') || type.includes('website')) map.link = item.count;
-                        else if (type.includes('image') || type.includes('pdf') || type.includes('mp3')) map.image = item.count;
-                        // Add more mappings if you have other types
-                    });
-
-                    return map;
-                };
-
-                const generatedByType = transformData(result.generated);
-                const scannedByType = transformData(result.scanned);
-                const activeByType = transformData(result.active);
-
-                const totalGenerated = Object.values(generatedByType).reduce((a, b) => a + b, 0);
-                const totalScanned = Object.values(scannedByType).reduce((a, b) => a + b, 0);
-                const activeQRCodes = Object.values(activeByType).reduce((a, b) => a + b, 0);
-
-                setStatsData({
-                    totalGenerated,
-                    totalScanned,
-                    activeQRCodes,
-                    generatedByType,
-                    scannedByType,
-                    activeByType,
-                });
-
-            } catch (err) {
-                console.error("Failed to load stats:", err);
-                setError("Impossible de charger les statistiques pour le moment.");
-
-                // Fallback to mock data so UI doesn't break
-                setStatsData({
-                    totalGenerated: 0,
-                    totalScanned: 0,
-                    activeQRCodes: 0,
-                    generatedByType: { email: 0, link: 0, image: 0 },
-                    scannedByType: { email: 0, link: 0, image: 0 },
-                    activeByType: { email: 0, link: 0, image: 0 },
-                });
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchStats();
-    }, []);
-
-    if (loading) {
-        return <div className="stats-container">Chargement des statistiques...</div>;
+  // Update parent whenever file or name changes
+  useEffect(() => {
+    if (!selectedFile) {
+      setData((prev) => ({
+        ...prev,
+        file: null,
+        name: '',
+        content: '',
+      }));
+      return;
     }
 
-    if (error) {
-        return <div className="stats-container"><p style={{ color: 'red' }}>{error}</p></div>;
+    // This will be replaced by real code_url after backend response
+    const placeholderUrl = 'https://qrit.app/r/abc123';
+
+    setData((prev) => ({
+      ...prev,
+      // Important: pass the actual File object
+      file: selectedFile,
+      // Use custom name or fallback to filename
+      name: customName || selectedFile.name.replace(/\.pdf$/i, ''),
+      // For live preview in Step 3
+      content: placeholderUrl,
+    }));
+  }, [selectedFile, customName, setData]);
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    validateAndSetFile(file);
+  };
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    validateAndSetFile(file);
+  };
+
+  const validateAndSetFile = (file) => {
+    if (!file) return;
+
+    if (file.type !== 'application/pdf') {
+      alert('Veuillez sélectionner un fichier PDF valide.');
+      return;
     }
 
-    return (
-        <div className="stats-container">
-            <div className="stats-header">
-                <h2 className="stats-title">Statistiques</h2>
-                <p className="stats-subtitle">
-                    Vue d'ensemble de l'activité de vos QR codes
-                </p>
-            </div>
+    if (file.size > 10 * 1024 * 1024) { // 10MB limit (adjust to your backend)
+      alert('Le fichier est trop volumineux (max 10 Mo).');
+      return;
+    }
 
-            <div className='stats-cards-container no-scrollbar'>
-                <div className="stats-cards-grid">
-                    {/* 1. CODES GÉNÉRÉS */}
-                    <div className="stats-card">
-                        <div className="stats-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                <rect x="3" y="3" width="7" height="7" rx="1" />
-                                <rect x="14" y="3" width="7" height="7" rx="1" />
-                                <rect x="3" y="14" width="7" height="7" rx="1" />
-                                <rect x="16" y="16" width="3" height="3" rx="0.5" />
-                            </svg>
-                        </div>
+    setSelectedFile(file);
+  };
 
-                        <div className="stats-card-content">
-                            <span className="stats-card-label">Codes générés</span>
-                            <span className="stats-card-value">{statsData.totalGenerated}</span>
-                            <span className="stats-card-period">ce mois</span>
+  const handleBrowseClick = () => {
+    fileInputRef.current.click();
+  };
 
-                            <div className="stats-card-details">
-                                <div className="stats-card-details-item">
-                                    <div className="stats-card-details-item-label">
-                                        <div className="stats-card-details-item-icon">@</div>
-                                        <span>Email</span>
-                                    </div>
-                                    <span className="stats-card-details-item-value">
-                                        {statsData.generatedByType.email}
-                                    </span>
-                                </div>
+  const handleRemoveFile = () => {
+    setSelectedFile(null);
+    setCustomName('');
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
 
-                                <div className="stats-card-details-item">
-                                    <div className="stats-card-details-item-label">
-                                        <div className="stats-card-details-item-icon">🔗</div>
-                                        <span>Lien</span>
-                                    </div>
-                                    <span className="stats-card-details-item-value">
-                                        {statsData.generatedByType.link}
-                                    </span>
-                                </div>
+  const formatFileSize = (bytes) => {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  };
 
-                                <div className="stats-card-details-item">
-                                    <div className="stats-card-details-item-label">
-                                        <div className="stats-card-details-item-icon">🖼</div>
-                                        <span>Image</span>
-                                    </div>
-                                    <span className="stats-card-details-item-value">
-                                        {statsData.generatedByType.image}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  return (
+    <div className="pdf-type-container">
+      <div className="pdf-type-header">
+        <h2>QR Code PDF</h2>
+        <p style={{ color: '#64748b', marginBottom: '24px' }}>
+          Transformez votre document en QR code téléchargeable avec suivi des scans
+        </p>
+      </div>
 
-                    {/* 2. CODES SCANNÉS */}
-                    <div className="stats-card">
-                        <div className="stats-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                <circle cx="12" cy="12" r="3" />
-                            </svg>
-                        </div>
-
-                        <div className="stats-card-content">
-                            <span className="stats-card-label">Codes scannés</span>
-                            <span className="stats-card-value">{statsData.totalScanned}</span>
-                            <span className="stats-card-period">total</span>
-
-                            <div className="stats-card-details">
-                                <div className="stats-card-details-item">
-                                    <div className="stats-card-details-item-label">
-                                        <div className="stats-card-details-item-icon">@</div>
-                                        <span>Email</span>
-                                    </div>
-                                    <span className="stats-card-details-item-value">
-                                        {statsData.scannedByType.email}
-                                    </span>
-                                </div>
-
-                                <div className="stats-card-details-item">
-                                    <div className="stats-card-details-item-label">
-                                        <div className="stats-card-details-item-icon">🔗</div>
-                                        <span>Lien</span>
-                                    </div>
-                                    <span className="stats-card-details-item-value">
-                                        {statsData.scannedByType.link}
-                                    </span>
-                                </div>
-
-                                <div className="stats-card-details-item">
-                                    <div className="stats-card-details-item-label">
-                                        <div className="stats-card-details-item-icon">🖼</div>
-                                        <span>Image</span>
-                                    </div>
-                                    <span className="stats-card-details-item-value">
-                                        {statsData.scannedByType.image}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* 3. CODES ACTIFS */}
-                    <div className="stats-card">
-                        <div className="stats-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                <polyline points="22 4 12 14.01 9 11.01" />
-                            </svg>
-                        </div>
-
-                        <div className="stats-card-content">
-                            <span className="stats-card-label">Codes actifs</span>
-                            <span className="stats-card-value">{statsData.activeQRCodes}</span>
-                            <span className="stats-card-period">en circulation</span>
-
-                            <div className="stats-card-details">
-                                <div className="stats-card-details-item">
-                                    <div className="stats-card-details-item-label">
-                                        <div className="stats-card-details-item-icon">@</div>
-                                        <span>Email</span>
-                                    </div>
-                                    <span className="stats-card-details-item-value">
-                                        {statsData.activeByType.email}
-                                    </span>
-                                </div>
-
-                                <div className="stats-card-details-item">
-                                    <div className="stats-card-details-item-label">
-                                        <div className="stats-card-details-item-icon">🔗</div>
-                                        <span>Lien</span>
-                                    </div>
-                                    <span className="stats-card-details-item-value">
-                                        {statsData.activeByType.link}
-                                    </span>
-                                </div>
-
-                                <div className="stats-card-details-item">
-                                    <div className="stats-card-details-item-label">
-                                        <div className="stats-card-details-item-icon">🖼</div>
-                                        <span>Image</span>
-                                    </div>
-                                    <span className="stats-card-details-item-value">
-                                        {statsData.activeByType.image}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div className="pdf-type-content">
+        {/* Optional name input */}
+        <div style={{ marginBottom: '20px' }}>
+          <label style={{ fontWeight: 600, display: 'block', marginBottom: '8px' }}>
+            Nom du document (facultatif)
+          </label>
+          <input
+            type="text"
+            placeholder="Ex: Contrat 2025, Menu, Brochure..."
+            value={customName}
+            onChange={(e) => setCustomName(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '12px',
+              borderRadius: '8px',
+              border: '1px solid #cbd5e1',
+              fontSize: '15px',
+            }}
+          />
         </div>
-    );
+
+        {/* Upload zone */}
+        <div
+          className={`upload-area ${isDragging ? 'drag-active' : ''}`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <input
+            type="file"
+            accept="application/pdf"
+            ref={fileInputRef}
+            onChange={handleFileSelect}
+            style={{ display: 'none' }}
+          />
+
+          <div className="upload-icon">
+            <CloudUpload size={48} color={isDragging ? '#546FFF' : '#9CA3AF'} />
+          </div>
+
+          <div className="upload-text">
+            {isDragging ? 'Déposez votre PDF ici' : 'Glissez et déposez votre PDF ici'}
+          </div>
+
+          <div className="upload-subtext">- OU -</div>
+
+          <button className="browse-btn" onClick={handleBrowseClick}>
+            Parcourir les fichiers
+          </button>
+        </div>
+
+        {/* Selected file preview */}
+        <div className="file-list-section">
+          <h3>Fichier importé</h3>
+
+          {!selectedFile ? (
+            <div className="no-file-message">
+              <p>Aucun fichier sélectionné</p>
+            </div>
+          ) : (
+            <div className="file-item">
+              <div className="file-icon pdf">
+                <FileText size={24} />
+              </div>
+
+              <div className="file-info">
+                <div className="file-name-row">
+                  <span className="file-name">{selectedFile.name}</span>
+                  <span className="file-status">Prêt</span>
+                </div>
+                <div className="file-size">
+                  {formatFileSize(selectedFile.size)}
+                </div>
+                <div className="progress-bar-bg">
+                  <div className="progress-bar-fill" style={{ width: '100%' }}></div>
+                </div>
+              </div>
+
+              <button className="remove-btn" onClick={handleRemoveFile}>
+                <X size={18} />
+              </button>
+            </div>
+          )}
+
+          {selectedFile && (
+            <div style={{
+              marginTop: '24px',
+              padding: '16px',
+              background: '#f0f9ff',
+              borderRadius: '12px',
+              textAlign: 'center',
+              fontSize: '14px'
+            }}>
+              <strong>Prévisualisation du lien court :</strong><br/>
+              <code style={{
+                background: '#e0f2fe',
+                color: '#0c4a6e',
+                padding: '8px 12px',
+                borderRadius: '8px',
+                display: 'inline-block',
+                marginTop: '8px'
+              }}>
+                https://qrit.app/r/abc123
+              </code>
+              <p style={{ margin: '8px 0 0', fontSize: '13px', color: '#64748b' }}>
+                Le vrai lien sera généré après création
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
+
+export default PDFTypeForm;

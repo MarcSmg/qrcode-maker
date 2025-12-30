@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 function Edition() {
   const navigate = useNavigate();
 
-  // Initialize edition state if not exists
   if (!localStorage.getItem('editionState')) {
     localStorage.setItem('editionState', '1');
   }
@@ -19,10 +18,12 @@ function Edition() {
     parseInt(localStorage.getItem('editionState'), 10) || 1
   );
 
-  const [qrType, setQrType] = useState('email');
+  const [qrType, setQrType] = useState('url');
 
   const [data, setData] = useState({
-    content: " ",
+    content: "",
+    name: "",
+    file: null,
     dotsOptions: { type: "square", color: "#000000" },
     backgroundOptions: { color: "#ffffff" },
     imageOptions: { crossOrigin: "anonymous", margin: 10 },
@@ -40,87 +41,124 @@ function Edition() {
     navigate(link);
   };
 
+  // Mapping des types vers type_id
+  const getTypeId = () => {
+    const map = {
+      url: 1,
+      website: 1,
+      mp3: 1,
+      text: 2,
+      facebook: 3,
+      social: 3,
+      email: 4,
+      pdf: 5,
+    };
+    return map[qrType] || 1;
+  };
 
-
-  const [typeId, setTypeId] = useState(1)
-
-  // NEW: Create QR on backend using native fetch
   const createQrCodeOnBackend = async () => {
-
-    (qrType == 'url' || qrType == 'mp3') && setTypeId(1);
-    (qrType == 'text') && setTypeId(2);
-    (qrType == 'facebook' || qrType == 'social') && setTypeId(3);
-    (qrType == 'pdf') && setTypeId(4);
-
-    // 'email'
-
     try {
       setLoading(true);
 
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert("Vous n'êtes pas connecté");
+        return false;
+      }
+
+      let response;
+      let result;
 
 
-      const payload = {
-        type_id: typeId,
-        name: `${qrType.charAt(0).toUpperCase() + qrType.slice(1)} test`,
-        content: data.content.trim() || "https://example.com",
-        scan_limit: 5,
-        design: {
-          color: data.dotsOptions.color.replace('#', ''),
-          background: data.backgroundOptions.color.replace('#', ''),
-          size: 260,
-          margin: 2
-        },
-        metadata: []
-      };
 
-      console.log('Token being sent:', localStorage.getItem('token'));
+      if (qrType === 'pdf' && data.file) {
+        const formData = new FormData();
+        formData.append('name', data.name || data.file.name.replace(/\.pdf$/i, ''));
+        formData.append('file', data.file);
 
-      const response = await fetch('http://localhost:8000/api/qrcodes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify(payload),
-      });
+        // Optionnels
+        if (data.scan_limit) formData.append('scan_limit', data.scan_limit);
+
+        if (data.dotsOptions || data.backgroundOptions) {
+          formData.append('design', JSON.stringify({
+            color: data.dotsOptions?.color?.replace('#', '') || '000000',
+            background: data.backgroundOptions?.color?.replace('#', '') || 'ffffff',
+            size: 260,
+            margin: 2,
+          }));
+        }
+
+        response = await fetch('http://localhost:8000/api/qrcodes/pdf', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json',
+          },
+          body: formData,
+        });
+      }
+      else {
+        const payload = {
+          type_id: getTypeId(),
+          name: data.name || `${qrType.charAt(0).toUpperCase() + qrType.slice(1)} QR`,
+          content: data.content.trim() || "https://example.com",
+          scan_limit: data.scan_limit || null,
+          design: {
+            color: data.dotsOptions?.color?.replace('#', '') || '000000',
+            background: data.backgroundOptions?.color?.replace('#', '') || 'ffffff',
+            size: 260,
+            margin: 2,
+          },
+        };
+
+        response = await fetch('http://localhost:8000/api/qrcodes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        });
+      }
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.log('Validation errors from backend:', errorData);
-        throw new Error(errorData.message || `HTTP ${response.status}`);
+        console.error('Erreur backend:', errorData);
+        alert(errorData.message || "Erreur lors de la création du QR code");
+        return false;
       }
 
-      const result = await response.json();
+      result = await response.json();
 
-      if (result?.data?.code_url) {
-        const shortUrl = result.data.code_url;
+      const shortUrl = result.data?.code_url;
 
-        // Update the QR content to the dynamic short URL
-        setData(prev => ({
-          ...prev,
-          content: shortUrl
-        }));
-
-        console.log("QR créé avec succès ! URL courte :", shortUrl);
-        return true;
-      } else {
-        throw new Error("Aucune code_url retournée par le serveur");
+      if (!shortUrl) {
+        alert("Le serveur n'a pas retourné de lien court");
+        return false;
       }
+
+      setData(prev => ({
+        ...prev,
+        content: shortUrl
+      }));
+
+      console.log("QR créé avec succès ! Lien court :", shortUrl);
+      return true;
+
     } catch (error) {
-      console.error("Erreur lors de la création du QR :", error);
-      alert("Impossible de créer le QR code. Vérifiez votre connexion ou réessayez.");
+      console.error("Erreur création QR :", error);
+      alert("Impossible de créer le QR code. Vérifiez votre connexion.");
       return false;
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle Next button — special case when going from step 2 to 3
   const handleNext = async () => {
     if (activeElementId === 2) {
       const success = await createQrCodeOnBackend();
-      if (!success) return; // Stop navigation if backend failed
+      if (!success) return;
     }
 
     if (activeElementId < 4) {
@@ -136,9 +174,9 @@ function Edition() {
 
   const steps = [
     { id: 1, title: 'Type de QR' },
-    { id: 2, title: 'Infos a convertir' },
+    { id: 2, title: 'Infos à convertir' },
     { id: 3, title: 'Style' },
-    { id: 4, title: 'Telecharger' },
+    { id: 4, title: 'Télécharger' },
   ];
 
   return (
@@ -148,9 +186,9 @@ function Edition() {
           style={{ cursor: 'pointer' }}
           width={30}
           height={30}
-          onClick={() => handleNavigate('/dashboard')}
+          onClick={() => { handleNavigate('/dashboard'); setActiveElement(1); }}
         />
-        Generer un code QR
+        Générer un code QR
       </h2>
 
       <div className='breadcrumb'>
@@ -160,8 +198,7 @@ function Edition() {
             style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
           >
             <div
-              className={`breadcrumb-element ${activeElementId === element.id ? 'active-element' : ''
-                }`}
+              className={`breadcrumb-element ${activeElementId === element.id ? 'active-element' : ''}`}
             >
               <span>{element.id}</span>
               <p>{element.title}</p>
@@ -194,7 +231,7 @@ function Edition() {
           style={{ backgroundColor: activeElementId === 4 ? '#7C8493' : '' }}
           onClick={handleNext}
         >
-          {loading ? 'Création en cours...' : 'Suivant'}
+          {loading ? 'Création en cours...' : activeElementId === 3 ? 'Créer le QR' : 'Suivant'}
         </button>
       </div>
     </div>

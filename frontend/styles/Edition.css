@@ -164,6 +164,68 @@ h2 {
     gap: 5px;
 }
 
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 12px;
+    margin-top: 12px;
+}
+
+.file-icon.pdf {
+    background: #fef2f2;
+    color: #ef4444;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.file-name {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.file-size {
+    font-size: 14px;
+    color: #64748b;
+    margin: 4px 0;
+}
+
+.file-status {
+    font-size: 13px;
+    color: #16a34a;
+    font-weight: 500;
+}
+
+.progress-bar-bg {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: #3b82f6;
+    transition: width 0.3s;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ef4444;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.remove-btn:hover {
+    background: #fee2e2;
+}
+
 @media (max-width: 640px) {
     .qrtypes-container {
         grid-template-columns: 1fr;
