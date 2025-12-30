@@ -25,10 +25,10 @@ class QrCode extends Model
         "metadata",
     ];
 
-    // protected $casts = [
-    //     'design' => 'array',
-    //     'metadata' => 'array',
-    // ];
+    protected $casts = [
+        'design' => 'array',
+        'metadata' => 'array',
+    ];
 
     public function type(){
         return $this->belongsTo(QrType::class, 'type_id');
