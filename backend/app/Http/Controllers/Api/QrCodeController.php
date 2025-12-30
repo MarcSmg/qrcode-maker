@@ -29,8 +29,26 @@ class QrCodeController extends Controller
 
         return response()->json([
             'data' => $qrcode
-    ]);
-}
+        ]);
+    }
+
+    public function destroy(QrCode $qrCode){
+
+        if ($qrCode->user_id !== Auth::id()) {
+            return response()->json([
+                'message' => 'Accès non autorisé'
+            ], 403);
+        }
+
+        $qrCode->scans()->delete();
+
+        $qrCode->delete();
+
+        return response()->json([
+            'message' => 'QR code supprimé avec succès'
+        ], 200);
+    }
+
 
     // Créer un nouveau QR code
     public function store(Request $request): JsonResponse
