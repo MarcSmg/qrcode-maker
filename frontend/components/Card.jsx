@@ -9,6 +9,7 @@ function Card({ qrId, qrCodeUrl, content, createdAt }) {
   const [scanCount, setScanCount] = useState(0);
   const [loadingStats, setLoadingStats] = useState(true);
 
+
   // Fetch real-time stats for this specific QR code
   useEffect(() => {
     const fetchStats = async () => {
@@ -134,7 +135,7 @@ function Card({ qrId, qrCodeUrl, content, createdAt }) {
       </div>
 
       <div className="card-menu hidden" ref={cardMenu}>
-        <ul style={{listStyleType:'none'}}>
+        <ul style={{ listStyleType: 'none' }}>
           <li onClick={handleToggleActive}>
             {isActive ? 'Désactiver' : 'Activer'} le QR code
           </li>

@@ -21,7 +21,7 @@ function HistoryFilter({ options }) {
               key={index} 
               className="filter-option"
               onClick={() => {
-                console.log(`Option sélectionnée : ${option}`);
+                // console.log(`Option sélectionnée : ${option}`);
                 setIsOpen(false); 
               }}
             >

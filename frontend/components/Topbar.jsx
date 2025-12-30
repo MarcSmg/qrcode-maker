@@ -29,7 +29,7 @@ function Topbar({ setCurrentMenu }) {
                 }
 
                 const user = await response.json();
-                console.log(user);
+                // console.log(user);
 
 
                 // On prend le prénom du champ 'name', ou fallback sur email

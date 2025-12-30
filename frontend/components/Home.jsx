@@ -40,6 +40,8 @@ function Home() {
     fetchLatest();
   }, []);
 
+  
+
   return (
     <div className="home">
       <WelcomeBanner />

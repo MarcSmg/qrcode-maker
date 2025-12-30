@@ -5,7 +5,7 @@ import Sidebar from "../components/Sidebar";
 
 
 export default function Dashboard() {
-    console.log(JSON.parse(localStorage.getItem("currentMenu")));
+    // console.log(JSON.parse(localStorage.getItem("currentMenu")));
 
     const [currentMenu, setCurrentMenu] = useState(JSON.parse(localStorage.getItem("currentMenu")) || 0)
     return (
