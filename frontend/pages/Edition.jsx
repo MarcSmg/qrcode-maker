@@ -65,6 +65,7 @@ function Edition() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify(payload),
@@ -72,6 +73,7 @@ function Edition() {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
+        console.log('Validation errors from backend:', errorData); 
         throw new Error(errorData.message || `HTTP ${response.status}`);
       }
 
