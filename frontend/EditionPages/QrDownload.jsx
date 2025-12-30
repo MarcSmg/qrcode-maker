@@ -40,7 +40,7 @@ function QrDownload({ data }) {
 
   return (
     <div className="edit-main">
-      <h3 style={{ paddingLeft: 30, fontSize: 20, marginBottom: 30 }}>
+      <h3 style={{ paddingLeft: 30, fontSize: 20, marginBottom: 30, width: '100%', }}>
         4. Prévisualiser et télécharger
       </h3>
 
