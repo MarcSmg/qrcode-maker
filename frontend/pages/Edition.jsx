@@ -19,7 +19,7 @@ function Edition() {
     parseInt(localStorage.getItem('editionState'), 10) || 1
   );
 
-  const [qrType, setQrType] = useState('url'); // default, will be updated by QrType
+  const [qrType, setQrType] = useState('email');
 
   const [data, setData] = useState({
     content: " ",

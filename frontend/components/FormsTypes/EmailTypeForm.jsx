@@ -6,7 +6,7 @@ function EmailTypeForm({ setData }) {
     const [formData, setFormData] = useState({
         email: "",
         subject: "",
-        content: "",
+        body: "", // renamed from "content" for clarity
     });
 
     const handleChange = (e) => {
@@ -14,86 +14,103 @@ function EmailTypeForm({ setData }) {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const generateEmailQR = ({ email, subject, body }) => {
-        let uri = `mailto:${email}`;
+    // Generate proper mailto: URI
+    const generateMailtoUri = () => {
+        if (!formData.email.trim()) return "";
+
+        let uri = `mailto:${encodeURIComponent(formData.email.trim())}`;
 
         const params = new URLSearchParams();
-        if (subject) params.append("subject", subject);
-        if (body) params.append("body", body);
+        if (formData.subject.trim()) {
+            params.append("subject", formData.subject.trim());
+        }
+        if (formData.body.trim()) {
+            params.append("body", formData.body.trim());
+        }
 
-        if ([...params].length > 0) {
+        if (params.toString()) {
             uri += `?${params.toString()}`;
         }
 
         return uri;
     };
 
-    // 🔥 UPDATE QR DATA ON UNMOUNT
+    // Update parent data.content whenever form changes
     useEffect(() => {
-        return () => {
-            if (!formData.email) return;
+        const mailtoUri = generateMailtoUri();
 
+        if (mailtoUri) {
             setData((prev) => ({
                 ...prev,
-                content: generateEmailQR({
-                    email: formData.email,
-                    subject: formData.subject,
-                    body: formData.content,
-                }),
+                content: mailtoUri,
+                name: formData.subject || "QR Email", // nice default name
             }));
-        };
+        }
     }, [formData, setData]);
 
     return (
         <div className="email-type-container">
             <div className="email-type-header">
-                <h2>Entrez votre mail</h2>
+                <h2>QR Code Email</h2>
+                <p style={{ color: "#64748b", fontSize: "14px", marginBottom: "24px" }}>
+                    Scannez pour ouvrir un email pré-rempli
+                </p>
 
                 <div className="input-container">
-                    <div className="inline-container">
-                        <InputConnexion
-                            type="text"
-                            id="email"
-                            name="email"
-                            icon="Mail"
-                            className="form-input"
-                            label="E-mail"
-                            placeholder="qrit@qr.com"
-                            onChange={handleChange}
-                            value={formData.email}
-                        />
+                    <InputConnexion
+                        type="email"
+                        id="email"
+                        name="email"
+                        icon="Mail"
+                        className="form-input"
+                        label="Adresse e-mail du destinataire"
+                        placeholder="contact@exemple.com"
+                        onChange={handleChange}
+                        value={formData.email}
+                        required
+                    />
 
-                        <InputConnexion
-                            type="text"
-                            id="subject"
-                            name="subject"
-                            icon="Info"
-                            className="form-input"
-                            label="Sujet"
-                            placeholder="Demande de.."
-                            onChange={handleChange}
-                            value={formData.subject}
-                        />
-                    </div>
+                    <InputConnexion
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        icon="Type"
+                        className="form-input"
+                        label="Sujet (facultatif)"
+                        placeholder="Bonjour !"
+                        onChange={handleChange}
+                        value={formData.subject}
+                    />
 
                     <label
-                        htmlFor="content"
+                        htmlFor="body"
                         style={{
                             textAlign: "left",
                             fontSize: 13,
                             fontWeight: 600,
                             color: "#2b2b2b",
+                            marginTop: "16px",
+                            display: "block",
                         }}
                     >
-                        Message
+                        Message pré-rempli (facultatif)
                     </label>
 
                     <textarea
-                        name="content"
-                        id="content"
-                        placeholder="Entrez votre message"
+                        name="body"
+                        id="body"
+                        placeholder="Bonjour,\n\nJe vous contacte au sujet de..."
+                        rows="5"
+                        style={{
+                            width: "100%",
+                            padding: "12px",
+                            borderRadius: "8px",
+                            border: "1px solid #cbd5e1",
+                            fontFamily: "inherit",
+                            resize: "none",
+                        }}
                         onChange={handleChange}
-                        value={formData.content}
+                        value={formData.body}
                     />
                 </div>
             </div>
