@@ -58,7 +58,7 @@ class QrCodeController extends Controller
             'name' => 'nullable|string|max:255',
             'content' => 'required|string',
             'scan_limit' => 'nullable|integer|min:1',
-            'design' => 'nullable|array',
+            'design' => 'nullable',
             'metadata' => 'nullable|array',
         ]);
 
@@ -78,6 +78,12 @@ class QrCodeController extends Controller
         //     'design' => $validated['design'] ?? null,
         //     'metadata' => $validated['metadata'] ?? [],
         // ]);
+
+        $design = $validated['design'] ?? null;
+
+        if (is_string($design)) {
+            $design = json_decode($design, true);
+        }
         
         $qrCode = QrCodeModel::create([
             'user_id' => Auth::id(),
@@ -87,7 +93,7 @@ class QrCodeController extends Controller
             'short_code' => $this->generateUniqueShortCode(),
             'scan_limit' => $validated['scan_limit'] ?? null,
             'scan_count'=> 0,
-            'design' => $validated['design'] ?? [],
+            'design' => $design,
             'metadata' => $validated['metadata'] ?? [],
             'is_active' => true,
         ]);
@@ -104,10 +110,17 @@ class QrCodeController extends Controller
             'name' => 'required|string',
             'file' => 'required|file|mimes:pdf|max:10240',
             'scan_limit' => 'nullable|integer|min:1',
-            'design' => 'nullable|array',
+            'design' => 'nullable',
         ]);
 
         $path = $request->file('file')->store('pdfs/qr');
+
+        $design = $validated['design'] ?? null;
+
+        if (is_string($design)) {
+            $design = json_decode($design, true);
+        }
+
 
         $qrCode = QrCode::create([
             'user_id' => Auth::id(),
@@ -118,7 +131,7 @@ class QrCodeController extends Controller
             'scan_count' => 0,
             'scan_limit' => $validated['scan_limit'] ?? null,
             'is_active' => true,
-            'design' => $validated['design'] ?? [],
+            'design' => $design,
         ]);
 
         return response()->json([
@@ -132,7 +145,7 @@ class QrCodeController extends Controller
             'subject' => ['nullable', 'string', 'max:255'],
             'body' => ['nullable', 'string'],
             'scan_limit' => 'nullable|integer|min:1',
-            'design' => 'nullable|array',
+            'design' => 'nullable',
         ]);
 
         $email = $request->email;
@@ -152,6 +165,12 @@ class QrCodeController extends Controller
         if (!empty($query)) {
             $mailto .= '?' . http_build_query($query);
         }
+        
+        $design = $validated['design'] ?? null;
+
+        if (is_string($design)) {
+            $design = json_decode($design, true);
+        }
 
         $qrCode = QrCode::create([
             'user_id'   => $request->user()->id,
@@ -161,7 +180,7 @@ class QrCodeController extends Controller
             'short_code'=> Str::random(8),
             'scan_count'=> 0,
             'scan_limit' => $validated['scan_limit'] ?? null,
-            'design' => $validated['design'] ?? [],
+            'design' => $design,
             'is_active' => true,
         ]);
 
