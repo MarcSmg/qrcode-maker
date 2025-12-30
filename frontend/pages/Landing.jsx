@@ -20,7 +20,7 @@ function Landing() {
     const navigate = useNavigate()
     const [activeTab, setActiveTab] = useState('text');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const handleNavigate = (link) =>{
+    const handleNavigate = (link) => {
         navigate(link);
     }
 
@@ -31,7 +31,8 @@ function Landing() {
                 <div className="nav-container">
                     <div className="logo">
                         <div className="logo-icon">
-                            <img style={{ width: "35px", }} src="logo.svg" alt="" />                        </div>
+                            <img style={{ width: "35px", }} src="logo.svg" alt="" />
+                        </div>
                         <span className="logo-text">QR It</span>
                     </div>
 
@@ -40,14 +41,14 @@ function Landing() {
                         <a href="#features">Fonctionnalités</a>
                         <a href="#about">A propos</a>
                         <div className="mobile-actions">
-                            <a href="/signup" className="login-link">Se connecter</a>
-                            <button className="btn-primary" onClick={()=>handleNavigate('/signup')}>Commencer</button>
+                            <a href="/signin" className="login-link">Se connecter</a>
+                            <button className="btn-primary" onClick={() => handleNavigate('/signup')}>Commencer</button>
                         </div>
                     </div>
 
                     <div className="nav-actions">
-                        <a href="/signup" className="login-link">Se connecter</a>
-                        <button className="btn-primary" onClick={()=>handleNavigate('/signup')}>Commencer</button>
+                        <a href="/signin" className="login-link">Se connecter</a>
+                        <button className="btn-primary" onClick={() => handleNavigate('/signup')}>Commencer</button>
                     </div>
 
                     <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -77,7 +78,7 @@ function Landing() {
                                 placeholder="Entrez votre URL ici..."
                                 className="url-input"
                             />
-                            <button className="btn-generate" onClick={()=>handleNavigate('/dashboard')}>Générer</button> {/*Might change that in the future */}
+                            <button className="btn-generate" onClick={() => handleNavigate('/dashboard')}>Générer</button> {/*Might change that in the future */}
                         </div>
 
                         <div className="generator-tabs">
