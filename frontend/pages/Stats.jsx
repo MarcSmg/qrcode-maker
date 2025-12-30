@@ -1,38 +1,104 @@
-import React, { useState } from 'react';
-import '../styles/Stats.css'
+import React, { useState, useEffect } from 'react';
+import '../styles/Stats.css';
+import { Facebook, Type } from 'lucide-react';
 
 export default function Stats() {
-  // Il faudra intégré des appels API ici pour récupérer les vraies données
-  const [statsData] = useState({
-    totalGenerated: 84,
-    totalScanned: 42,
-    activeQRCodes: 15,
+  const [statsData, setStatsData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    // Détails pour les "Codes générés"
-    generatedByType: {
-      email: 25,
-      link: 42,
-      image: 17,
-    },
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-    // Détails pour les "Codes scannés"
-    scannedByType: {
-      email: 8,
-      link: 27,
-      image: 7,
-    },
+        const token = localStorage.getItem('token'); // Adjust if you store it elsewhere
 
-    // Détails pour les "Codes actifs"
-    activeByType: {
-      email: 5,
-      link: 8,
-      image: 2,
-    },
-  });
+        const response = await fetch('http://localhost:8000/api/qrcodes/stats', {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            ...(token && { 'Authorization': `Bearer ${token}` }),
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erreur ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        const transformData = (dataArray) => {
+          const map = {
+            email: 0,
+            link: 0,
+            image: 0,
+            text: 0,
+            social: 0,
+          };
+
+          dataArray.forEach(item => {
+            const type = item.type.toLowerCase();
+            if (type.includes('email')) map.email = item.count;
+            else if (type.includes('url') || type.includes('link') || type.includes('website')) map.link = item.count;
+            else if (type.includes('image') || type.includes('pdf') || type.includes('mp3')) map.image = item.count;
+            else if (type.includes('text')) map.text = item.count;
+            else if (type.includes('social')) map.social = item.count;
+          });
+
+          return map;
+        };
+
+        const generatedByType = transformData(result.generated);
+        const scannedByType = transformData(result.scanned);
+        const activeByType = transformData(result.active);
+
+        const totalGenerated = Object.values(generatedByType).reduce((a, b) => a + b, 0);
+        const totalScanned = Object.values(scannedByType).reduce((a, b) => a + b, 0);
+        const activeQRCodes = Object.values(activeByType).reduce((a, b) => a + b, 0);
+
+        setStatsData({
+          totalGenerated,
+          totalScanned,
+          activeQRCodes,
+          generatedByType,
+          scannedByType,
+          activeByType,
+        });
+
+      } catch (err) {
+        console.error("Failed to load stats:", err);
+        setError("Impossible de charger les statistiques pour le moment.");
+
+        // Fallback to mock data so UI doesn't break
+        setStatsData({
+          totalGenerated: 0,
+          totalScanned: 0,
+          activeQRCodes: 0,
+          generatedByType: { email: 0, link: 0, image: 0, text: 0, social: 0 },
+          scannedByType: { email: 0, link: 0, image: 0, text: 0, social: 0 },
+          activeByType: { email: 0, link: 0, image: 0, text: 0, social: 0 },
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  if (loading) {
+    return <div className="stats-container">Chargement des statistiques...</div>;
+  }
+
+  if (error) {
+    return <div className="stats-container"><p style={{ color: 'red' }}>{error}</p></div>;
+  }
 
   return (
     <div className="stats-container">
-      {/* Header */}
       <div className="stats-header">
         <h2 className="stats-title">Statistiques</h2>
         <p className="stats-subtitle">
@@ -40,11 +106,10 @@ export default function Stats() {
         </p>
       </div>
 
-      {/* Cards verticales */}
       <div className='stats-cards-container no-scrollbar'>
         <div className="stats-cards-grid">
           {/* 1. CODES GÉNÉRÉS */}
-          <div className="stats-card ">{/*stats-card-primary*/}
+          <div className="stats-card">
             <div className="stats-card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -77,6 +142,28 @@ export default function Stats() {
                   </div>
                   <span className="stats-card-details-item-value">
                     {statsData.generatedByType.link}
+                  </span>
+                </div>
+
+
+                <div className="stats-card-details-item">
+                  <div className="stats-card-details-item-label">
+                    <div className="stats-card-details-item-icon"><Facebook /></div>
+                    <span>Social</span>
+                  </div>
+                  <span className="stats-card-details-item-value">
+                    {statsData.generatedByType.social}
+                  </span>
+                </div>
+
+
+                <div className="stats-card-details-item">
+                  <div className="stats-card-details-item-label">
+                    <div className="stats-card-details-item-icon"><Type /></div>
+                    <span>Texte</span>
+                  </div>
+                  <span className="stats-card-details-item-value">
+                    {statsData.generatedByType.text}
                   </span>
                 </div>
 
@@ -130,6 +217,27 @@ export default function Stats() {
 
                 <div className="stats-card-details-item">
                   <div className="stats-card-details-item-label">
+                    <div className="stats-card-details-item-icon"><Facebook /></div>
+                    <span>Social</span>
+                  </div>
+                  <span className="stats-card-details-item-value">
+                    {statsData.scannedByType.social}
+                  </span>
+                </div>
+
+
+                <div className="stats-card-details-item">
+                  <div className="stats-card-details-item-label">
+                    <div className="stats-card-details-item-icon"><Type /></div>
+                    <span>Texte</span>
+                  </div>
+                  <span className="stats-card-details-item-value">
+                    {statsData.scannedByType.text}
+                  </span>
+                </div>
+
+                <div className="stats-card-details-item">
+                  <div className="stats-card-details-item-label">
                     <div className="stats-card-details-item-icon">🖼</div>
                     <span>Image</span>
                   </div>
@@ -178,6 +286,27 @@ export default function Stats() {
 
                 <div className="stats-card-details-item">
                   <div className="stats-card-details-item-label">
+                    <div className="stats-card-details-item-icon"><Facebook /></div>
+                    <span>Social</span>
+                  </div>
+                  <span className="stats-card-details-item-value">
+                    {statsData.activeByType.social}
+                  </span>
+                </div>
+
+
+                <div className="stats-card-details-item">
+                  <div className="stats-card-details-item-label">
+                    <div className="stats-card-details-item-icon"><Type /></div>
+                    <span>Texte</span>
+                  </div>
+                  <span className="stats-card-details-item-value">
+                    {statsData.activeByType.text}
+                  </span>
+                </div>
+
+                <div className="stats-card-details-item">
+                  <div className="stats-card-details-item-label">
                     <div className="stats-card-details-item-icon">🖼</div>
                     <span>Image</span>
                   </div>
@@ -190,7 +319,6 @@ export default function Stats() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }

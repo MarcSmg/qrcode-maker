@@ -22,7 +22,7 @@
 }
 
 .btn-bleue {
-  background-color: #99CAFF; 
+  background-color: #99CAFF;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -106,6 +106,8 @@
   margin: 24px 0 16px;
   padding-bottom: 12px;
   border-bottom: 2px solid #e8e8e8;
+  overflow-y: scroll;
+
 }
 
 .date-label {
@@ -211,7 +213,8 @@
 
 .history-page {
   width: 100%;
-  min-height: 100%;
+  /* min-height: 100vh; */
+  overflow-y: scroll;
 }
 
 .entete {
@@ -237,8 +240,11 @@
 
 .history-list {
   max-width: 900px;
+  height: 50vh;
   margin: 0 auto;
   padding: 0 20px;
+  overflow-y: scroll;
+
 }
 
 .no-results {

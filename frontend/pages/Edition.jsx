@@ -40,13 +40,27 @@ function Edition() {
     navigate(link);
   };
 
+
+
+  const [typeId, setTypeId] = useState(1)
+
   // NEW: Create QR on backend using native fetch
   const createQrCodeOnBackend = async () => {
+
+    (qrType == 'url' || qrType == 'mp3') && setTypeId(1);
+    (qrType == 'text') && setTypeId(2);
+    (qrType == 'facebook' || qrType == 'social') && setTypeId(3);
+    (qrType == 'pdf') && setTypeId(4);
+
+    // 'email'
+
     try {
       setLoading(true);
 
+
+
       const payload = {
-        type_id: 1,
+        type_id: typeId,
         name: `${qrType.charAt(0).toUpperCase() + qrType.slice(1)} test`,
         content: data.content.trim() || "https://example.com",
         scan_limit: 5,
@@ -73,7 +87,7 @@ function Edition() {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.log('Validation errors from backend:', errorData); 
+        console.log('Validation errors from backend:', errorData);
         throw new Error(errorData.message || `HTTP ${response.status}`);
       }
 

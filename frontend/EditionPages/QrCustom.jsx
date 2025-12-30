@@ -72,6 +72,13 @@ export default function QrCustom({ data, setData }) {
     reader.readAsDataURL(file);
   };
 
+  const handleRemoveLogo = () => {
+    setData(prev => ({
+      ...prev,
+      image: null,
+    }));
+  };
+
 
   const toggle = id => {
     setOpenId(prev => (prev === id ? null : id));
@@ -307,6 +314,20 @@ export default function QrCustom({ data, setData }) {
                   <button onClick={() => fileInputRef.current.click()}>
                     Choisir un logo
                   </button>
+                  {/* Show remove button only if a logo is currently set */}
+                  {data.image && (
+                    <button
+                      className="remove-btn"
+                      onClick={handleRemoveLogo}
+                      style={{
+                        padding: "6px 10px",
+                        borderRadius: "8px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Supprimer le logo
+                    </button>
+                  )}
                 </div>
               )}
 
