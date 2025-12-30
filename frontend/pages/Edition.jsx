@@ -148,7 +148,7 @@ function Edition() {
           style={{ cursor: 'pointer' }}
           width={30}
           height={30}
-          onClick={() => handleNavigate('/dashboard')}
+          onClick={() => {handleNavigate('/dashboard');setActiveElement(1)}}
         />
         Generer un code QR
       </h2>
