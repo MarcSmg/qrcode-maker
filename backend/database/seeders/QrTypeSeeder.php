@@ -30,6 +30,11 @@ class QrTypeSeeder extends Seeder
                 'display_name' => 'PDF',
                 'description' => 'Document PDF téléchargeable',
             ],
+            [
+                'name' => 'email',
+                'display_name' => 'Email',
+                'description' => 'Envoyer un mail',
+            ]
         ];
 
         foreach ($types as $type) {

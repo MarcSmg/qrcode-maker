@@ -46,9 +46,6 @@ Route::middleware(['auth:sanctum', 'is.admin'])->get('/users', [UserController::
 // Qr code related routes
 Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 
- 
-
-
 
 // Types de QR code
 Route::get('/qr-types', [QrTypeController::class, 'index']);
@@ -57,6 +54,7 @@ Route::get('/qr-types/{qrType}', [QrTypeController::class, 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('qrcodes', QrCodeController::class)->except(['edit', 'create']);
     Route::post('qrcodes/pdf', [QrCodeController::class, 'storePdf']);
+    Route::post('qrcodes/email', [QrCodeController::class, 'storeMail']);
     // Génération de QR code
     Route::get('/qrcodes/generate/{shortCode}', [QrCodeController::class, 'generateQrCode']);
     
