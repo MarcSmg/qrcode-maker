@@ -37,7 +37,7 @@ class QrCodeController extends Controller
     {
         $validated = $request->validate([
             'type_id' => 'required|exists:qr_types,id',
-            'name' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
             'content' => 'required|string',
             'scan_limit' => 'nullable|integer|min:1',
             'design' => 'nullable|array',
@@ -64,12 +64,14 @@ class QrCodeController extends Controller
         $qrCode = QrCodeModel::create([
             'user_id' => Auth::id(),
             'type_id' => $validated['type_id'],
-            'name' => $validated['name'],
+            'name' => $validated['name'] ?? "",
             'content' => $content,
             'short_code' => $this->generateUniqueShortCode(),
             'scan_limit' => $validated['scan_limit'] ?? null,
+            'scan_count'=> 0,
             'design' => $validated['design'] ?? [],
             'metadata' => $validated['metadata'] ?? [],
+            'is_active' => true,
         ]);
 
         return response()->json([
@@ -83,23 +85,73 @@ class QrCodeController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'file' => 'required|file|mimes:pdf|max:10240',
+            'scan_limit' => 'nullable|integer|min:1',
+            'design' => 'nullable|array',
         ]);
 
         $path = $request->file('file')->store('pdfs/qr');
 
         $qrCode = QrCode::create([
             'user_id' => Auth::id(),
-            'type_id' => 4,
+            'type_id' => QrType::where('name', 'pdf')->firstOrFail()->id,
             'name' => $validated['name'],
             'content' => $path,
             'short_code' => Str::random(8),
             'scan_count' => 0,
+            'scan_limit' => $validated['scan_limit'] ?? null,
             'is_active' => true,
+            'design' => $validated['design'] ?? [],
         ]);
 
         return response()->json([
             'data' => $qrCode->load('type'),
         ], 201);
+    }
+
+    public function storeMail(Request $request) {
+        $request->validate([
+            'email' => ['required', 'email'],
+            'subject' => ['nullable', 'string', 'max:255'],
+            'body' => ['nullable', 'string'],
+            'scan_limit' => 'nullable|integer|min:1',
+            'design' => 'nullable|array',
+        ]);
+
+        $email = $request->email;
+
+        $query = [];
+
+        if ($request->filled('subject')) {
+            $query['subject'] = $request->subject;
+        }
+
+        if ($request->filled('body')) {
+            $query['body'] = $request->body;
+        }
+
+        $mailto = 'mailto:' . $email;
+
+        if (!empty($query)) {
+            $mailto .= '?' . http_build_query($query);
+        }
+
+        $qrCode = QrCode::create([
+            'user_id'   => $request->user()->id,
+            'type_id'   => QrType::where('name', 'email')->firstOrFail()->id,
+            'name'      => 'QR Email',
+            'content'   => $mailto,
+            'short_code'=> Str::random(8),
+            'scan_count'=> 0,
+            'scan_limit' => $validated['scan_limit'] ?? null,
+            'design' => $validated['design'] ?? [],
+            'is_active' => true,
+        ]);
+
+        return response()->json([
+            'message' => 'QR code email créé avec succès',
+            'data' => $qrCode->load('type'),
+        ], 201);
+
     }
 
 

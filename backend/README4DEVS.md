@@ -159,3 +159,4 @@ MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS="admin@qrit.app"
 MAIL_FROM_NAME="QrIt"
 ```
+
