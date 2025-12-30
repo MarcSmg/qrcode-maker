@@ -11,9 +11,7 @@ function MainContent({ currentMenu, setCurrentMenu }) {
     return (
         <div className="main-content">
             <Topbar setCurrentMenu={setCurrentMenu} />
-            {currentMenu == "profile" && <Profile user={{
-                
-            }}/>}
+            {currentMenu == 3 && <Profile setCurrentMenu={setCurrentMenu} />}
             {currentMenu == 0 && <Home />}
             {currentMenu == 1 && <Stats />}
             {currentMenu == 2 && <History />}
