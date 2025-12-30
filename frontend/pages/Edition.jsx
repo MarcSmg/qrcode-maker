@@ -11,7 +11,14 @@ import { useNavigate } from 'react-router-dom';
 function Edition() {
   const navigate = useNavigate();
   const [activeElementId, setActiveElementId] = useState(1)
-  const [data, setData] = useState("")
+  const [data, setData] = useState({
+    content: " ",
+    dotsOptions: { type: "square", color: "#000000" },
+    backgroundOptions: { color: "#ffffff" },
+    imageOptions: { crossOrigin: "anonymous", margin: 10 },
+    image: null,
+  })
+
   const handleNavigate = (link) => {
     navigate(link);
   }
@@ -56,9 +63,9 @@ function Edition() {
       </div>
       <div className='main-content no-scrollbar'>
         {activeElementId == 1 && <QrType setQrType={setQrType} setActiveElementId={setActiveElementId} />}
-        {activeElementId == 2 && <QrInfos qrType={qrType} data={data} setData={setData}/>}
-        {activeElementId == 3 && <QrCustom data={data}/>}
-        {activeElementId == 4 && <QrDownload />}
+        {activeElementId == 2 && <QrInfos qrType={qrType} data={data} setData={setData} />}
+        {activeElementId == 3 && <QrCustom data={data} setData={setData}/>}
+        {activeElementId == 4 && <QrDownload data={data} />}
       </div>
       <div className='nav-buttons'>
         <button className="btn-primary" onClick={() => {

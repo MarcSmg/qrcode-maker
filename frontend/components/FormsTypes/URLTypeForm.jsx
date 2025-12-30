@@ -8,8 +8,14 @@ function URLTypeForm({ data, setData }) {
 
     const handleChange = (e) => {
         const { value } = e.target;
-        setCurrentData(value)
-        setData(value);
+        setCurrentData(prev => ({
+            ...prev,
+            content: value,
+        }));
+        setData(prev => ({
+            ...prev,
+            content: value,
+        }));
     };
 
     return (
@@ -25,7 +31,7 @@ function URLTypeForm({ data, setData }) {
                         label={"Entrez votre lien"}
                         placeholder={"https://..."}
                         onChange={handleChange}
-                        value={currentData}
+                        value={currentData.content}
                     />
                 </div>
 

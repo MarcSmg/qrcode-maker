@@ -2,52 +2,61 @@ import { useEffect, useRef, useState } from "react";
 import QRCodeStyling from "qr-code-styling";
 
 
-export default function QrCustom({ data }) {
+export default function QrCustom({ data, setData }) {
 
-  const qrCode = new QRCodeStyling({
-    width: 260,
-    height: 260,
-    data: data,
-    dotsOptions: {
-      type: "square",
-      color: "#000000",
-    },
-    backgroundOptions: {
-      color: "#ffffff",
-    },
-    imageOptions: {
-      crossOrigin: "anonymous",
-      margin: 10,
-    },
-  });
-
-
+  const qrCodeRef = useRef(null);
   const qrRef = useRef(null);
   const fileInputRef = useRef(null);
   const [openId, setOpenId] = useState(null);
 
-
   useEffect(() => {
-    qrCode.append(qrRef.current);
+    qrCodeRef.current = new QRCodeStyling({
+      width: 260,
+      height: 260,
+      data: data.content,
+      dotsOptions: data.dotsOptions,
+      backgroundOptions: data.backgroundOptions,
+      imageOptions: data.imageOptions,
+    });
+    qrCodeRef.current.append(qrRef.current);
+
   }, []);
 
+  useEffect(() => {
+    if (!qrCodeRef.current) return;
 
-  const handlePatternChange = type => {
-    qrCode.update({
-      dotsOptions: { type },
+    qrCodeRef.current.update({
+      data: data.content,
+      dotsOptions: data.dotsOptions,
+      backgroundOptions: data.backgroundOptions,
+      imageOptions: data.imageOptions,
+      image: data.image,
     });
-    console.log("Updated")
+  }, [data]);
+
+
+  const handlePatternChange = (type) => {
+    setData(prev => ({
+      ...prev,
+      dotsOptions: {
+        ...prev.dotsOptions,
+        type,
+      },
+    }));
   };
 
-  const handleColorChange = color => {
-    qrCode.update({
-      dotsOptions: { color },
-    });
+  const handleColorChange = (color) => {
+    setData(prev => ({
+      ...prev,
+      dotsOptions: {
+        ...prev.dotsOptions,
+        color,
+      },
+    }));
   };
 
-  const handleLogoChange = file => {
+  const handleLogoChange = (file) => {
     if (!file) return;
-
     if (!file.type.startsWith("image/")) {
       alert("Veuillez sélectionner une image");
       return;
@@ -55,9 +64,10 @@ export default function QrCustom({ data }) {
 
     const reader = new FileReader();
     reader.onload = () => {
-      qrCode.update({
+      setData(prev => ({
+        ...prev,
         image: reader.result,
-      });
+      }));
     };
     reader.readAsDataURL(file);
   };
@@ -185,114 +195,122 @@ export default function QrCustom({ data }) {
           }
         }
       `}</style>
-
-      <div className="page">
-        <div className="left">
-          <div className="qr-box">
-            <div ref={qrRef} />
+      <div className='edit-main'>
+        <h3 style={{
+          paddingLeft: '30px',
+          fontSize: '20px',
+          width: '100%',
+          marginBottom: '30px',
+          fontWeight: '600',
+        }}>3. Donnez du style a votre code QR</h3>
+        <div className="page">
+          <div className="left">
+            <div className="qr-box">
+              <div ref={qrRef} />
+            </div>
           </div>
-        </div>
-        <div className="right">
-          <div className="section"
-            onClick={() => toggle("pattern")}
-          >
-            <div className="header">
-              <div className="header-left">
-                <div className="icon">
-                  <img src="/images/motif.png" alt="Motif" />
+          <div className="right">
+            <div className="section">
+              <div className="header"
+                onClick={() => toggle("pattern")}
+              >
+                <div className="header-left">
+                  <div className="icon">
+                    <img src="/images/motif.png" alt="Motif" />
+                  </div>
+                  <div className="texts">
+                    <h4>Motif du QR</h4>
+                    <p>Forme du QR code</p>
+                  </div>
                 </div>
-                <div className="texts">
-                  <h4>Motif du QR</h4>
-                  <p>Forme du QR code</p>
+
+                <div
+                  className={`arrow ${openId === "pattern" ? "open" : ""}`}
+                >
+                  ►
                 </div>
               </div>
 
-              <div
-                className={`arrow ${openId === "pattern" ? "open" : ""}`}
-              >
-                ►
-              </div>
+              {openId === "pattern" && (
+                <div className="content">
+                  <button onClick={() => { handlePatternChange("square"); console.log("Carre") }}>
+                    Carré
+                  </button>
+                  <button onClick={() => { handlePatternChange("dots"); console.log("Points") }}>
+                    Points
+                  </button>
+                  <button onClick={() => { handlePatternChange("rounded"); console.log("Arrondi") }}>
+                    Arrondi
+                  </button>
+                </div>
+              )}
             </div>
 
-            {openId === "pattern" && (
-              <div className="content">
-                <button onClick={() => { handlePatternChange("square"); console.log("Carre") }}>
-                  Carré
-                </button>
-                <button onClick={() => { handlePatternChange("dots"); console.log("Pounts") }}>
-                  Points
-                </button>
-                <button onClick={() => { handlePatternChange("rounded"); console.log("Arrondi") }}>
-                  Arrondi
-                </button>
-              </div>
-            )}
-          </div>
+            <div className="section">
+              <div className="header"
+                onClick={() => toggle("color")}
+              >
+                <div className="header-left">
+                  <div className="icon"><img src="/images/couleur.png" alt="Couleur" /></div>
+                  <div className="texts">
+                    <h4>Couleur</h4>
+                    <p>Couleur du QR code</p>
+                  </div>
+                </div>
 
-          <div className="section"
-            onClick={() => toggle("color")}
-          >
-            <div className="header">
-              <div className="header-left">
-                <div className="icon"><img src="/images/couleur.png" alt="Couleur" /></div>
-                <div className="texts">
-                  <h4>Couleur</h4>
-                  <p>Couleur du QR code</p>
+                <div
+                  className={`arrow ${openId === "color" ? "open" : ""}`}
+                >
+                  ►
                 </div>
               </div>
 
-              <div
-                className={`arrow ${openId === "color" ? "open" : ""}`}
-              >
-                ►
-              </div>
+              {openId === "color" && (
+                <div className="content">
+                  <button onClick={() => handleColorChange("#000000")}>Noir</button>
+                  <button onClick={() => handleColorChange("#22c55e")}>Vert</button>
+                  <button onClick={() => handleColorChange("#3b82f6")}>Bleu</button>
+                  <button onClick={() => handleColorChange("#ef4444")}>Rouge</button>
+                </div>
+              )}
             </div>
 
-            {openId === "color" && (
-              <div className="content">
-                <button onClick={() => handleColorChange("#000000")}>Noir</button>
-                <button onClick={() => handleColorChange("#22c55e")}>Vert</button>
-                <button onClick={() => handleColorChange("#3b82f6")}>Bleu</button>
-                <button onClick={() => handleColorChange("#ef4444")}>Rouge</button>
-              </div>
-            )}
-          </div>
+            <div className="section">
+              <div className="header"
+                onClick={() => toggle("logo")}
+              >
+                <div className="header-left">
+                  <div className="icon"><img src="/images/logo.png" alt="logo" /></div>
+                  <div className="texts">
+                    <h4>Ajouter un logo</h4>
+                    <p>Importer une image</p>
+                  </div>
+                </div>
 
-          <div className="section"
-            onClick={() => toggle("logo")}
-          >
-            <div className="header">
-              <div className="header-left">
-                <div className="icon"><img src="/images/logo.png" alt="logo" /></div>
-                <div className="texts">
-                  <h4>Ajouter un logo</h4>
-                  <p>Importer une image</p>
+                <div
+                  className={`arrow ${openId === "logo" ? "open" : ""}`}
+                >
+                  ►
                 </div>
               </div>
 
-              <div
-                className={`arrow ${openId === "logo" ? "open" : ""}`}
-              >
-                ►
-              </div>
+              {openId === "logo" && (
+                <div className="content">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={e => handleLogoChange(e.target.files[0])}
+                  />
+
+                  <button onClick={() => fileInputRef.current.click()}>
+                    Choisir un logo
+                  </button>
+                </div>
+              )}
+
             </div>
-
-            {openId === "logo" && (
-              <div className="content">
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  onChange={e => handleLogoChange(e.target.files[0])}
-                />
-
-                <button onClick={() => fileInputRef.current.click()}>
-                  Choisir un logo
-                </button>
-              </div>
-            )}
-
           </div>
         </div>
       </div>

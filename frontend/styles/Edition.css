@@ -144,6 +144,26 @@ h2 {
 
 }
 
+.main-container {
+    width: min(520px, 92vw);
+    height: 100%;
+    max-height: 600px;
+    background: #2563eb14;
+    border: 2px solid #2564eb2d;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+
+.download-buttons {
+    gap: 5px;
+}
+
 @media (max-width: 640px) {
     .qrtypes-container {
         grid-template-columns: 1fr;
@@ -158,6 +178,25 @@ h2 {
         padding: 30px 10px;
         background-color: #bae0ff5e;
         backdrop-filter: blur(10px);
+    }
+
+    .main-container {
+        background-color: transparent;
+        border: none;
+        overflow-y: scroll;
+        justify-content: flex-start;
+
+    }
+
+    .download-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 15px;
+        margin-bottom: 150px;
+    }
+
+    .download-buttons .btn-primary {
+        width: 100%;
     }
 
 
